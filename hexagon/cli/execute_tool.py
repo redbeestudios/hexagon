@@ -13,7 +13,8 @@ def register_external_tools(src: dict):
 
 def execute_action(action_id: str, args):
     tool_action_module = _load_action_module(action_id) or \
-                         _load_action_module(f'hexagon.tools.external.{action_id}')
+                         _load_action_module(f'hexagon.tools.external.{action_id}') or \
+                         _load_action_module(f'hexagon.tools.internal.{action_id}')
 
     if not tool_action_module:
         print(f'[red]Hexagon did not find the action [bold]{action_id}')
