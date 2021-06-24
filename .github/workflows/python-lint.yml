@@ -2,8 +2,9 @@ name: Project Standards
 
 on:
   push:
-    paths:
-      - "**.py"
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   lint:
