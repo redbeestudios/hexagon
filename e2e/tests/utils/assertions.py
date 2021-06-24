@@ -1,7 +1,6 @@
 import collections
 import subprocess
 import os
-from functools import partial
 from typing import Callable, List
 
 last_output_file_path = os.path.realpath(os.path.join(
