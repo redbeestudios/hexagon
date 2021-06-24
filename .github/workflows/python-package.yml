@@ -5,18 +5,17 @@ name: build & release
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ 3.7, 3.8, 3.9 ]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
       - uses: actions/checkout@v2
@@ -41,7 +40,7 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest -svv tests
+          pytest -svv
 
   release:
     if: ${{ github.event_name != 'pull_request' && github.event_name != 'pull_request_target' }}
