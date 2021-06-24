@@ -37,8 +37,8 @@ def __has_no_extension(action_id):
 
 
 def _execute_python_module(action_id, args):
-    tool_action_module = _load_action_module(action_id) or \
-                         _load_action_module(f'hexagon.tools.external.{action_id}')
+    tool_action_module = _load_action_module(action_id) or _load_action_module(f'hexagon.tools.external.{action_id}')
+
     if not tool_action_module:
         print(f'[red]Hexagon did not find the action [bold]{action_id}')
         print('[red][dim]We checked:')
