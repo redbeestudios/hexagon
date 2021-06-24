@@ -29,7 +29,8 @@ def execute_action(action_id: str, args):
 
 
 def _is_internal_action(action_id):
-  return 'hexagon.tools.internal.' in action_id
+    return 'hexagon.tools.internal.' in action_id
+
 
 def __has_no_extension(action_id):
     return action_id.count('.') == 0
