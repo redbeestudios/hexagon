@@ -62,8 +62,8 @@ def main(_):
                             '(can be absolute path or relative to YAML. ie: ./tools or .)',
                     default='.',
                     validate=PathValidator(is_dir=True, message='Please select a valid directory')
-                ).execute()
-                , comment='relative to this file')
+                ).execute(),
+                comment='relative to this file')
 
         copytree(
             os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'cli', '__templates', 'custom_tool')),

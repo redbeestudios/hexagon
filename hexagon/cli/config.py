@@ -14,10 +14,9 @@ class Configuration:
         self.custom_tools_path = None
         self.__config = None
 
-    def init_config(self, path):
-        if CONFIG_FILE_ENV_VARIABLE_NAME in os.environ:
-            self.project_yaml = os.environ[CONFIG_FILE_ENV_VARIABLE_NAME]
-            self.project_path = os.path.dirname(self.project_yaml)
+    def init_config(self, path: str):
+        self.project_yaml = path
+        self.project_path = os.path.dirname(self.project_yaml)
 
         __defaults = {
             'cli': {'name': 'Hexagon'},
@@ -96,4 +95,4 @@ class Configuration:
 
 
 configuration = Configuration()
-cli, tools, envs = configuration.init_config(os.getenv('HEXAGON_CONFIG_FILE', 'app.yaml'))
+cli, tools, envs = configuration.init_config(os.getenv(CONFIG_FILE_ENV_VARIABLE_NAME, 'app.yaml'))
