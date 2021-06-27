@@ -17,8 +17,11 @@ except Exception:
 
 
 def run_hexagon_e2e_test(
-    test_file: str, args: Optional[List[str]] = [], env: Optional[Dict[str, str]] = {}
+    test_file: str, args: List[str] = tuple(), env: Optional[Dict[str, str]] = None
 ):
+    if env is None:
+        env = {}
+
     test_folder_path = e2e_test_folder_path(test_file)
 
     env["HEXAGON_TEST_SHELL"] = (
@@ -35,7 +38,7 @@ def run_hexagon_e2e_test(
 
 
 def run_hexagon(
-    cwd: str, args: Optional[List[str]] = [], env: Optional[Dict[str, str]] = None
+    cwd: str, args: List[str] = tuple(), env: Optional[Dict[str, str]] = None
 ):
     environment = None
     if env:
@@ -55,8 +58,8 @@ def run_hexagon(
     )
 
 
-def write_to_process(process: subprocess.Popen, input: str):
-    process.stdin.write(input)
+def write_to_process(process: subprocess.Popen, stdin: str):
+    process.stdin.write(stdin)
     process.stdin.flush()
 
 

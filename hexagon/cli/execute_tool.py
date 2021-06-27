@@ -21,6 +21,7 @@ def execute_action(action_id: str, args):
         )
         sys.exit(1)
 
+
 def _is_internal_action(action_id):
     return "hexagon.tools.internal." in action_id
 
