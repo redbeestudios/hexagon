@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
-      - uses: Lt-Mayonesa/actions-flake8@stable
+      - uses: Lt-Mayonesa/actions-flake8
         with:
           use_bugbear: true
