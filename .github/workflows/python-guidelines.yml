@@ -14,4 +14,4 @@ jobs:
       - uses: psf/black@stable
       - uses: Lt-Mayonesa/actions-flake8@main
         with:
-          use_bugbear: true
+          use_bugbear: 1
