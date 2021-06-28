@@ -4,7 +4,7 @@ from e2e.tests.utils.run import run_hexagon_e2e_test, write_to_process
 from e2e.tests.utils.assertions import assert_process_output, assert_process_ended
 from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
 import os
-import yaml
+from ruamel.yaml import YAML
 import shutil
 
 LONG_NAME = 'Custom Action Test'
@@ -30,7 +30,7 @@ base_app_file = {
 
 def _write_app_file(app_file):
     with open(app_file_path, 'w') as file:
-        file.writelines(yaml.safe_dump(app_file))
+        YAML().dump(app_file, file)
 
 
 def _shared_assertions(process):
@@ -98,16 +98,20 @@ def test_create_new_open_link_tool():
     ])
 
     write_to_process(process, '-test\n')
-    assert_process_output(process, [['What command would you like to give your tool?', 'open-link-test']])
+    assert_process_output(
+        process, [['What command would you like to give your tool?', 'open-link-test']])
 
     write_to_process(process, '\n')
-    assert_process_output(process, [['Would you like to add an alias/shortcut? (empty for none)', 'olt']])
+    assert_process_output(
+        process, [['Would you like to add an alias/shortcut? (empty for none)', 'olt']])
 
     write_to_process(process, f'{LONG_NAME}\n')
-    assert_process_output(process, ['Would you like to add a long name? (this will be displayed instead of command'])
+    assert_process_output(
+        process, ['Would you like to add a long name? (this will be displayed instead of command'])
 
     write_to_process(process, f'{DESCRIPTION}\n')
-    assert_process_output(process, ['Would you like to add a description? (this will be displayed along side'], True)
+    assert_process_output(
+        process, ['Would you like to add a description? (this will be displayed along side'], True)
 
     assert_process_output(process, [
         '╰╼',
@@ -157,10 +161,14 @@ def test_create_new_python_module_tool():
         ['What type of tool is it?', 'shell']
     ])
 
-    assert_process_output(process, [['What command would you like to give your tool?', 'a-new-action-command']])
-    assert_process_output(process, [['Would you like to add an alias/shortcut? (empty for none)', 'anac']])
-    assert_process_output(process, ['Would you like to add a long name? (this will be displayed instead of command'])
-    assert_process_output(process, ['Would you like to add a description? (this will be displayed along side'], True)
+    assert_process_output(
+        process, [['What command would you like to give your tool?', 'a-new-action-command']])
+    assert_process_output(
+        process, [['Would you like to add an alias/shortcut? (empty for none)', 'anac']])
+    assert_process_output(
+        process, ['Would you like to add a long name? (this will be displayed instead of command'])
+    assert_process_output(
+        process, ['Would you like to add a description? (this will be displayed along side'], True)
     assert_process_output(process, [
         '╰╼',
         'Para repetir este comando:',
@@ -175,8 +183,10 @@ def test_create_new_python_module_tool():
     assert created_tool['type'] == 'shell'
     assert created_tool['alias'] == 'anac'
 
-    assert os.path.isfile(os.path.join(e2e_test_folder_path(__file__), 'a-new-action/__init__.py'))
-    assert os.path.isfile(os.path.join(e2e_test_folder_path(__file__), 'a-new-action/README.md'))
+    assert os.path.isfile(os.path.join(
+        e2e_test_folder_path(__file__), 'a-new-action/__init__.py'))
+    assert os.path.isfile(os.path.join(
+        e2e_test_folder_path(__file__), 'a-new-action/README.md'))
 
     shutil.rmtree(os.path.join(e2e_test_folder_path(__file__), 'a-new-action'))
 
@@ -186,7 +196,8 @@ def test_create_tool_creates_custom_tools_dir():
     app_file = base_app_file.copy()
     app_file['cli'].pop('custom_tools_dir', None)
 
-    custom_tools_dir_path = os.path.join(e2e_test_folder_path(__file__), custom_tools_dir_name)
+    custom_tools_dir_path = os.path.join(
+        e2e_test_folder_path(__file__), custom_tools_dir_name)
     if os.path.isdir(custom_tools_dir_path):
         shutil.rmtree(custom_tools_dir_path)
     os.mkdir(custom_tools_dir_path)
@@ -225,4 +236,5 @@ def test_create_tool_creates_custom_tools_dir():
         custom_tools_dir_name,
         'a-new-action/__init__.py'
     ))
-    assert os.path.isfile(os.path.join(e2e_test_folder_path(__file__), custom_tools_dir_name, 'a-new-action/README.md'))
+    assert os.path.isfile(os.path.join(e2e_test_folder_path(
+        __file__), custom_tools_dir_name, 'a-new-action/README.md'))
