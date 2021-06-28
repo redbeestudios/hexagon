@@ -4,13 +4,16 @@ import os
 import signal
 from typing import Callable, List
 
-last_output_file_path = os.path.realpath(os.path.join(
-    __file__, os.path.pardir, os.path.pardir, os.path.pardir, 'last-output.txt'))
+last_output_file_path = os.path.realpath(
+    os.path.join(
+        __file__, os.path.pardir, os.path.pardir, os.path.pardir, "last-output.txt"
+    )
+)
 
 
 def _save_last_output(lines: List[str]):
-    with open(last_output_file_path, 'w', encoding='utf-8') as file:
-        file.write(''.join(lines))
+    with open(last_output_file_path, "w", encoding="utf-8") as file:
+        file.write("".join(lines))
 
 
 def _save_last_output_and_raise(process: subprocess.Popen, lines_read: List[str], error: Exception, timeouted=False):
@@ -32,7 +35,9 @@ def _check_process_return_code(process: subprocess.Popen):
 
 
 Expected_Process_Output_Item = str or Callable[[str], bool]
-Expected_Process_Output = Expected_Process_Output_Item or List[Expected_Process_Output_Item]
+Expected_Process_Output = (
+    Expected_Process_Output_Item or List[Expected_Process_Output_Item]
+)
 
 
 def _assert_process_output_line(
@@ -47,6 +52,7 @@ def _assert_process_output_line(
             assert expected.rstrip() in line.rstrip()
         if isinstance(expected, collections.Callable):
             assert expected(line)
+
     try:
         if isinstance(expected, list):
             for assertion in expected:
@@ -70,7 +76,7 @@ MAX_ATTEMPTS = 50
 def assert_process_output(
     process: subprocess.Popen,
     expected_output: List[Expected_Process_Output],
-    discard_until_initial=False
+    discard_until_initial=False,
 ):
     """
     Assert the output of a CLI process
@@ -89,7 +95,8 @@ def assert_process_output(
     # Read from stdout until assertion fails or all expected lines are reads
     while line_index < len(expected_output):
         def timeout_handler(signum, frame):
-            _save_last_output_and_raise(process, lines_read, Exception('Timeout reading from process'), timeouted=True)
+            _save_last_output_and_raise(process, lines_read, Exception(
+                'Timeout reading from process'), timeouted=True)
         signal.signal(signal.SIGALRM, timeout_handler)
 
         signal.alarm(3)

@@ -3,13 +3,16 @@ from e2e.tests.utils.assertions import assert_process_ended, assert_process_outp
 from e2e.tests.utils.run import discard_output, run_hexagon_e2e_test, write_to_process
 import os
 
-aliases_file_path = os.path.realpath(os.path.join(
-    __file__, os.path.pardir, os.path.pardir, 'install_cli', 'home-aliases.txt'))
+aliases_file_path = os.path.realpath(
+    os.path.join(
+        __file__, os.path.pardir, os.path.pardir, "install_cli", "home-aliases.txt"
+    )
+)
 
 
 def test_install_cli():
-    with open(aliases_file_path, 'w') as file:
-        file.write('previous line\n')
+    with open(aliases_file_path, "w") as file:
+        file.write("previous line\n")
 
     process = run_hexagon_e2e_test(__file__, env={})
     assert_process_output(process, [
@@ -38,23 +41,23 @@ def test_install_cli():
         'install_cli',
     ])
     discard_output(process, 5)
-    write_to_process(process, '/config.yml\n')
+    write_to_process(process, "/config.yml\n")
     assert_process_output(
         process,
         [
-            '│ Added alias to home-aliases.txt',
-            '┆',
-            '',
-            '',
-            '# added by hexagon',
+            "│ Added alias to home-aliases.txt",
+            "┆",
+            "",
+            "",
+            "# added by hexagon",
             'alias hexagon-test="HEXAGON_CONFIG_FILE=',
-            '',
-            '',
-            '┆',
-            '│',
-            '╰╼',
+            "",
+            "",
+            "┆",
+            "│",
+            "╰╼",
         ],
-        discard_until_initial=True
+        discard_until_initial=True,
     )
 
     assert_process_ended(process)
