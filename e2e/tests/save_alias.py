@@ -46,28 +46,34 @@ def test_save_alias():
         ],
     )
     discard_output(process, 2)
-    write_to_process(process, 'hexagon-save-alias-test\n')
-    assert_process_output(process, [
-        'Ultimo comando: echo works ¿Qué alias querés crear?',
-        '',
-        '│ Added alias to home-aliases.txt',
-        '┆',
-        '',
-        '',
-        '# added by hexagon',
-        'alias hexagon-save-alias-test="echo works"',
-        '',
-        '┆',
-        '│',
-        '╰╼',
-        'Para repetir este comando:',
-        '    hexagon-test save-alias',
-    ])
+    write_to_process(process, "hexagon-save-alias-test\n")
+    assert_process_output(
+        process,
+        [
+            "Ultimo comando: echo works ¿Qué alias querés crear?",
+            "",
+            "│ Added alias to home-aliases.txt",
+            "┆",
+            "",
+            "",
+            "# added by hexagon",
+            'alias hexagon-save-alias-test="echo works"',
+            "",
+            "┆",
+            "│",
+            "╰╼",
+            "Para repetir este comando:",
+            "    hexagon-test save-alias",
+        ],
+    )
 
     assert_process_ended(process)
 
-    with open(aliases_file_path, 'r') as file:
-        assert file.read() == 'previous line\n\n# added by hexagon\nalias hexagon-save-alias-test="echo works"'  # noqa: E501
+    with open(aliases_file_path, "r") as file:
+        assert (
+            file.read()
+            == 'previous line\n\n# added by hexagon\nalias hexagon-save-alias-test="echo works"'
+        )  # noqa: E501
 
-    with open(last_command_file_path, 'r') as file:
-        assert file.read() == 'hexagon-test save-alias'
+    with open(last_command_file_path, "r") as file:
+        assert file.read() == "hexagon-test save-alias"

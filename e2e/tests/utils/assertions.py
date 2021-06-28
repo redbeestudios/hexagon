@@ -16,13 +16,15 @@ def _save_last_output(lines: List[str]):
         file.write("".join(lines))
 
 
-def _save_last_output_and_raise(process: subprocess.Popen, lines_read: List[str], error: Exception, timeouted=False):
+def _save_last_output_and_raise(
+    process: subprocess.Popen, lines_read: List[str], error: Exception, timeouted=False
+):
     process.kill()
     lines: List[str] = [*lines_read]
     if not timeouted:
         for line in process.stdout.readlines():
             lines.append(line)
-    print('Last command output:')
+    print("Last command output:")
     for line in lines:
         print(line.rstrip())
     _save_last_output(lines)
@@ -31,7 +33,7 @@ def _save_last_output_and_raise(process: subprocess.Popen, lines_read: List[str]
 
 def _check_process_return_code(process: subprocess.Popen):
     if process.returncode and process.returncode > 0:
-        raise Exception('\n'.join(process.stderr.readlines()))
+        raise Exception("\n".join(process.stderr.readlines()))
 
 
 Expected_Process_Output_Item = str or Callable[[str], bool]
@@ -45,7 +47,7 @@ def _assert_process_output_line(
     line: str,
     expected: Expected_Process_Output,
     lines_read: List[str],
-    discard_until_initial: bool
+    discard_until_initial: bool,
 ):
     def assert_line(expected: Expected_Process_Output_Item):
         if isinstance(expected, str):
@@ -94,9 +96,15 @@ def assert_process_output(
     attempts = 0
     # Read from stdout until assertion fails or all expected lines are reads
     while line_index < len(expected_output):
+
         def timeout_handler(signum, frame):
-            _save_last_output_and_raise(process, lines_read, Exception(
-                'Timeout reading from process'), timeouted=True)
+            _save_last_output_and_raise(
+                process,
+                lines_read,
+                Exception("Timeout reading from process"),
+                timeouted=True,
+            )
+
         signal.signal(signal.SIGALRM, timeout_handler)
 
         signal.alarm(3)
@@ -108,17 +116,16 @@ def assert_process_output(
         expected = expected_output[line_index]
 
         if _assert_process_output_line(
-            process,
-            line,
-            expected,
-            lines_read,
-            discard_until_initial
+            process, line, expected, lines_read, discard_until_initial
         ):
             line_index += 1
         else:
             if attempts >= MAX_ATTEMPTS:
-                _save_last_output_and_raise(process, lines_read, Exception(
-                    f'Couldnt match output after {MAX_ATTEMPTS} attempts'))
+                _save_last_output_and_raise(
+                    process,
+                    lines_read,
+                    Exception(f"Couldnt match output after {MAX_ATTEMPTS} attempts"),
+                )
             attempts += 1
 
 

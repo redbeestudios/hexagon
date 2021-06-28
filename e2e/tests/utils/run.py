@@ -53,20 +53,20 @@ def run_hexagon(
         encoding="utf-8",
         cwd=cwd,
         env=environment,
-        universal_newlines=True
+        universal_newlines=True,
     )
 
 
 def write_to_process(process: subprocess.Popen, input: str):
     written = process.stdin.write(input)
     if written != len(input):
-        raise Exception(f'Written {written} instead of {input}')
+        raise Exception(f"Written {written} instead of {input}")
     process.stdin.flush()
 
 
 def discard_output(process: subprocess.Popen, length: int):
     def timeout_handler(signum, frame):
-        raise Exception('Timeout reading from process')
+        raise Exception("Timeout reading from process")
 
     for _ in itertools.repeat(None, length):
         signal.signal(signal.SIGALRM, timeout_handler)

@@ -15,31 +15,37 @@ def test_install_cli():
         file.write("previous line\n")
 
     process = run_hexagon_e2e_test(__file__, env={})
-    assert_process_output(process, [
-        '╭╼ Hexagon',
-        '│',
-        '│ This looks like your first time running Hexagon.',
-        '│ You should probably run "Install CLI".',
-        '│',
-        'Hi, which tool would you like to use today?',
-        '┌──────────────────────────────────────────────────────────────────────────────',
-        '',
-        '❯',
-        '',
-        'Install CLI                                               Install a custom',
-        '',
-        '└──────────────────────────────────────────────────────────────────────────────',
-        '',
-    ])
-    write_to_process(process, '\n')
-    assert_process_output(process, [
-        ['Hi, which tool would you like to use today?', 'Install CLI'],
-        '',
-        '',
-        'Where is your project\'s hexagon config file?',
-        '',
-        'install_cli',
-    ])
+    assert_process_output(
+        process,
+        [
+            "╭╼ Hexagon",
+            "│",
+            "│ This looks like your first time running Hexagon.",
+            '│ You should probably run "Install CLI".',
+            "│",
+            "Hi, which tool would you like to use today?",
+            "┌──────────────────────────────────────────────────────────────────────────────",
+            "",
+            "❯",
+            "",
+            "Install CLI                                               Install a custom",
+            "",
+            "└──────────────────────────────────────────────────────────────────────────────",
+            "",
+        ],
+    )
+    write_to_process(process, "\n")
+    assert_process_output(
+        process,
+        [
+            ["Hi, which tool would you like to use today?", "Install CLI"],
+            "",
+            "",
+            "Where is your project's hexagon config file?",
+            "",
+            "install_cli",
+        ],
+    )
     discard_output(process, 5)
     write_to_process(process, "/config.yml\n")
     assert_process_output(
@@ -62,5 +68,8 @@ def test_install_cli():
 
     assert_process_ended(process)
 
-    with open(aliases_file_path, 'r') as file:
-        assert file.read() == f'previous line\n\n# added by hexagon\nalias hexagon-test="HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} hexagon"'  # noqa: E501
+    with open(aliases_file_path, "r") as file:
+        assert (
+            file.read()
+            == f'previous line\n\n# added by hexagon\nalias hexagon-test="HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} hexagon"'
+        )  # noqa: E501
