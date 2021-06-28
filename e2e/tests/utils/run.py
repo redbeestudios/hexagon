@@ -2,6 +2,7 @@ from e2e.tests.utils.path import e2e_test_folder_path
 import subprocess
 import os
 import itertools
+import signal
 from typing import Dict, List, Optional
 
 hexagon_path = os.path.join(os.path.pardir, os.path.os.pardir, 'hexagon')
@@ -41,16 +42,23 @@ def run_hexagon(cwd: str, args: Optional[List[str]] = [], env: Optional[Dict[str
         encoding='utf-8',
         cwd=cwd,
         env=environment,
-        universal_newlines=True,
-        bufsize=1
+        universal_newlines=True
     )
 
 
 def write_to_process(process: subprocess.Popen, input: str):
-    process.stdin.write(input)
+    written = process.stdin.write(input)
+    if written != len(input):
+        raise Exception(f'Written {written} instead of {input}')
     process.stdin.flush()
 
 
 def discard_output(process: subprocess.Popen, length: int):
+    def timeout_handler(signum, frame):
+        raise Exception('Timeout reading from process')
+
     for _ in itertools.repeat(None, length):
+        signal.signal(signal.SIGALRM, timeout_handler)
+        signal.alarm(3)
         process.stdout.readline()
+        signal.alarm(0)
