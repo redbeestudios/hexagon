@@ -28,7 +28,7 @@ class Logger:
 
     def gap(self, repeat: int = 1):
         if not self.__decorations.result_only:
-            for n in range(repeat):
+            for _ in range(repeat):
                 self.__console.print(self.__decorations.border)
 
     def info(self, *message: str, gap_start: int = 0, gap_end: int = 0):
