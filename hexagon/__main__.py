@@ -34,7 +34,7 @@ def main():
         env, params = select_env(envs, tool["envs"] if "envs" in tool else None, _env)
         tracer.tracing(env)
 
-        action = execute_action(tool["action"], params)
+        action = execute_action(tool, params, env, sys.argv[3:])
 
         print("│")
 

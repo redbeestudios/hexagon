@@ -20,13 +20,13 @@ def _shared_gui_assertions(process):
             "",
             "ƒ Python Module Env Test",
             "",
+            "ƒ Python Module Asterisk Env Test",
+            "",
             "ƒ Node Module Test",
             "",
             "ƒ Node Module Env Test",
             "",
             "⬡ Save Last Command",
-            "",
-            "⬡ Create A New Tool",
             "",
             "└──────────────────────────────────────────────────────────────────────────────",
             "",
@@ -45,7 +45,74 @@ def test_execute_python_module_by_gui():
         process,
         [
             ["Hi, which tool would you like to use today?", "ƒ Python Module Test"],
-            "executed python module",
+            "executed python-module",
+            "│",
+            "╰╼",
+            "Para repetir este comando:",
+            "    hexagon-test python-module",
+        ],
+    )
+
+    assert_process_ended(process)
+
+
+def test_execute_python_module_with_env_by_gui():
+    process = run_hexagon_e2e_test(__file__)
+
+    _shared_gui_assertions(process)
+
+    write_to_process(process, f"{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}\n")
+
+    assert_process_output(
+        process,
+        [
+            ["Hi, which tool would you like to use today?", "ƒ Python Module Env Test"],
+        ],
+    )
+
+    assert_process_output(
+        process, ["On which environment?", "", "", "", "", "dev", "", "qa", "", "", ""]
+    )
+
+    write_to_process(process, "\n")
+
+    assert_process_output(
+        process,
+        [
+            ["On which environment?", "dev"],
+            "executed python-module in dev",
+            "Env args:",
+            "[789, 'ghi']",
+            "│",
+            "╰╼",
+            "Para repetir este comando:",
+            "    hexagon-test python-module",
+        ],
+    )
+
+    assert_process_ended(process)
+
+
+def test_execute_python_module_with_env_asterisk_by_gui():
+    process = run_hexagon_e2e_test(__file__)
+
+    _shared_gui_assertions(process)
+
+    write_to_process(
+        process, f"{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}\n"
+    )
+
+    assert_process_output(
+        process,
+        [
+            [
+                "Hi, which tool would you like to use today?",
+                "ƒ Python Module Asterisk Env Test",
+            ],
+            "",
+            "executed python-module",
+            "Env args:",
+            "all_envs",
             "│",
             "╰╼",
             "Para repetir este comando:",
@@ -81,7 +148,7 @@ def test_execute_python_module_by_alias():
         [
             "╭╼ Test",
             "│",
-            "executed pm",
+            "executed python-module",
             "│",
             "╰╼",
         ],
@@ -91,14 +158,17 @@ def test_execute_python_module_by_alias():
 
 
 def test_execute_python_module_with_env_and_arguments():
-    process = run_hexagon_e2e_test(__file__, ["python-module", "env", "123", "abc"])
+    process = run_hexagon_e2e_test(__file__, ["python-module-env", "dev", "123", "abc"])
 
     assert_process_output(
         process,
         [
             "╭╼ Test",
             "│",
-            "executed python-module in env with cli args:",
+            "executed python-module in dev",
+            "Env args:",
+            "[789, 'ghi']",
+            "Cli args:",
             "123",
             "abc",
             "│",
@@ -109,17 +179,17 @@ def test_execute_python_module_with_env_and_arguments():
     assert_process_ended(process)
 
 
-def test_execute_python_module_with_env_arguments():
-    process = run_hexagon_e2e_test(__file__, ["python-module-env"])
+def test_execute_python_module_with_other_env():
+    process = run_hexagon_e2e_test(__file__, ["python-module-env", "qa"])
 
     assert_process_output(
         process,
         [
             "╭╼ Test",
             "│",
-            "executed python-module-env with env args:",
-            "456",
-            "def",
+            "executed python-module in qa",
+            "Env args:",
+            "ordereddict([('foo', 'foo'), ('bar', 'bar')])",
             "│",
             "╰╼",
         ],
@@ -128,13 +198,14 @@ def test_execute_python_module_with_env_arguments():
     assert_process_ended(process)
 
 
-def test_execute_node_module_by_gui():
+def test_execute_script_module_by_gui():
     process = run_hexagon_e2e_test(__file__)
 
     _shared_gui_assertions(process)
 
     write_to_process(
-        process, f"{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}\n"
+        process,
+        f"{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}\n",
     )
 
     assert_process_output(
@@ -152,7 +223,7 @@ def test_execute_node_module_by_gui():
     assert_process_ended(process)
 
 
-def test_execute_node_module_by_argument():
+def test_execute_script_module_by_argument():
     process = run_hexagon_e2e_test(__file__, ["node-module"])
 
     assert_process_output(
@@ -169,15 +240,19 @@ def test_execute_node_module_by_argument():
     assert_process_ended(process)
 
 
-def test_execute_node_module_with_env_and_arguments():
-    process = run_hexagon_e2e_test(__file__, ["node-module", "env", "arg1", "arg2"])
+def test_execute_script_module_with_env_and_arguments():
+    process = run_hexagon_e2e_test(__file__, ["node-module-env", "dev", "arg1", "arg2"])
 
     assert_process_output(
         process,
         [
             "╭╼ Test",
             "│",
-            "executed node module in env with args:",
+            "executed node module",
+            "CLI arguments:",
+            "env=dev",
+            "789",
+            "ghi",
             "arg1",
             "arg2",
             "│",
@@ -188,17 +263,19 @@ def test_execute_node_module_with_env_and_arguments():
     assert_process_ended(process)
 
 
-def test_execute_node_module_with_env_arguments():
-    process = run_hexagon_e2e_test(__file__, ["node-module-env"])
+def test_execute_script_module_with_other_env():
+    process = run_hexagon_e2e_test(__file__, ["node-module-env", "qa"])
 
     assert_process_output(
         process,
         [
             "╭╼ Test",
             "│",
-            "executed node module in undefined with args:",
-            "env_arg1",
-            "env_arg2",
+            "executed node module",
+            "CLI arguments:",
+            "foo=foo",
+            "bar=bar",
+            "env=qa",
             "│",
             "╰╼",
         ],

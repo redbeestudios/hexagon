@@ -91,6 +91,7 @@ def assert_process_output(
             - List of strings and/or predicates
         * `discard_until_initial`: Discard lines until the first expected line is found
     """
+    __tracebackhide__ = True
     line_index = 0
     lines_read = []
     attempts = 0

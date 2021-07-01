@@ -5,7 +5,7 @@ from InquirerPy.validator import EmptyInputValidator
 from rich import print
 
 
-def main(_):
+def main(*_):
     with open("last_command", "r") as f:
         last_command = f.read()
 

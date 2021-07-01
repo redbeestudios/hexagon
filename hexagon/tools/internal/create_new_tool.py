@@ -9,7 +9,7 @@ from hexagon.cli.config import configuration
 from hexagon.tools import external
 
 
-def main(_):
+def main(*_):
     create_action = False
     output = {
         "action": inquirer.fuzzy(

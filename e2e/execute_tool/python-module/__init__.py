@@ -1,23 +1,24 @@
-import sys
-from hexagon.cli.args import fill_args
+from typing import Any, Dict, List
 
 
-def main(_):
-    _, _tool, _env, _arg1, _arg2 = fill_args(sys.argv, 5)
-    to_print = "executed"
+def main(
+    action: Dict[str, Any],
+    env: str = None,
+    env_args: Any = None,
+    cli_args: List[Any] = [],
+):
+    to_print = f"executed {action['action']}"
 
-    if _tool:
-        to_print += f" {_tool}"
-    else:
-        to_print += " python module"
+    if env:
+        to_print += f" in {env}"
 
-    if _env:
-        to_print += f" in {_env}"
+    print(to_print)
 
-    if _arg1 and _arg2:
-        to_print += " with cli args:"
-        print(to_print)
-        print(_arg1)
-        print(_arg2)
-    else:
-        print(to_print)
+    if env_args:
+        print("Env args:")
+        print(env_args)
+
+    if cli_args and len(cli_args) > 0:
+        print("Cli args:")
+        for cli_arg in cli_args:
+            print(cli_arg)
