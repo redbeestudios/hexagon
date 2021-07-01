@@ -1,24 +1,12 @@
-import os
-from dataclasses import dataclass
 from typing import Optional
 
 from rich.console import Console
 
-
-@dataclass
-class LoggingStyle:
-    show_colors: bool = True
-    result_only: bool = False
-    start: str = ""
-    border: str = ""
-    border_result: str = ""
-    process_out: str = ""
-    process_in: str = ""
-    finish: str = ""
+from hexagon.cli.printer.themes import LoggingTheme
 
 
 class Logger:
-    def __init__(self, console: Console, decorations: LoggingStyle) -> None:
+    def __init__(self, console: Console, decorations: LoggingTheme) -> None:
         self.__console = console
         self.__decorations = decorations
 
@@ -64,24 +52,3 @@ class Logger:
     def finish(self, message: str = None):
         if not self.__decorations.result_only:
             self.__console.print(f"{self.__decorations.finish}{message or ''}")
-
-
-__styles = {
-    "default": LoggingStyle(
-        start="╭╼ ",
-        border="│ ",
-        border_result="├ ",
-        process_out="┆",
-        process_in="┆",
-        finish="╰╼ ",
-    ),
-    "disabled": LoggingStyle(show_colors=False),
-    "result_only": LoggingStyle(result_only=True),
-}
-
-style = __styles[os.getenv("HEXAGON_STYLE", "default")]
-
-log = Logger(
-    Console(color_system="auto" if style.show_colors else None),
-    style,
-)

@@ -1,6 +1,7 @@
 import pytest
 
-from hexagon.cli.printer import Logger, LoggingStyle
+from hexagon.cli.printer import Logger
+from hexagon.cli.printer.themes import LoggingTheme
 
 
 class Console:
@@ -27,7 +28,7 @@ class Console:
 def test_log_start(decoration, message, expected):
     console = Console()
 
-    Logger(console, LoggingStyle(start=decoration)).start(message)
+    Logger(console, LoggingTheme(start=decoration)).start(message)
 
     assert console.output == expected
 
@@ -49,7 +50,7 @@ def test_log_start(decoration, message, expected):
 def test_log_gap(border, repeat, expected):
     console = Console()
 
-    Logger(console, LoggingStyle(border=border)).gap(repeat)
+    Logger(console, LoggingTheme(border=border)).gap(repeat)
 
     assert console.output == expected
 
@@ -67,7 +68,7 @@ def test_log_gap(border, repeat, expected):
 def test_log_info(decoration, message, gap_start, gap_end, expected):
     console = Console()
 
-    Logger(console, LoggingStyle(border=decoration)).info(
+    Logger(console, LoggingTheme(border=decoration)).info(
         message, gap_start=gap_start, gap_end=gap_end
     )
 
@@ -94,7 +95,7 @@ def test_log_info_with_multiple_message(
 ):
     console = Console()
 
-    Logger(console, LoggingStyle(border=decoration)).info(
+    Logger(console, LoggingTheme(border=decoration)).info(
         *message, gap_start=gap_start, gap_end=gap_end
     )
 
@@ -112,7 +113,7 @@ def test_log_info_with_multiple_message(
 def test_log_result(decoration, message, expected):
     console = Console()
 
-    Logger(console, LoggingStyle(border_result=decoration)).result(message)
+    Logger(console, LoggingTheme(border_result=decoration)).result(message)
 
     assert console.output == expected
 
@@ -134,7 +135,7 @@ def test_log_example(process_out, process_in, message, expected):
     console = Console()
 
     Logger(
-        console, LoggingStyle(process_out=process_out, process_in=process_in)
+        console, LoggingTheme(process_out=process_out, process_in=process_in)
     ).example(message)
 
     assert console.output == expected
