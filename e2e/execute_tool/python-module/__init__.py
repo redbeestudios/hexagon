@@ -5,7 +5,7 @@ def main(
     action: Dict[str, Any],
     env: str = None,
     env_args: Any = None,
-    cli_args: List[Any] = [],
+    cli_args: List[Any] = None,
 ):
     to_print = f"executed {action['action']}"
 
