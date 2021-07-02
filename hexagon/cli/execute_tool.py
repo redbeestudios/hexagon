@@ -2,7 +2,7 @@ import importlib
 import subprocess
 import sys
 import os
-from typing import List
+from typing import List, Union, Dict
 
 from hexagon.cli.config import configuration
 from hexagon.cli.printer import log
@@ -18,7 +18,7 @@ def execute_action(action, env_args, env, args):
     )
 
     if script_action_command:
-        execute_script(
+        _execute_script(
             script_action_command, action_to_execute, env_args or [], env, args
         )
     elif _is_internal_action(action_to_execute) or __has_no_extension(
@@ -63,7 +63,7 @@ def _execute_python_module(action_id, action, env, env_args, args):
         sys.exit(1)
 
 
-def execute_script(command: str, script: str, env_args, env, args):
+def _execute_script(command: str, script: str, env_args, env, args):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)
     if env and "alias" in env:
@@ -72,7 +72,7 @@ def execute_script(command: str, script: str, env_args, env, args):
     subprocess.call([command, script_path] + args)
 
 
-def __sanitize_args_for_command(*args: List[any]):
+def __sanitize_args_for_command(*args: Union[List[any], Dict]):
     positional = []
     named = []
     for arg in args:
