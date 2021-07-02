@@ -18,7 +18,7 @@ from hexagon.cli.args import cli_arg
 
 def main(
     tool: Dict[str, Any],
-    env: str = None,
+    env: Dict[str, Any] = None,
     env_args: Any = None,
     cli_args: List[Any] = None,
 ):

@@ -66,7 +66,9 @@ def _execute_python_module(action_id, action, env, env_args, args):
 def execute_script(command: str, script: str, env_args, env, args):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)
-    args = __sanitize_args_for_command(env_args, {"env": env}, *args)
+    if env and "alias" in env:
+        del env["alias"]
+    args = __sanitize_args_for_command(env_args, env, *args)
     subprocess.call([command, script_path] + args)
 
 
@@ -79,6 +81,8 @@ def __sanitize_args_for_command(*args: List[any]):
         elif isinstance(arg, list):
             for a in arg:
                 positional.append(str(a))
+        elif not arg:
+            continue
         else:
             try:
                 named += [f"{k}={v}" for k, v in arg.items() if v]

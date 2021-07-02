@@ -6,8 +6,10 @@ cli:
 envs:
   dev:
     alias: d
+    name: dev
   qa:
     alias: q
+    name: qa
 
 tools:
   google:

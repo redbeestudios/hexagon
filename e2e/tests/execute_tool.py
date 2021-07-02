@@ -71,7 +71,7 @@ def test_execute_python_module_with_env_by_gui():
         .then_output_should_be(
             [
                 ["On which environment?", "dev"],
-                "executed python-module in dev",
+                "executed python-module",
                 "Env args:",
                 "[789, 'ghi']",
                 "│",
@@ -155,7 +155,9 @@ def test_execute_python_module_with_env_and_arguments():
             [
                 "╭╼ Test",
                 "│",
-                "executed python-module in dev",
+                "executed python-module",
+                "Env:",
+                "ordereddict([('alias', 'd'), ('name', 'dev')])",
                 "Env args:",
                 "[789, 'ghi']",
                 "Cli args:",
@@ -177,7 +179,9 @@ def test_execute_python_module_with_other_env():
             [
                 "╭╼ Test",
                 "│",
-                "executed python-module in qa",
+                "executed python-module",
+                "Env:",
+                "ordereddict([('alias', 'q'), ('name', 'qa')])",
                 "Env args:",
                 "ordereddict([('foo', 'foo'), ('bar', 'bar')])",
                 "│",
@@ -239,7 +243,7 @@ def test_execute_script_module_with_env_and_arguments():
                 "│",
                 "executed node module",
                 "CLI arguments:",
-                "env=dev",
+                "name=dev",
                 "789",
                 "ghi",
                 "arg1",
@@ -264,7 +268,7 @@ def test_execute_script_module_with_other_env():
                 "CLI arguments:",
                 "foo=foo",
                 "bar=bar",
-                "env=qa",
+                "name=qa",
                 "│",
                 "╰╼",
             ]

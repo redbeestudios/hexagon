@@ -3,16 +3,15 @@ from typing import Any, Dict, List
 
 def main(
     action: Dict[str, Any],
-    env: str = None,
+    env: Dict[str, Any] = None,
     env_args: Any = None,
     cli_args: List[Any] = None,
 ):
-    to_print = f"executed {action['action']}"
+    print(f"executed {action['action']}")
 
     if env:
-        to_print += f" in {env}"
-
-    print(to_print)
+        print("Env:")
+        print(env)
 
     if env_args:
         print("Env args:")
