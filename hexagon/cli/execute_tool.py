@@ -4,9 +4,8 @@ import sys
 import os
 from typing import List
 
-from rich import print
-
 from hexagon.cli.config import configuration
+from hexagon.cli.printer import log
 
 _command_by_file_extension = {"js": "node", "sh": "bash"}
 
@@ -27,8 +26,8 @@ def execute_action(action, env_args, env, args):
     ):
         _execute_python_module(action_to_execute, action, env, env_args, args)
     else:
-        print(
-            f"[red]Executor for extension [bold]{ext}[/bold] not known [dim](supported: .js, .sh)."
+        log.error(
+            f"Executor for extension [bold]{ext}[/bold] not known [dim](supported: .js, .sh)."
         )
         sys.exit(1)
 
@@ -47,20 +46,20 @@ def _execute_python_module(action_id, action, env, env_args, args):
     )
 
     if not tool_action_module:
-        print(f"[red]Hexagon did not find the action [bold]{action_id}")
-        print("[red][dim]We checked:")
-        print(
-            f"[red][dim]     - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
+        log.error(f"Hexagon did not find the action [bold]{action_id}")
+        log.error("[dim]We checked:")
+        log.error(
+            f"[dim]     - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
         )
-        print(
-            "[red][dim]     - Hexagon repository of externals tools (hexagon.tools.external)"
+        log.error(
+            "[dim]     - Hexagon repository of externals tools (hexagon.tools.external)"
         )
         sys.exit(1)
     try:
         tool_action_module.main(action, env, env_args, args)
     except AttributeError as e:
-        print(f"[red]Execution of tool [bold]{action_id}[/bold] thru: {e}")
-        print("[red]Does it have the required `main(args...)` method?")
+        log.error(f"Execution of tool [bold]{action_id}[/bold] thru: {e}")
+        log.error("Does it have the required `main(args...)` method?")
         sys.exit(1)
 
 
