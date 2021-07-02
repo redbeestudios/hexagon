@@ -1,9 +1,6 @@
 from e2e.tests.utils.hexagon_spec import HexagonSpec, as_a_user
 from e2e.tests.utils.hexagon_config import read_config_file
 from e2e.tests.utils.path import e2e_test_folder_path
-from e2e.tests.utils.run import run_hexagon_e2e_test, write_to_process
-from e2e.tests.utils.assertions import assert_process_output, assert_process_ended
-from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
 from e2e.tests.utils.config import write_hexagon_config
 import os
 import shutil

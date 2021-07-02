@@ -1,7 +1,4 @@
 from e2e.tests.utils.hexagon_spec import as_a_user
-from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
-from e2e.tests.utils.assertions import assert_process_ended, assert_process_output
-from e2e.tests.utils.run import discard_output, run_hexagon_e2e_test, write_to_process
 import os
 
 test_folder_path = os.path.realpath(
