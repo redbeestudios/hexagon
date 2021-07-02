@@ -5,6 +5,7 @@ from InquirerPy.validator import EmptyInputValidator
 
 from hexagon.cli.tracer import tracer
 from hexagon.cli.printer import log
+from hexagon.cli.args import cli_arg
 
 
 # Toda tool de hexagon tiene que tener un main que se va a invocar
@@ -21,7 +22,7 @@ def main(
     env_args: Any = None,
     cli_args: List[Any] = None,
 ):
-    _name = cli_args[0] if cli_args and len(cli_args) > 0 else None
+    _name = cli_arg(cli_args, 0)
 
     # Es importante usar tracer.tracing para registrar los argumentos/sub_comandos que
     # se van ejecutando. de está manera hexagon puede recomendar al usuario
@@ -34,7 +35,7 @@ def main(
         ).execute()
     )
 
-    log.info("Tool.action:", tool["action"])
-    log.info("Env:", env)
-    log.info("Valor en tool.envs:", env_args)
-    log.info("tu apellido es:", name)
+    log.info(f"Tool.action: {tool['action']}")
+    log.info(f"Env: {env}")
+    log.info(f"Valor en tool.envs: {env_args}")
+    log.info(f"tu apellido es: {name}")

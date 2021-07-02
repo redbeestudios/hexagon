@@ -39,6 +39,11 @@ class HexagonSpec:
         write_to_process(self.process, "\n")
         return self
 
+    def write(self, text: str):
+        __tracebackhide__ = True
+        write_to_process(self.process, text)
+        return self
+
     def exit(self, status: int = 0):
         __tracebackhide__ = True
         assert_process_ended(self.process, status)
