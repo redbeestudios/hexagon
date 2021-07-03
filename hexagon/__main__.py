@@ -1,7 +1,7 @@
 import sys
 
 from hexagon.support.args import fill_args
-from hexagon.support.config import cli, tools, envs
+from hexagon.cli import cli, tools, envs
 from hexagon.support.execute_tool import execute_action
 from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer

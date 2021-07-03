@@ -4,7 +4,7 @@ from shutil import copytree
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 
-from hexagon.support.config import configuration
+from hexagon.cli import configuration
 from hexagon.tools import external
 from hexagon.support.printer import log
 
