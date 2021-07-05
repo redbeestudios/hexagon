@@ -6,7 +6,7 @@ class Tracer:
         self.initial_trace = initial_trace
         self.trace = []
 
-    def tracing(self, what):
+    def tracing(self, what: str):
         if what:
             self.trace.append(what)
         return what

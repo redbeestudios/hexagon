@@ -1,30 +1,28 @@
 import importlib
+import os
 import subprocess
 import sys
-import os
 from typing import List, Union, Dict
 
-from hexagon.cli import configuration
+from hexagon.domain import configuration
+from hexagon.domain.tool import Tool
+from hexagon.domain.env import Env
 from hexagon.support.printer import log
 
 _command_by_file_extension = {"js": "node", "sh": "bash"}
 
 
-def execute_action(action, env_args, env, args):
-    action_to_execute: str = action["action"]
-    ext = action_to_execute.split(".")[-1]
-    script_action_command = (
-        _command_by_file_extension[ext] if ext in _command_by_file_extension else None
-    )
+def execute_action(tool: Tool, env_args, env: Env, args):
+    action: str = tool.action
+    ext = action.split(".")[-1]
+    script_action_command = _command_by_file_extension.get(ext, None)
 
     if script_action_command:
-        _execute_script(
-            script_action_command, action_to_execute, env_args or [], env, args
-        )
-    elif _is_internal_action(action_to_execute) or __has_no_extension(
-        action_to_execute
-    ):
-        _execute_python_module(action_to_execute, action, env, env_args, args)
+        _execute_script(script_action_command, action, env_args or [], env, args)
+
+    elif _is_internal_action(action) or __has_no_extension(action):
+        _execute_python_module(action, tool, env, env_args, args)
+
     else:
         log.error(
             f"Executor for extension [bold]{ext}[/bold] not known [dim](supported: .js, .sh)."
@@ -40,7 +38,7 @@ def __has_no_extension(action_id):
     return action_id.count(".") == 0
 
 
-def _execute_python_module(action_id, action, env, env_args, args):
+def _execute_python_module(action_id, tool, env, env_args, args):
     tool_action_module = _load_action_module(action_id) or _load_action_module(
         f"hexagon.tools.external.{action_id}"
     )
@@ -56,7 +54,7 @@ def _execute_python_module(action_id, action, env, env_args, args):
         )
         sys.exit(1)
     try:
-        tool_action_module.main(action, env, env_args, args)
+        tool_action_module.main(dict(tool), env, dict(env_args), args)
     except AttributeError as e:
         log.error(f"Execution of tool [bold]{action_id}[/bold] thru: {e}")
         log.error("Does it have the required `main(args...)` method?")
@@ -66,8 +64,8 @@ def _execute_python_module(action_id, action, env, env_args, args):
 def _execute_script(command: str, script: str, env_args, env, args):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)
-    if env and "alias" in env:
-        del env["alias"]
+    # if env and "alias" in env:
+    #     del env["alias"]
     args = __sanitize_args_for_command(env_args, env, *args)
     subprocess.call([command, script_path] + args)
 
@@ -95,7 +93,8 @@ def __sanitize_args_for_command(*args: Union[List[any], Dict]):
 def _load_action_module(action_id):
     try:
         return __load_module(action_id)
-    except ModuleNotFoundError:
+    except ModuleNotFoundError as e:
+        log.error("some eror", e)
         return None
 
 
