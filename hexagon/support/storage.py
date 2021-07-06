@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import sys
 from typing import Any, Dict, List
 from ruamel.yaml import YAML
 from enum import Enum
@@ -23,6 +24,13 @@ _extension_by_value_type = {
     StorageValueType.text: ".txt",
     StorageValueType.text_multiline: ".txt",
     StorageValueType.dictionary: ".yaml",
+}
+
+_storage_path_by_os = {
+    "linux": os.path.expanduser("~/.config/hexagon"),
+    "darwin": os.path.expanduser("~/.config/hexagon"),
+    "cygwin": os.path.expanduser("~/.config/hexagon"),
+    "win32": os.path.expanduser("~/hexagon"),
 }
 
 _storage_dir_path = None
@@ -53,7 +61,7 @@ def _get_storage_dir_path():
         return _storage_dir_path
 
     _storage_dir_path = os.getenv(
-        "HEXAGON_STORAGE_PATH", os.path.expanduser("~/.hexagon")
+        "HEXAGON_STORAGE_PATH", _storage_path_by_os[sys.platform]
     )
     Path(_storage_dir_path).mkdir(exist_ok=True)
 
