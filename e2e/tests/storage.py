@@ -1,10 +1,12 @@
 import pytest
+from unittest.mock import patch
 import os
 import shutil
 from pathlib import Path
 from ruamel.yaml import YAML
 
 from hexagon.support.storage import store_user_data, load_user_data
+from hexagon.cli import cli
 
 storage_path = os.path.realpath(
     os.path.join(os.path.dirname(__file__), os.path.pardir, "storage")
@@ -28,7 +30,7 @@ def _create_dir_for_file(file_path: str):
 
 def test_storage_text():
     text = "text-single-line"
-    store_user_data(app, key, text)
+    store_user_data(key, text, app=app)
 
     with open(os.path.join(storage_path, app, key) + ".txt", "r") as file:
         assert file.read() == text
@@ -40,7 +42,7 @@ def test_storage_text_append():
     with open(file_path, "w") as file:
         file.write("appended: ")
 
-    store_user_data(app, key, "text", append=True)
+    store_user_data(key, "text", append=True, app=app)
 
     with open(file_path, "r") as file:
         assert file.read() == "appended: text"
@@ -48,7 +50,7 @@ def test_storage_text_append():
 
 def test_storage_text_multiline():
     text = ["text", "multi", "line"]
-    store_user_data(app, key, text)
+    store_user_data(key, text, app=app)
 
     with open(os.path.join(storage_path, app, key) + ".txt", "r") as file:
         assert list(line.rstrip() for line in file.readlines()) == text
@@ -64,7 +66,7 @@ def test_storage_text_multiline_append():
     existing_lines = list(line.rstrip() for line in existing_lines)
     added_lines = list(f"added line {i}" for i in range(4, 7))
 
-    store_user_data(app, key, added_lines, append=True)
+    store_user_data(key, added_lines, append=True, app=app)
 
     with open(file_path, "r") as file:
         assert (
@@ -80,7 +82,7 @@ def test_storage_dictionary():
         "nested": {"nested1": "n1", "nested2": "n123"},
     }
 
-    store_user_data(app, key, dictionary)
+    store_user_data(key, dictionary, app=app)
 
     with open(os.path.join(storage_path, app, key) + ".yaml", "r") as file:
         assert YAML().load(file) == dictionary
@@ -104,7 +106,7 @@ def test_storage_dictionary_append():
         "nested": {"nested2": "n12345", "newNested": "newNested"},
     }
 
-    store_user_data(app, key, added_dictionary, append=True)
+    store_user_data(key, added_dictionary, append=True, app=app)
 
     with open(file_path, "r") as file:
         assert YAML().load(file) == {
@@ -117,7 +119,7 @@ def test_storage_dictionary_append():
 
 def test_storage_nested_key():
     text = "text-single-line"
-    store_user_data(app, "very.nested.key", text)
+    store_user_data("very.nested.key", text, app=app)
 
     with open(
         os.path.join(storage_path, app, "very", "nested", "key") + ".txt", "r"
@@ -132,7 +134,7 @@ def test_storage_load_existing_text():
     with open(file_path, "w") as file:
         file.write(text)
 
-    assert load_user_data(app, key) == text
+    assert load_user_data(key, app=app) == text
 
 
 def test_storage_load_existing_text_multiline():
@@ -142,7 +144,7 @@ def test_storage_load_existing_text_multiline():
     with open(file_path, "w") as file:
         file.writelines(existing_lines)
 
-    assert load_user_data(app, key) == existing_lines
+    assert load_user_data(key, app=app) == existing_lines
 
 
 def test_storage_load_existing_dictionary():
@@ -157,4 +159,20 @@ def test_storage_load_existing_dictionary():
     with open(file_path, "w") as file:
         YAML().dump(existing_dictionary, file)
 
-    assert load_user_data(app, key) == existing_dictionary
+    assert load_user_data(key, app=app) == existing_dictionary
+
+
+def test_storage_default_app():
+    store_user_data(key, "data")
+
+    with open(os.path.join(storage_path, "hexagon", key) + ".txt") as file:
+        assert file.read() == "data"
+
+
+@patch("hexagon.cli.configuration.has_config", True)
+def test_storage_configured_app():
+    cli["name"] = "test-app"
+    store_user_data(key, "data")
+
+    with open(os.path.join(storage_path, "test-app", key) + ".txt") as file:
+        assert file.read() == "data"

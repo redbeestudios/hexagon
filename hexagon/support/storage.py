@@ -4,6 +4,7 @@ from typing import Any, Dict, List
 from ruamel.yaml import YAML
 from enum import Enum
 from shutil import rmtree
+from hexagon.cli import cli, configuration
 
 HEXAGON_STORAGE_APP = "hexagon"
 
@@ -94,7 +95,21 @@ def _storage_file(dir_path: str, file_name: str):
     return (file_path, value_type)
 
 
-def store_user_data(app: str, key: str, data: InputDataType, append=False):
+def _get_app(app: str = None):
+    return (
+        app
+        if app
+        else (
+            cli["name"].lower()
+            if cli and configuration.has_config
+            else HEXAGON_STORAGE_APP
+        )
+    )
+
+
+def store_user_data(key: str, data: InputDataType, append=False, app: str = None):
+    app = _get_app(app)
+
     value_type = _storage_value_type_by_data_type(data)
     extension = _extension_by_value_type[value_type]
     (dir_path, file_name) = _resolve_storage_path(app, key)
@@ -125,7 +140,8 @@ def store_user_data(app: str, key: str, data: InputDataType, append=False):
             YAML().dump(to_write, file)
 
 
-def load_user_data(app: str, key: str):
+def load_user_data(key: str, app: str = None):
+    app = _get_app(app)
     (file_path, value_type) = _storage_file(*_resolve_storage_path(app, key))
 
     if not value_type:
@@ -143,9 +159,7 @@ def load_user_data(app: str, key: str):
             return (
                 None
                 if not lines or len(lines) == 0
-                else lines[0]
-                if len(lines) == 1
-                else lines
+                else (lines[0] if len(lines) == 1 else lines)
             )
         elif value_type == StorageValueType.dictionary:
             return YAML().load(file)
