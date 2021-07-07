@@ -39,7 +39,7 @@ InputDataType = str or List[str] or Dict[Any]
 
 
 def _merge_dictionaries_deep(a, b, path=None):
-    "merges b into a"
+    """merges b into a"""
     if path is None:
         path = []
     for key in b:
@@ -71,7 +71,7 @@ def _get_storage_dir_path():
 def _resolve_storage_path(app: str, key: str, base_dir=None):
     base_dir = base_dir if base_dir else _get_storage_dir_path()
     key_splitted = key.split(".")
-    return (os.path.join(base_dir, app, *key_splitted[:-1]), *key_splitted[-1:])
+    return os.path.join(base_dir, app, *key_splitted[:-1]), *key_splitted[-1:]
 
 
 def _storage_value_type_by_data_type(data: InputDataType):
@@ -100,7 +100,7 @@ def _storage_file(dir_path: str, file_name: str):
     base_file_path = os.path.join(dir_path, file_name)
     value_type = _storage_value_type_by_file_path(base_file_path)
     file_path = base_file_path + _extension_by_value_type[value_type]
-    return (file_path, value_type)
+    return file_path, value_type
 
 
 def _get_app(app: str = None):
@@ -120,7 +120,7 @@ def store_user_data(key: str, data: InputDataType, append=False, app: str = None
 
     value_type = _storage_value_type_by_data_type(data)
     extension = _extension_by_value_type[value_type]
-    (dir_path, file_name) = _resolve_storage_path(app, key)
+    dir_path, file_name = _resolve_storage_path(app, key)
     file_name += extension
     file_path = os.path.join(dir_path, file_name)
 
@@ -150,7 +150,7 @@ def store_user_data(key: str, data: InputDataType, append=False, app: str = None
 
 def load_user_data(key: str, app: str = None):
     app = _get_app(app)
-    (file_path, value_type) = _storage_file(*_resolve_storage_path(app, key))
+    file_path, value_type = _storage_file(*_resolve_storage_path(app, key))
 
     if not value_type:
         return None
@@ -174,12 +174,12 @@ def load_user_data(key: str, app: str = None):
 
 
 def delete_user_data(app: str, key: str):
-    (dir_path, file_name) = _resolve_storage_path(app, key)
+    dir_path, file_name = _resolve_storage_path(app, key)
     full_path = os.path.join(dir_path, file_name)
     if os.path.isdir(full_path):
         rmtree(full_path)
     else:
-        (file_path, value_type) = _storage_file(dir_path, file_name)
+        file_path, value_type = _storage_file(dir_path, file_name)
         if not value_type:
             return
         os.remove(file_path)
