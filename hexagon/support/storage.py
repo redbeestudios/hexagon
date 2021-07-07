@@ -71,7 +71,7 @@ def _get_storage_dir_path():
 def _resolve_storage_path(app: str, key: str, base_dir=None):
     base_dir = base_dir if base_dir else _get_storage_dir_path()
     key_splitted = key.split(".")
-    return os.path.join(base_dir, app, *key_splitted[:-1]), *key_splitted[-1:]
+    return (os.path.join(base_dir, app, *key_splitted[:-1]), *key_splitted[-1:])
 
 
 def _storage_value_type_by_data_type(data: InputDataType):
