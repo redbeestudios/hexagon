@@ -249,7 +249,7 @@ def test_execute_failing_command():
         .then_output_should_be(
             [
                 "i-dont-exist failed with: [Errno 2] No such file or directory: 'i-dont-exist'",
-                "Hexagon did not find the python module i-dont-exist",
+                "We tried looking for:",
             ],
             True,
         )
