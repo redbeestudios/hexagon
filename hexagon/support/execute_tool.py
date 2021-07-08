@@ -44,22 +44,15 @@ def execute_action(action, env_args, env, args):
                 log.error(f"{executed_command} failed with: {return_code}")
             else:
                 log.error(f"{executed_command} failed")
+            log.error("[dim] We tried looking for:")
             log.error(
-                f"Hexagon did not find the python module [bold]{action_to_execute}"
-            )
-            log.error("[dim]We checked:")
-            log.error(
-                f"[dim]     - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
+                f"[dim]   - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
             )
             log.error(
-                "[dim]     - Hexagon repository of externals tools (hexagon.tools.external)"
+                "[dim]   - Hexagon repository of externals tools (hexagon.tools.external)"
             )
-            log.error(
-                "[dim]To run a script pass a file, .js|.sh are currently supported"
-            )
-            log.error(
-                "[dim]As we couldn't find anything else, we just ran your action as a regular shell command"
-            )
+            log.error("[dim]   - A known script file (.js, .sh)")
+            log.error("[dim]   - Running your action as a shell command directly")
             sys.exit(1)
 
 
