@@ -1,73 +1,109 @@
 import importlib
-import os
 import subprocess
 import sys
+import os
 from typing import List, Union, Dict
 
-from hexagon.domain import configuration
-from hexagon.domain.tool import Tool
-from hexagon.domain.env import Env
+from hexagon.cli import configuration
 from hexagon.support.printer import log
 
 _command_by_file_extension = {"js": "node", "sh": "bash"}
 
 
-def execute_action(tool: Tool, env_args, env: Env, args):
-    action: str = tool.action
-    ext = action.split(".")[-1]
-    script_action_command = _command_by_file_extension.get(ext, None)
+def execute_action(action, env_args, env, args):
+    action_to_execute: str = action["action"]
+    ext = action_to_execute.split(".")[-1]
+    script_action_command = (
+        _command_by_file_extension[ext] if ext in _command_by_file_extension else None
+    )
 
     if script_action_command:
-        _execute_script(script_action_command, action, env_args or [], env, args)
-
-    elif _is_internal_action(action) or __has_no_extension(action):
-        _execute_python_module(action, tool, env, env_args, args)
-
-    else:
-        log.error(
-            f"Executor for extension [bold]{ext}[/bold] not known [dim](supported: .js, .sh)."
+        _execute_script(
+            script_action_command, action_to_execute, env_args or [], env, args
         )
-        sys.exit(1)
+    else:
+        python_module_found = _execute_python_module(
+            action_to_execute, action, env, env_args, args
+        )
+        if python_module_found:
+            return
+
+        splitted_action = action_to_execute.split(" ")
+        return_code, executed_command = _execute_command(
+            splitted_action[0],
+            env_args,
+            args,
+            action_args=splitted_action[1:],
+            handle_error=True,
+        )
+
+        if return_code != 0:
+            if isinstance(return_code, int):
+                log.error(f"{executed_command} returned {return_code}\n")
+            elif return_code:
+                log.error(f"{executed_command} failed with: {return_code}")
+            else:
+                log.error(f"{executed_command} failed")
+            log.error("[dim] We tried looking for:")
+            log.error(
+                f"[dim]   - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
+            )
+            log.error(
+                "[dim]   - Hexagon repository of externals tools (hexagon.tools.external)"
+            )
+            log.error("[dim]   - A known script file (.js, .sh)")
+            log.error("[dim]   - Running your action as a shell command directly")
+            sys.exit(1)
 
 
-def _is_internal_action(action_id):
-    return "hexagon.tools.internal." in action_id
-
-
-def __has_no_extension(action_id):
-    return action_id.count(".") == 0
-
-
-def _execute_python_module(action_id, tool, env, env_args, args):
+def _execute_python_module(action_id, action, env, env_args, args):
     tool_action_module = _load_action_module(action_id) or _load_action_module(
         f"hexagon.tools.external.{action_id}"
     )
 
     if not tool_action_module:
-        log.error(f"Hexagon did not find the action [bold]{action_id}")
-        log.error("[dim]We checked:")
-        log.error(
-            f"[dim]     - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
-        )
-        log.error(
-            "[dim]     - Hexagon repository of externals tools (hexagon.tools.external)"
-        )
-        sys.exit(1)
+
+        return False
     try:
-        tool_action_module.main(dict(tool), env, dict(env_args), args)
+        tool_action_module.main(action, env, env_args, args)
+        return True
     except AttributeError as e:
         log.error(f"Execution of tool [bold]{action_id}[/bold] thru: {e}")
         log.error("Does it have the required `main(args...)` method?")
         sys.exit(1)
 
 
+def _execute_command(
+    command: str,
+    env_args,
+    cli_args,
+    env=None,
+    action_args: List[str] = None,
+    handle_error=False,
+):
+    action_args = action_args if action_args else []
+    hexagon_args = __sanitize_args_for_command(env_args, env, *cli_args)
+    command_to_execute = [command] + action_args + hexagon_args
+    command_to_execute_as_string = " ".join(command_to_execute)
+
+    def run():
+        return subprocess.call(command_to_execute), command_to_execute_as_string
+
+    if handle_error:
+        try:
+            return run()
+        except Exception as error:
+            return str(error), command_to_execute_as_string
+
+    return run()
+
+
 def _execute_script(command: str, script: str, env_args, env, args):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)
-    # if env and "alias" in env:
-    #     del env["alias"]
-    args = __sanitize_args_for_command(env_args, env, *args)
-    subprocess.call([command, script_path] + args)
+    if env and "alias" in env:
+        del env["alias"]
+    _execute_command(command, env_args, args, env, [script_path])
 
 
 def __sanitize_args_for_command(*args: Union[List[any], Dict]):
@@ -93,8 +129,7 @@ def __sanitize_args_for_command(*args: Union[List[any], Dict]):
 def _load_action_module(action_id):
     try:
         return __load_module(action_id)
-    except ModuleNotFoundError as e:
-        log.error("some eror", e)
+    except ModuleNotFoundError:
         return None
 
 
