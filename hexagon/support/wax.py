@@ -17,8 +17,8 @@ def __choices_with_long_name(dic: Dict[str, Union[Tool, Env]], classifier=lambda
         if "__separator" in k:
             return "--------------------------------------------------------------------------------"
         else:
-            gap = 60 if "description" in v else 0
-            return f"{classifier(v) + (v.long_name or k): <{gap}}{v.description}"
+            gap = 60 if v.description else 0
+            return f"{classifier(v) + (v.long_name or k): <{gap}}{v.description or ''}"
 
     return [{"value": k, "name": build_display(v, k)} for k, v in dic.items()]
 
@@ -32,7 +32,9 @@ def search_by_key_or_alias(dic: Dict[str, Union[Tool, Env]], arg: str):
     return None
 
 
-def select_env(available_envs: dict, tool_envs: dict = None, selected=None):
+def select_env(
+    available_envs: Dict[str, Env], tool_envs: dict = None, selected: str = None
+):
     if not tool_envs:
         return None, None
 

@@ -1,4 +1,8 @@
 import sys
+from typing import Dict
+
+from hexagon.domain.env import Env
+from hexagon.domain.tool import Tool
 
 
 class Tracer:
@@ -14,16 +18,18 @@ class Tracer:
     def command(self):
         return " ".join(self.trace)
 
-    def command_as_aliases(self, tools_dict: dict, envs_dict: dict):
+    def command_as_aliases(
+        self, tools_dict: Dict[str, Tool], envs_dict: Dict[str, Env]
+    ):
         if len(self.trace) < 1:
             return ""
 
-        _tool_alias = tools_dict[self.trace[:1][0]].get("alias")
+        _tool_alias = tools_dict[self.trace[:1][0]].alias
         if not _tool_alias:
             return None
 
         try:
-            al = envs_dict.get(self.trace[1:2][0], {}).get("alias")
+            al = envs_dict.get(self.trace[1:2][0], Env()).alias
             _env_alias = [al] if al else []
         except IndexError:
             _env_alias = []

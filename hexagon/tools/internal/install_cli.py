@@ -30,4 +30,4 @@ def main(*_):
 
     cli, tools, envs = configuration.init_config(src_path)
 
-    save_new_alias(cli["command"], f"HEXAGON_CONFIG_FILE={src_path} hexagon")
+    save_new_alias(cli.command, f"HEXAGON_CONFIG_FILE={src_path} hexagon")
