@@ -7,14 +7,13 @@ def test_show_errors_when_invalid_yaml():
         .run_hexagon()
         .then_output_should_be(
             [
-                "There was an error validating your YAML",
-                "3 validation errors for ConfigFile",
-                "cli -> command",
-                "field required (type=value_error.missing)",
-                "envs",
-                "field required (type=value_error.missing)",
-                "tools -> google-invalid -> action",
-                "field required (type=value_error.missing)",
+                "There were 3 error(s) in your YAML",
+                "",
+                "cli.command -> field required",
+                "",
+                "envs -> field required",
+                "",
+                "tools.google-invalid.action -> field required",
             ]
         )
         .exit(status=1)
