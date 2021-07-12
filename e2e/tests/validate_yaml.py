@@ -13,7 +13,7 @@ def test_show_errors_when_invalid_yaml():
                 "",
                 "envs -> field required",
                 "",
-                "tools.google-invalid.action -> field required",
+                "tools.0.action -> field required",
             ]
         )
         .exit(status=1)

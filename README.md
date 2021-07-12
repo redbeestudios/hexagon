@@ -11,7 +11,7 @@ Make your team's knowledge truly accessible, truly shared, and truly empowering 
 
 ### Install hexagon
 ```bash
-python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.11.0/hexagon-0.11.0.tar.gz
+python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.12.0/hexagon-0.12.0.tar.gz
 ```
 
 ### Create your teams CLI
@@ -24,14 +24,14 @@ cli:
   command: tc
 
 envs:
-  dev:
+  - name: dev
     alias: d
-  qa:
+  - name: qa
     alias: q
 
 tools:
 
-  google:
+  - name: google
     alias: g
     long_name: Google
     description: Open google
@@ -41,7 +41,7 @@ tools:
       qa: google.qa
     action: open_link
 
-  docker-registry:
+  - name: docker-registry
     alias: dr
     long_name: Docker Registry
     type: shell

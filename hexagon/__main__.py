@@ -5,7 +5,7 @@ from hexagon.domain import cli, tools, envs
 from hexagon.support.execute_tool import execute_action
 from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer
-from hexagon.support.wax import search_by_key_or_alias, select_env, select_tool
+from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
@@ -30,16 +30,17 @@ def main():
         )
 
     try:
-        _tool = search_by_key_or_alias(tools, _tool)
-        _env = search_by_key_or_alias(envs, _env)
+        _tool = search_by_name_or_alias(tools, _tool)
+        _env = search_by_name_or_alias(envs, _env)
 
-        name, tool = select_tool(tools, _tool)
-        tracer.tracing(name)
+        tool = select_tool(tools, _tool)
+        tracer.tracing(tool.name)
 
         env, params = select_env(envs, tool.envs, _env)
-        tracer.tracing(env)
+        if env:
+            tracer.tracing(env.name)
 
-        action = execute_action(tool, params, envs.get(env, None), sys.argv[3:])
+        action = execute_action(tool, params, env, sys.argv[3:])
 
         log.gap()
 
