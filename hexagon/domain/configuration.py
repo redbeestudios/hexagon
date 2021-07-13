@@ -8,7 +8,6 @@ from ruamel.yaml import YAML
 from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool, ToolType
-from hexagon.support.printer import log
 from hexagon.support.yaml import display_yaml_errors
 
 
