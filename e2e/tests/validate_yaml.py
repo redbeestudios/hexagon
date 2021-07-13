@@ -9,11 +9,22 @@ def test_show_errors_when_invalid_yaml():
             [
                 "There were 3 error(s) in your YAML",
                 "",
-                "cli.command -> field required",
+                "cli.command -> str type expected",
+                "2   name: Test",
+                "3   custom_tools_dir: .",
+                "4   command: [ 'test' ]",
+                "5",
+                "6 tools:",
                 "",
-                "envs -> field required",
+                "" "envs -> field required",
                 "",
-                "tools.0.action -> field required",
+                "",
+                "tools.1.action -> field required",
+                "13",
+                "14",
+                "15   - name: google-invalid",
+                "16     long_name: Google",
+                "17     type: web",
             ]
         )
         .exit(status=1)

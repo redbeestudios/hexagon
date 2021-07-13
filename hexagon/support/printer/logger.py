@@ -33,23 +33,23 @@ class Logger:
     def example(
         self,
         *message: Union[str, Syntax],
-        decorator_start=True,
-        decorator_end=True,
+        decorator_start: Union[str, bool] = True,
+        decorator_end: Union[str, bool] = True,
     ):
         def __use_decorator(param, default):
             return param if isinstance(param, str) else default
 
-        if not self.__decorations.result_only and decorator_start:
+        if not self.__decorations.result_only and decorator_start is not False:
             self.__console.print(
-                f"{__use_decorator(decorator_start, self.__decorations.process_out)}\n"
+                __use_decorator(decorator_start, f"{self.__decorations.process_out}\n")
             )
 
         for msg in message:
             self.__console.print(msg)
 
-        if not self.__decorations.result_only and decorator_end:
+        if not self.__decorations.result_only and decorator_end is not False:
             self.__console.print(
-                f"\n{__use_decorator(decorator_end, self.__decorations.process_in)}"
+                __use_decorator(decorator_end, f"\n{self.__decorations.process_in}")
             )
 
     def error(self, message: str, err: Optional[Exception] = None):
