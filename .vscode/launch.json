@@ -35,5 +35,18 @@
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
             }
         }
+        {
+            "name": "Update Hexagon",
+            "type": "python",
+            "request": "launch",
+            "module": "hexagon",
+            "console": "integratedTerminal",
+            "subProcess": true,
+            "env": {
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/update_hexagon/storage",
+                "HEXAGON_VERSION": "0.1.0",
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
+            }
+        }
     ]
 }

@@ -1,3 +1,4 @@
+import time
 from typing import Callable, Dict, List, Optional
 
 from e2e.tests.utils.assertions import (
@@ -77,6 +78,13 @@ class HexagonSpec:
         # label=e2e estimate=30m
         # if i have a e2e test with .exit(status=1) when actual exit status is 0 test passes
         assert_process_ended(self.process, status)
+
+    def force_exit(self):
+        return self.write("^C")
+
+    def wait(self, seconds: int):
+        time.sleep(seconds)
+        return self
 
 
 def as_a_user(test_file):
