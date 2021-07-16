@@ -44,7 +44,7 @@
             "subProcess": true,
             "env": {
                 "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/update_hexagon/storage",
-                "HEXAGON_VERSION": "0.1.0",
+                "HEXAGON_VERSION_OVERRIDE": "0.1.0",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
             }
         }

@@ -32,6 +32,8 @@ def __already_checked():
             last_checked, LAST_UPDATE_DATE_FORMAT
         ).date()
 
+        # TODO: Move to hexagon configuration
+        # See https://github.com/redbeestudios/hexagon/pull/35#discussion_r670870804 for more information
         result = last_checked_date >= datetime.date.today()
 
     if not result:
@@ -55,7 +57,7 @@ def check_for_hexagon_updates():
 
     _, setup_info = mock_setup.call_args
 
-    current_version = os.getenv("HEXAGON_VERSION", setup_info["version"])
+    current_version = os.getenv("HEXAGON_VERSION_OVERRIDE", setup_info["version"])
     hexagon_github_repo_info = urlparse(setup_info["url"]).path.split("/")
     hexagon_github_repo_org = hexagon_github_repo_info[1]
     hexagon_github_repo_name = hexagon_github_repo_info[2]
