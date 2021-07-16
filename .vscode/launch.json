@@ -34,7 +34,7 @@
                 "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/create_new_tool/app.yml",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
             }
-        }
+        },
         {
             "name": "Update Hexagon",
             "type": "python",
