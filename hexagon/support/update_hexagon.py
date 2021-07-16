@@ -57,7 +57,7 @@ def check_for_hexagon_updates():
 
     _, setup_info = mock_setup.call_args
 
-    current_version = os.getenv("HEXAGON_VERSION_OVERRIDE", setup_info["version"])
+    current_version = os.getenv("HEXAGON_TEST_VERSION_OVERRIDE", setup_info["version"])
     hexagon_github_repo_info = urlparse(setup_info["url"]).path.split("/")
     hexagon_github_repo_org = hexagon_github_repo_info[1]
     hexagon_github_repo_name = hexagon_github_repo_info[2]

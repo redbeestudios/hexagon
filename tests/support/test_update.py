@@ -21,7 +21,7 @@ def _confirm_mock(_, default=None):
 
 
 def test_hexagon_updates_itself(monkeypatch):
-    monkeypatch.setenv("HEXAGON_VERSION_OVERRIDE", "0.1.0")
+    monkeypatch.setenv("HEXAGON_TEST_VERSION_OVERRIDE", "0.1.0")
     monkeypatch.setattr(inquirer, "confirm", _confirm_mock)
     delete_user_data(HEXAGON_STORAGE_APP, HexagonStorageKeys.last_update_check.value)
     with mock.patch.object(

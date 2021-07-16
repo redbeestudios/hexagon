@@ -35,7 +35,7 @@ def _clear_last_check():
 
 os_env_vars = {
     "HEXAGON_UPDATE_DISABLED": "",
-    "HEXAGON_VERSION_OVERRIDE": "0.1.0",
+    "HEXAGON_TEST_VERSION_OVERRIDE": "0.1.0",
     "HEXAGON_STORAGE_PATH": storage_path,
 }
 
