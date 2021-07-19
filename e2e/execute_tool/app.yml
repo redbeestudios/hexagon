@@ -71,6 +71,15 @@ tools:
     alias: gc
     long_name: A generic command
 
+  - name: generic-multiline-command
+    action: |
+      echo "executed generic-multiline-command #1"
+      echo "executed generic-multiline-command #2"
+      echo "executed generic-multiline-command #3"
+    type: shell
+    alias: gc
+    long_name: A generic command
+
   - name: failing-command
     action: i-dont-exist
     type: shell

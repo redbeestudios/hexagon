@@ -281,14 +281,35 @@ def test_execute_command():
     )
 
 
+def test_execute_multiline_command():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["generic-multiline-command"])
+        .then_output_should_be(
+            [
+                "executed generic-multiline-command #1",
+                "executed generic-multiline-command #2",
+                "executed generic-multiline-command #3",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__,
+        ".config/test/last-command.txt",
+        "hexagon-test generic-multiline-command",
+    )
+
+
 def test_execute_failing_command():
     (
         as_a_user(__file__)
         .run_hexagon(["failing-command"], {"HEXAGON_THEME": "default"})
         .then_output_should_be(
             [
-                "i-dont-exist failed with: [Errno 2] No such file or directory: 'i-dont-exist'",
-                "We tried looking for:",
+                "i-dont-exist returned code: 127",
+                "Hexagon couldn't execute the action: i-dont-exist",
+                "We tried:",
             ],
             True,
         )
