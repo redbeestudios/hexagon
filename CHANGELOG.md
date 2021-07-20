@@ -2,6 +2,22 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.5 (2021-07-20)
+### Fix
+* **execute:** Use subprocess shell=True ([#38](https://github.com/redbeestudios/hexagon/issues/38)) ([`6d5e1e8`](https://github.com/redbeestudios/hexagon/commit/6d5e1e8e2e6ce62ca15acbf9d002d3ae6d0881ef))
+
+## v0.13.4 (2021-07-19)
+### Fix
+* **yaml:** Handle error for None values ([`33300c6`](https://github.com/redbeestudios/hexagon/commit/33300c6463ab7f0accdccf0b46ed7fb96be64ac4))
+
+## v0.13.3 (2021-07-17)
+### Fix
+* Simplify always true cli.command ([`c72de85`](https://github.com/redbeestudios/hexagon/commit/c72de855b7f8a0e236a9ea100d0e2662f8d90895))
+
+## v0.13.2 (2021-07-17)
+### Fix
+* **last-command:** Store last command whe tool executed directly ([`1f6c887`](https://github.com/redbeestudios/hexagon/commit/1f6c8875317245b599b18063420650277d9d27b8))
+
 ## v0.13.1 (2021-07-13)
 ### Fix
 * **help:** Help expecting dict crashes ([`cf86f99`](https://github.com/redbeestudios/hexagon/commit/cf86f99c56e9c5a4affe426021b3230ef342d99f))

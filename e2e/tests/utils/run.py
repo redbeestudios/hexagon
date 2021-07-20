@@ -42,6 +42,11 @@ def run_hexagon_e2e_test(
     if "HEXAGON_UPDATE_DISABLED" not in os_env_vars:
         os_env_vars["HEXAGON_UPDATE_DISABLED"] = "1"
 
+    os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
+        "HEXAGON_STORAGE_PATH",
+        os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
+    )
+
     app_config_path = os.path.join(test_folder_path, "app.yml")
     if os.path.isfile(app_config_path):
         os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
@@ -90,3 +95,9 @@ def discard_output(process: subprocess.Popen, length: int):
         signal.alarm(3)
         process.stdout.readline()
         signal.alarm(0)
+
+
+def clean_hexagon_environment():
+    for key in os.environ:
+        if "HEXAGON_" in key:
+            del os.environ[key]

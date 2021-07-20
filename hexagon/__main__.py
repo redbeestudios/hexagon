@@ -53,7 +53,7 @@ def main():
 
         log.finish()
 
-        if tracer.has_traced() and cli.command:
+        if tracer.has_traced():
             log.extra(
                 "[cyan dim]Para repetir este comando:[/cyan dim]",
                 f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
@@ -64,10 +64,10 @@ def main():
                     "[cyan dim]  o:[/cyan dim]",
                     f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
                 )
-            store_user_data(
-                HexagonStorageKeys.last_command.value,
-                f"{cli.command} {tracer.command()}",
-            )
+        store_user_data(
+            HexagonStorageKeys.last_command.value,
+            f"{cli.command} {tracer.command()}",
+        )
     except KeyboardInterrupt:
         sys.exit(1)
 

@@ -1,3 +1,6 @@
+from e2e.tests.utils.assertions import (
+    assert_file_has_contents,
+)
 from e2e.tests.utils.hexagon_spec import as_a_user
 
 shared_prompt_output = [
@@ -40,6 +43,9 @@ def test_execute_python_module_by_gui():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module"
+    )
 
 
 def test_execute_python_module_with_env_by_gui():
@@ -74,6 +80,9 @@ def test_execute_python_module_with_env_by_gui():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module-env dev"
+    )
 
 
 def test_execute_python_module_with_env_asterisk_by_gui():
@@ -99,6 +108,9 @@ def test_execute_python_module_with_env_asterisk_by_gui():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module-env-all"
+    )
 
 
 def test_execute_python_module_by_argument():
@@ -112,6 +124,9 @@ def test_execute_python_module_by_argument():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module"
+    )
 
 
 def test_execute_python_module_by_alias():
@@ -124,6 +139,9 @@ def test_execute_python_module_by_alias():
             ]
         )
         .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module"
     )
 
 
@@ -145,6 +163,9 @@ def test_execute_python_module_with_env_and_arguments():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module-env dev"
+    )
 
 
 def test_execute_python_module_with_other_env():
@@ -161,6 +182,9 @@ def test_execute_python_module_with_other_env():
             ]
         )
         .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module-env qa"
     )
 
 
@@ -182,6 +206,9 @@ def test_execute_script_module_by_gui():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test node-module"
+    )
 
 
 def test_execute_script_module_by_argument():
@@ -194,6 +221,9 @@ def test_execute_script_module_by_argument():
             ]
         )
         .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test node-module"
     )
 
 
@@ -214,6 +244,9 @@ def test_execute_script_module_with_env_and_arguments():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test node-module-env dev"
+    )
 
 
 def test_execute_script_module_with_other_env():
@@ -231,6 +264,9 @@ def test_execute_script_module_with_other_env():
         )
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test node-module-env qa"
+    )
 
 
 def test_execute_command():
@@ -240,6 +276,41 @@ def test_execute_command():
         .then_output_should_be(["executed generic-command"])
         .exit()
     )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test generic-command"
+    )
+
+
+def test_execute_complex_command():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["complex-command"])
+        .then_output_should_be(["nested 1"])
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test complex-command"
+    )
+
+
+def test_execute_multiline_command():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["generic-multiline-command"])
+        .then_output_should_be(
+            [
+                "executed generic-multiline-command #1",
+                "executed generic-multiline-command #2",
+                "executed generic-multiline-command #3",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__,
+        ".config/test/last-command.txt",
+        "hexagon-test generic-multiline-command",
+    )
 
 
 def test_execute_failing_command():
@@ -248,8 +319,9 @@ def test_execute_failing_command():
         .run_hexagon(["failing-command"], {"HEXAGON_THEME": "default"})
         .then_output_should_be(
             [
-                "i-dont-exist failed with: [Errno 2] No such file or directory: 'i-dont-exist'",
-                "We tried looking for:",
+                "i-dont-exist returned code: 127",
+                "Hexagon couldn't execute the action: i-dont-exist",
+                "We tried:",
             ],
             True,
         )

@@ -8,7 +8,11 @@ from e2e.tests.utils.assertions import (
 )
 from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
 from e2e.tests.utils.config import write_hexagon_config
-from e2e.tests.utils.run import run_hexagon_e2e_test, write_to_process
+from e2e.tests.utils.run import (
+    run_hexagon_e2e_test,
+    write_to_process,
+    clean_hexagon_environment,
+)
 
 
 class HexagonSpec:
@@ -74,10 +78,12 @@ class HexagonSpec:
 
     def exit(self, status: int = 0):
         __tracebackhide__ = True
-        # FIXME: e2e exit status code is not validated correctly
-        # label=e2e estimate=30m
-        # if i have a e2e test with .exit(status=1) when actual exit status is 0 test passes
         assert_process_ended(self.process, status)
+        clean_hexagon_environment()
+
+    @property
+    def _and_(self):
+        return self
 
     def force_exit(self):
         return self.write("^C")
