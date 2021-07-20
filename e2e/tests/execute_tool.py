@@ -281,6 +281,18 @@ def test_execute_command():
     )
 
 
+def test_execute_complex_command():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["complex-command"])
+        .then_output_should_be(["nested 1"])
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test complex-command"
+    )
+
+
 def test_execute_multiline_command():
     (
         as_a_user(__file__)
