@@ -91,3 +91,9 @@ tools:
     type: shell
     alias: fc
     long_name: A failing command
+
+  - name: python-module-file
+    action: single_file_module
+    type: shell
+    alias: pmf
+    long_name: Python Module File Test

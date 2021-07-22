@@ -129,6 +129,22 @@ def test_execute_python_module_by_argument():
     )
 
 
+def test_execute_python_module_as_single_file_by_argument():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["python-module-file"])
+        .then_output_should_be(
+            [
+                "executed single_file_module",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module-file"
+    )
+
+
 def test_execute_python_module_by_alias():
     (
         as_a_user(__file__)
