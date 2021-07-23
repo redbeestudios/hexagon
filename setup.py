@@ -1,7 +1,7 @@
 import setuptools
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
-__version__ = "0.14.1"
+__version__ = "0.14.2"
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -32,6 +32,7 @@ setuptools.setup(
         "requests",
         "ruamel.yaml",
         "pydantic",
+        "packaging",
     ],
     python_requires=">=3.7",
     entry_points="""
