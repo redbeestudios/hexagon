@@ -148,12 +148,12 @@ def test_execute_python_module_as_single_file_by_argument():
 def test_show_correct_error_when_execute_python_module_with_import_error():
     (
         as_a_user(__file__)
-        .run_hexagon(["python-module-import-error"])
+        .run_hexagon(["p-m-import-error"])
         .then_output_should_be(
             [
                 "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
-                "python-module-import-error.p",
-                "y:4 in <module>",
+                "p-m-import-error.py:4",
+                "",
                 "",
                 "1",
                 "2",
@@ -170,13 +170,13 @@ def test_show_correct_error_when_execute_python_module_with_import_error():
 def test_show_correct_error_when_execute_python_module_with_script_error():
     (
         as_a_user(__file__)
-        .run_hexagon(["python-module-script-error"])
+        .run_hexagon(["p-m-script-error"])
         .then_output_should_be(
             [
-                "executed python-module-script-error",
+                "executed p-m-script-error",
                 "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
-                "python-module-script-error.p",
-                "y:15 in main",
+                "p-m-script-error.py:15",
+                "",
                 "",
                 "12",
                 "13",
@@ -187,7 +187,7 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
                 "18",
                 "─────────────────────────────────────────────────────────────────────",
                 "IndexError: list index out of range",
-                "Execution of tool python-module-script-error failed",
+                "Execution of tool p-m-script-error failed",
             ]
         )
         .exit(status=1)
