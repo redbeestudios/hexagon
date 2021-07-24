@@ -135,13 +135,62 @@ def test_execute_python_module_as_single_file_by_argument():
         .run_hexagon(["python-module-file"])
         .then_output_should_be(
             [
-                "executed single_file_module",
+                "executed single-file-module",
             ]
         )
         .exit()
     )
     assert_file_has_contents(
         __file__, ".config/test/last-command.txt", "hexagon-test python-module-file"
+    )
+
+
+def test_show_correct_error_when_execute_python_module_with_import_error():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["python-module-import-error"])
+        .then_output_should_be(
+            [
+                "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
+                "python-module-import-error.p",
+                "y:4 in <module>",
+                "",
+                "1",
+                "2",
+                "3",
+                "4 from hexagon.cli.env import Env",
+                "5",
+                "6",
+            ]
+        )
+        .exit(status=1)
+    )
+
+
+def test_show_correct_error_when_execute_python_module_with_script_error():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["python-module-script-error"])
+        .then_output_should_be(
+            [
+                "executed python-module-script-error",
+                "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
+                "python-module-script-error.p",
+                "y:15 in main",
+                "",
+                "12",
+                "13",
+                "14",
+                "15 │   err = [][3]",
+                "16",
+                "17",
+                "18",
+                "─────────────────────────────────────────────────────────────────────",
+                "IndexError: list index out of range",
+                "Execution of tool python-module-script-error failed",
+            ]
+        )
+        .exit(status=1)
     )
 
 

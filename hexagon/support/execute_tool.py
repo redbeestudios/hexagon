@@ -72,8 +72,8 @@ def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args)
         tool_action_module.main(tool, env, env_args, args)
         return True
     except Exception:
-        # log.error(f"Execution of tool [bold]{action_id}[/bold] thru:")
         __pretty_print_external_error(action_id)
+        log.error(f"Execution of tool [bold]{action_id}[/bold] failed")
         sys.exit(1)
 
 

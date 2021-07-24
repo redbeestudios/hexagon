@@ -93,7 +93,19 @@ tools:
     long_name: A failing command
 
   - name: python-module-file
-    action: single_file_module
+    action: single-file-module
     type: shell
     alias: pmf
     long_name: Python Module File Test
+
+  - name: python-module-import-error
+    action: python-module-import-error
+    type: shell
+    alias: pmie
+    long_name: Python Module Import Error Test
+
+  - name: python-module-script-error
+    action: python-module-script-error
+    type: shell
+    alias: pmse
+    long_name: Python Module Script Error Test
