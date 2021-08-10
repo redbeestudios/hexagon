@@ -1,5 +1,6 @@
 import sys
 
+from hexagon.support import analytics
 from hexagon.support.args import fill_args
 from hexagon.domain import cli, tools, envs
 from hexagon.support.execute_tool import execute_action
@@ -20,6 +21,7 @@ def main():
     if _tool == "-h" or _tool == "--help":
         return print_help(cli, tools, envs)
 
+    analytics.session_start()
     log.start(f"[bold]{cli.name}")
     log.gap()
 
@@ -70,6 +72,8 @@ def main():
         )
     except KeyboardInterrupt:
         sys.exit(1)
+
+    analytics.session_end()
 
 
 if __name__ == "__main__":

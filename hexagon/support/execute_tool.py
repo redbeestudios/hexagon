@@ -1,3 +1,4 @@
+import time
 import importlib
 import subprocess
 import sys
@@ -11,12 +12,15 @@ from rich import traceback as rich_traceback
 from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
 from hexagon.domain import configuration
+from hexagon.support import analytics
+from hexagon.support.analytics import Event
 from hexagon.support.printer import log
 
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
 def execute_action(tool: Tool, env_args, env: Env, args):
+    start = time.time()
     action_to_execute: str = tool.action
     ext = action_to_execute.split(".")[-1]
     script_action_command = _command_by_file_extension.get(ext)
@@ -25,11 +29,21 @@ def execute_action(tool: Tool, env_args, env: Env, args):
         _execute_script(
             script_action_command, action_to_execute, env_args or [], env, args
         )
+        analytics.user_action(
+            Event.execution,
+            tool=tool.name,
+            duration=(time.time() - start),
+        )
     else:
         python_module_found = _execute_python_module(
             action_to_execute, tool, env, env_args, args
         )
         if python_module_found:
+            analytics.user_action(
+                Event.execution,
+                tool=tool.name,
+                duration=(time.time() - start),
+            )
             return
 
         split_action = action_to_execute.split(" ")
@@ -55,6 +69,12 @@ def execute_action(tool: Tool, env_args, env: Env, args):
                 log.error("  - A known script file (.js, .sh)")
                 log.error("  - Running your action as a shell command directly")
             sys.exit(1)
+
+        analytics.user_action(
+            Event.execution,
+            tool=tool.name,
+            duration=(time.time() - start),
+        )
 
 
 def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args):
