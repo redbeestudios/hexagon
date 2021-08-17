@@ -99,6 +99,36 @@ def _read_next_line(process: subprocess.Popen, lines_read: List[str]):
     return line
 
 
+def _assert_dynamic_line_width(
+    process: subprocess.Popen,
+    line: str,
+    error: Exception,
+    expected: Expected_Process_Output,
+    lines_read: List[str],
+    text: str,
+):
+    if "max_lines" in expected and isinstance(expected["max_lines"], int):
+        line_delimiter = "\n"
+        if "line_delimiter" in expected and isinstance(expected["line_delimiter"], str):
+            line_delimiter = expected["line_delimiter"]
+        max_lines = expected["max_lines"]
+        accumulated_line = line
+        number_of_lines_read = 1
+        last_error = error
+        while number_of_lines_read < max_lines:
+            accumulated_line += _read_next_line(process, lines_read)
+            accumulated_line = accumulated_line.replace(line_delimiter, "")
+            try:
+                single_assert_line(accumulated_line, text)
+                return True
+            except Exception as last:
+                number_of_lines_read += 1
+                last_error = last
+        raise last_error
+    else:
+        raise error
+
+
 def _assert_process_output_line(
     process: subprocess.Popen,
     line: str,
@@ -117,29 +147,9 @@ def _assert_process_output_line(
             try:
                 single_assert_line(line, text)
             except Exception as error:
-                if "max_lines" in expected and isinstance(expected["max_lines"], int):
-                    line_delimiter = "\n"
-                    if "line_delimiter" in expected and isinstance(
-                        expected["line_delimiter"], str
-                    ):
-                        line_delimiter = expected["line_delimiter"]
-                    max_lines = expected["max_lines"]
-                    accumulated_line = line
-                    number_of_lines_read = 1
-                    last_error = error
-                    while number_of_lines_read < max_lines:
-                        accumulated_line += _read_next_line(process, lines_read)
-                        accumulated_line = accumulated_line.replace(line_delimiter, "")
-                        try:
-                            single_assert_line(accumulated_line, text)
-                            return True
-                        except Exception as last:
-                            number_of_lines_read += 1
-                            last_error = last
-                    raise last_error
-                else:
-                    raise error
-
+                _assert_dynamic_line_width(
+                    process, line, error, expected, lines_read, text
+                )
         if isinstance(expected, list):
             for assertion in expected:
                 single_assert_line(line, assertion)
