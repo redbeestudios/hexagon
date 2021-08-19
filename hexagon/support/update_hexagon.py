@@ -78,6 +78,6 @@ def check_for_hexagon_updates():
             shell=True,
             stdout=subprocess.DEVNULL,
         )
-    log.info("[green]✔️ [white]Updated to latest version")
+    log.info("[green]🗸 [white]Updated to latest version")
     log.finish()
     sys.exit(1)
