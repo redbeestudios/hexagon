@@ -1,3 +1,5 @@
+from hexagon.support.storage import HEXAGON_STORAGE_APP
+from hexagon.support.update.shared import already_checked_for_updates
 import pkg_resources
 import json
 import os
@@ -6,14 +8,7 @@ import sys
 from urllib.request import urlopen
 from packaging.version import parse as parse_version
 from hexagon.support.printer import log
-from hexagon.support.storage import (
-    store_user_data,
-    load_user_data,
-    HEXAGON_STORAGE_APP,
-    HexagonStorageKeys,
-)
 from InquirerPy import inquirer
-import datetime
 from halo import Halo
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
@@ -21,36 +16,10 @@ REPO_ORG = "redbeestudios"
 REPO_NAME = "hexagon"
 
 
-def __already_checked():
-    last_checked = load_user_data(
-        HexagonStorageKeys.last_update_check.value, HEXAGON_STORAGE_APP
-    )
-
-    result = False
-
-    if last_checked:
-        last_checked_date = datetime.datetime.strptime(
-            last_checked, LAST_UPDATE_DATE_FORMAT
-        ).date()
-
-        # TODO: Move to hexagon configuration
-        # See https://github.com/redbeestudios/hexagon/pull/35#discussion_r670870804 for more information
-        result = last_checked_date >= datetime.date.today()
-
-    if not result:
-        store_user_data(
-            HexagonStorageKeys.last_update_check.value,
-            datetime.date.today().strftime(LAST_UPDATE_DATE_FORMAT),
-            app=HEXAGON_STORAGE_APP,
-        )
-
-    return result
-
-
 def check_for_hexagon_updates():
     if bool(os.getenv("HEXAGON_UPDATE_DISABLED")):
         return
-    if __already_checked():
+    if already_checked_for_updates(HEXAGON_STORAGE_APP):
         return
 
     current_version = os.getenv(
