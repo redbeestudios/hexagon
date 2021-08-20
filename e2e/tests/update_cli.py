@@ -46,8 +46,13 @@ def _prepare():
         os.path.join(test_folder_path, "app.yml"),
         os.path.join(remote_repo_path, "app.yml"),
     )
+
     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
-    subprocess.check_call("git commit -m initial", cwd=remote_repo_path, shell=True)
+    subprocess.check_call(
+        "git -c user.name='Jhon Doe' -c user.email='my@email.org' commit -m initial",
+        cwd=remote_repo_path,
+        shell=True,
+    )
     subprocess.check_call("git clone -l remote local", cwd=test_folder_path, shell=True)
 
 
@@ -75,7 +80,11 @@ def test_cli_updated_if_pending_changes():
     )
 
     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
-    subprocess.check_call("git commit -m modified", cwd=remote_repo_path, shell=True)
+    subprocess.check_call(
+        "git -c user.name='Jhon Doe' -c user.email='my@email.org' commit -m modified",
+        cwd=remote_repo_path,
+        shell=True,
+    )
 
     (
         as_a_user(local_repo_path)
