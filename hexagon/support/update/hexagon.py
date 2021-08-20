@@ -50,6 +50,7 @@ class ChangelogVersionEntry:
     entries: List[ChangelogEntry]
 
 
+# TODO: Move changelog logic to its own module in the update module
 def _parse_changelog(
     current_hexagon_version: Version, repo_org: str, repo_name: str
 ) -> List[ChangelogVersionEntry]:
@@ -186,6 +187,7 @@ def check_for_hexagon_updates():
         f"New [cyan]hexagon [white]version available [green]{latest_github_release_version}[white]!"
     )
 
+    # TODO: Create helper to show spinner control
     spinners_disabled = bool(os.getenv("HEXAGON_DISABLE_SPINNER", ""))
 
     _show_changelog(current_version, spinners_disabled)

@@ -43,6 +43,7 @@ def check_for_cli_updates():
         log.info(f"New [cyan]{cli.name} [white]version available")
         if not inquirer.confirm("Would you like to update?", default=True).execute():
             return
+        # TODO: Use helper to show spinner control
         with Halo(text=f"Updating {cli.name}"):
             execute_command_in_cli_project_path("git pull")
         log.info("[green]🗸 [white]Updated to latest version")
