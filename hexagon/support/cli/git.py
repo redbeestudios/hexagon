@@ -48,5 +48,5 @@ def load_cli_git_config() -> CliGitConfig:
             store_user_data(CLI_GIT_CONFIG_STORAGE_KEY, write_dict, append=True)
 
         return CliGitConfig(remote, head_branch)
-    except Exception as error:
+    except Exception:
         return None
