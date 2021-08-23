@@ -49,4 +49,4 @@ def load_cli_git_config() -> CliGitConfig:
 
         return CliGitConfig(remote, head_branch)
     except Exception as error:
-        raise Exception(f"{error}. {GENERAL_GIT_CONFIG_ERROR}")
+        return None

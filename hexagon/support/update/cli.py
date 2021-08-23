@@ -19,12 +19,15 @@ def check_for_cli_updates():
     if already_checked_for_updates():
         return
 
+    cli_git_config = load_cli_git_config()
+    if not cli_git_config:
+        return
+
     current_git_branch_status = output_from_command_in_cli_project_path("git status")
     current_git_branch = re.search(r"On branch (.+)", current_git_branch_status).groups(
         0
     )[0]
 
-    cli_git_config = load_cli_git_config()
     not_in_head_branch = current_git_branch != cli_git_config.head_branch
 
     if not_in_head_branch:

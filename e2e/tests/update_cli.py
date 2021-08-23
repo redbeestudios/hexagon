@@ -3,6 +3,7 @@ from e2e.tests.utils.path import e2e_test_folder_path
 from e2e.tests.utils.hexagon_spec import as_a_user
 import os
 import shutil
+import tempfile
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 
@@ -99,3 +100,21 @@ def test_cli_updated_if_pending_changes():
     )
 
     _cleanup()
+
+
+def test_cli_updates_fail_silently_if_not_in_a_git_repository():
+    _cleanup()
+    tmp_dir = tempfile.gettempdir()
+    os.mkdir(local_repo_path)
+
+    shutil.copyfile(
+        os.path.join(test_folder_path, "app.yml"),
+        os.path.join(tmp_dir, "app.yml"),
+    )
+
+    (
+        as_a_user(tmp_dir)
+        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absoulte=True)
+        .then_output_should_be(["echo"])
+        .exit()
+    )
