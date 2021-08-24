@@ -3,6 +3,7 @@ import sys
 
 from hexagon.support.args import fill_args
 from hexagon.domain import cli, tools, envs
+from hexagon.domain.options import load_hexagon_options
 from hexagon.support.execute_tool import execute_action
 from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer
@@ -10,8 +11,10 @@ from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 from hexagon.support.printer import log
 from hexagon.support.update.hexagon import check_for_hexagon_updates
 from hexagon.support.storage import (
+    HEXAGON_STORAGE_APP,
     HexagonStorageKeys,
     store_user_data,
+    load_user_data,
 )
 
 
@@ -20,6 +23,10 @@ def main():
 
     if _tool == "-h" or _tool == "--help":
         return print_help(cli, tools, envs)
+
+    load_hexagon_options(
+        {}, load_user_data(HexagonStorageKeys.options.value, HEXAGON_STORAGE_APP)
+    )
 
     log.start(f"[bold]{cli.name}")
     log.gap()
