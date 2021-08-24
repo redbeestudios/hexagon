@@ -95,7 +95,16 @@ def test_cli_updated_if_pending_changes():
             test_file_path_is_absoulte=True,
         )
         .write("y")
-        .then_output_should_be(["Updated to latest version"], True)
+        .then_output_should_be(
+            [
+                "Updating",
+                "Fast-forward",
+                "app.yml | 2 +-",
+                "1 file changed, 1 insertion(+), 1 deletion(-)",
+                "Updated to latest version",
+            ],
+            True,
+        )
         .exit(1)
     )
 

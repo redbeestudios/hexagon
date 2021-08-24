@@ -1,4 +1,5 @@
 import subprocess
+import sys
 from hexagon.domain import configuration
 
 
@@ -12,13 +13,15 @@ def output_from_command_in_cli_project_path(command: str) -> str:
     )
 
 
-def execute_command_in_cli_project_path(command: str) -> None:
+def execute_command_in_cli_project_path(
+    command: str, show_stdout: bool = False
+) -> None:
     assert (
         subprocess.check_call(
             command,
             shell=True,
             cwd=configuration.project_path,
-            stdout=subprocess.DEVNULL,
+            stdout=sys.stdout if show_stdout else subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
         == 0
