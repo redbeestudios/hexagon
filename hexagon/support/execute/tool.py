@@ -33,11 +33,10 @@ def select_and_execute_tool(
     env = search_by_name_or_alias(envs, env_argument)
 
     tool = select_tool(tools, tool)
-    tracer.tracing(tool.name)
+    if tool.traced:
+        tracer.tracing(tool.name)
 
     env, params = select_env(envs, tool.envs, env)
-    if env:
-        tracer.tracing(env.name)
 
     if isinstance(tool, GroupTool):
         previous = tools, tool_argument, env_argument, arguments, custom_tools_path
@@ -55,6 +54,9 @@ def select_and_execute_tool(
     if isinstance(tool, FunctionTool):
         return tool.function()
 
+    if env:
+        tracer.tracing(env.name)
+
     return execute_action(tool, params, env, arguments, custom_tools_path)
 
 
@@ -64,6 +66,7 @@ GO_BACK_TOOL_ATTRIBUTES = {
     "type": ToolType.function,
     "description": "Go back to the previous menu",
     "icon": "🠔",
+    "traced": False,
 }
 
 
@@ -101,10 +104,15 @@ def _execute_group_tool(
     tools = group_config.tools
 
     if previous:
+
+        def goback():
+            tracer.remove_last()
+            select_and_execute_tool(*previous)
+
         tools = tools + [
             FunctionTool(
                 **GO_BACK_TOOL_ATTRIBUTES,
-                function=lambda: select_and_execute_tool(*previous),
+                function=goback,
             ),
         ]
 

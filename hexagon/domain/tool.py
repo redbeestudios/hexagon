@@ -21,6 +21,7 @@ class Tool(BaseModel):
     long_name: Optional[str] = None
     description: Optional[str] = None
     envs: Optional[Dict[str, Any]] = None
+    traced: Optional[bool] = True
 
     class Config:
         use_enum_values = True

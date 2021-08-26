@@ -16,7 +16,7 @@ def test_execute_tool_group_from_ui():
 def test_execute_tool_from_ui_after_leaving_tool_group():
     (
         as_a_user(__file__)
-        .run_hexagon()
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
         # Select the first group
         .arrow_down()
         .enter()
@@ -31,6 +31,7 @@ def test_execute_tool_from_ui_after_leaving_tool_group():
         .arrow_down()
         .enter()
         .then_output_should_be(["top level echo"], True)
+        .then_output_should_be(["hexagon-test top-level-echo"], True)
         .exit()
     )
 
@@ -78,4 +79,18 @@ def test_execute_tool_group_in_different_directory_with_default_custom_tools_dir
         as_a_user(__file__)
         .run_hexagon(["group-in-dir", "echo"])
         .then_output_should_be(["group tools in dir"])
+    )
+
+
+def test_execute_tool_group_has_correct_trace():
+    (
+        as_a_user(__file__)
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
+        .arrow_down()
+        .enter()
+        .arrow_down()
+        .enter()
+        .enter()
+        .then_output_should_be(["hexagon-test group python-module-env dev"], True)
+        .exit()
     )
