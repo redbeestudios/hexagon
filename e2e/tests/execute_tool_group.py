@@ -13,6 +13,28 @@ def test_execute_tool_group_from_ui():
     )
 
 
+def test_execute_tool_from_ui_after_leaving_tool_group():
+    (
+        as_a_user(__file__)
+        .run_hexagon()
+        # Select the first group
+        .arrow_down()
+        .enter()
+        # Go back to previous (root) menu
+        .arrow_down()
+        .arrow_down()
+        .enter()
+        # Run an echo tool in the main app.yml file
+        .arrow_down()
+        .arrow_down()
+        .arrow_down()
+        .arrow_down()
+        .enter()
+        .then_output_should_be(["top level echo"], True)
+        .exit()
+    )
+
+
 def test_execute_tool_group_by_argument():
     (
         as_a_user(__file__)

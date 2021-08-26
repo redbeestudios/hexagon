@@ -30,13 +30,7 @@
             "module": "hexagon",
             "console": "integratedTerminal",
             "subProcess": true,
-            "args": [
-                "group",
-                "python-module-env",
-                "dev",
-                "123",
-                "abc"
-            ],
+            "args": [],
             "env": {
                 "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/execute_tool_group/app.yml",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",

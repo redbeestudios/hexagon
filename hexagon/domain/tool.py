@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional, Dict, Any, Union
+from typing import Callable, List, Optional, Dict, Any, Union
 
 from pydantic import BaseModel
 
@@ -10,11 +10,13 @@ class ToolType(str, Enum):
     shell = "shell"
     hexagon = "hexagon"
     group = "group"
+    function = "function"
 
 
 class Tool(BaseModel):
     name: str
     type: ToolType = ToolType.misc
+    icon: Optional[str] = None
     alias: Optional[str] = None
     long_name: Optional[str] = None
     description: Optional[str] = None
@@ -30,6 +32,10 @@ class ActionTool(Tool):
 
 class GroupTool(Tool):
     tools: str
+
+
+class FunctionTool(Tool):
+    function: Callable
 
 
 class ToolGroupConfigFile(BaseModel):

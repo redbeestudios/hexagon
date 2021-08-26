@@ -30,3 +30,7 @@ tools:
     long_name: A group of tools in a dir with no custom dir
     type: group
     tools: group_tool_dir/app.yml
+  - name: top-level-echo
+    long_name: An echo in the main app.yml file
+    type: shell
+    action: echo "top level echo"

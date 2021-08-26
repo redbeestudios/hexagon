@@ -3,11 +3,14 @@ from prompt_toolkit.validation import ValidationError
 from hexagon.support.execute.action import execute_action
 from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 from hexagon.domain.tool import (
+    ActionTool,
+    FunctionTool,
     GroupTool,
     Tool,
     ToolGroupConfigFile,
+    ToolType,
 )
-from typing import List
+from typing import List, Tuple
 from hexagon.domain import envs, configuration
 from hexagon.support.tracer import tracer
 from hexagon.domain.configuration import (
@@ -24,7 +27,7 @@ def select_and_execute_tool(
     tool_argument: str = None,
     env_argument: str = None,
     arguments: List[object] = None,
-    custom_tools_path=None,
+    custom_tools_path: str = None,
 ) -> List[str]:
     arguments = arguments if arguments else []
     tool = search_by_name_or_alias(tools, tool_argument)
@@ -38,14 +41,29 @@ def select_and_execute_tool(
         tracer.tracing(env.name)
 
     if isinstance(tool, GroupTool):
-        return _execute_group_tool(tool, env_argument, arguments, custom_tools_path)
+        previous = tools, tool_argument, env_argument, arguments, custom_tools_path
+        return _execute_group_tool(
+            tool, previous, env_argument, arguments, custom_tools_path
+        )
 
-    result = execute_action(tool, params, env, arguments, custom_tools_path)
-    return result
+    if isinstance(tool, FunctionTool):
+        return tool.function()
+
+    return execute_action(tool, params, env, arguments, custom_tools_path)
+
+
+GO_BACK_TOOL_ATTRIBUTES = {
+    "name": "goback",
+    "long_name": "Go back",
+    "type": ToolType.function,
+    "description": "Go back to the previous menu",
+    "icon": "🠔",
+}
 
 
 def _execute_group_tool(
     tool: Tool,
+    previous: Tuple[List[Tool], str, str, List[object], str],
     env_argument: str = None,
     arguments: List[object] = None,
     previous_custom_tools_path: str = None,
@@ -74,8 +92,15 @@ def _execute_group_tool(
         os.path.dirname(tool.tools),
     )
 
+    tools = group_config.tools + [
+        FunctionTool(
+            **GO_BACK_TOOL_ATTRIBUTES,
+            function=lambda: select_and_execute_tool(*previous),
+        ),
+    ]
+
     return select_and_execute_tool(
-        group_config.tools,
+        tools,
         tool_argument,
         env_argument,
         sub_tool_arguments,
