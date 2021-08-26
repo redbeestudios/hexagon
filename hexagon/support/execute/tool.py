@@ -3,7 +3,6 @@ from prompt_toolkit.validation import ValidationError
 from hexagon.support.execute.action import execute_action
 from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 from hexagon.domain.tool import (
-    ActionTool,
     FunctionTool,
     GroupTool,
     Tool,
@@ -43,7 +42,14 @@ def select_and_execute_tool(
     if isinstance(tool, GroupTool):
         previous = tools, tool_argument, env_argument, arguments, custom_tools_path
         return _execute_group_tool(
-            tool, previous, env_argument, arguments, custom_tools_path
+            tool,
+            # If the tool matched the tool argument, disable navigating back
+            previous
+            if not next((t for t in tools if t.name == tool_argument), None)
+            else None,
+            env_argument,
+            arguments,
+            custom_tools_path,
         )
 
     if isinstance(tool, FunctionTool):
@@ -63,7 +69,7 @@ GO_BACK_TOOL_ATTRIBUTES = {
 
 def _execute_group_tool(
     tool: Tool,
-    previous: Tuple[List[Tool], str, str, List[object], str],
+    previous: Tuple[List[Tool], str, str, List[object], str] = None,
     env_argument: str = None,
     arguments: List[object] = None,
     previous_custom_tools_path: str = None,
@@ -92,12 +98,15 @@ def _execute_group_tool(
         os.path.dirname(tool.tools),
     )
 
-    tools = group_config.tools + [
-        FunctionTool(
-            **GO_BACK_TOOL_ATTRIBUTES,
-            function=lambda: select_and_execute_tool(*previous),
-        ),
-    ]
+    tools = group_config.tools
+
+    if previous:
+        tools = tools + [
+            FunctionTool(
+                **GO_BACK_TOOL_ATTRIBUTES,
+                function=lambda: select_and_execute_tool(*previous),
+            ),
+        ]
 
     return select_and_execute_tool(
         tools,
