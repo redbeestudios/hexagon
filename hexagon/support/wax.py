@@ -8,7 +8,7 @@ from hexagon.domain.tool import Tool
 
 def __classifier(value: Union[Tool, Env]):
     if value.icon:
-        return f"{value.icon} "
+        return f"{value.icon:2}"
 
     symbols = {
         "web": "⦾",
