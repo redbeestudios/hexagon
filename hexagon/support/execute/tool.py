@@ -60,14 +60,14 @@ def select_and_execute_tool(
     return execute_action(tool, params, env, arguments, custom_tools_path)
 
 
-GO_BACK_TOOL_ATTRIBUTES = {
-    "name": "goback",
-    "long_name": "Go back",
-    "type": ToolType.function,
-    "description": "Go back to the previous menu",
-    "icon": "🠔",
-    "traced": False,
-}
+GO_BACK_TOOL = Tool(
+    name="goback",
+    long_name="Go back",
+    type=ToolType.function,
+    description="Go back to the previous menu",
+    icon="🠔",
+    traced=False,
+)
 
 
 def _execute_group_tool(
@@ -110,10 +110,7 @@ def _execute_group_tool(
             select_and_execute_tool(*previous)
 
         tools = tools + [
-            FunctionTool(
-                **GO_BACK_TOOL_ATTRIBUTES,
-                function=goback,
-            ),
+            FunctionTool(**GO_BACK_TOOL.dict(), function=goback),
         ]
 
     return select_and_execute_tool(
