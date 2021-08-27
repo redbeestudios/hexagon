@@ -6,7 +6,6 @@ from typing import Any, Dict, List
 from ruamel.yaml import YAML
 from enum import Enum
 from shutil import rmtree
-from hexagon.domain import cli, configuration
 
 HEXAGON_STORAGE_APP = "hexagon"
 
@@ -36,22 +35,16 @@ _storage_path_by_os = {
     "win32": os.path.expanduser("~/hexagon"),
 }
 
-_storage_dir_path = None
-
 InputDataType = str or List[str] or Dict[Any]
 
 
 def _get_storage_dir_path():
-    global _storage_dir_path
-    if _storage_dir_path:
-        return _storage_dir_path
-
-    _storage_dir_path = os.getenv(
+    result = os.getenv(
         "HEXAGON_STORAGE_PATH", _storage_path_by_os[sys.platform]
     )
-    Path(_storage_dir_path).mkdir(exist_ok=True)
+    Path(result).mkdir(exist_ok=True)
 
-    return _storage_dir_path
+    return result
 
 
 def _resolve_storage_path(app: str, key: str, base_dir=None):
@@ -92,6 +85,8 @@ def _storage_file(dir_path: str, file_name: str):
 
 
 def _get_app(app: str = None):
+    from hexagon.domain import cli, configuration
+
     return (
         app
         if app

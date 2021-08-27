@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Any, Dict
-from hexagon.domain import get_options
 from hexagon.support.printer import log
+from hexagon.domain import options
 
 
 def _print_dict_indented(dictionary: Dict[str, Any], indent_level=0):
@@ -14,4 +14,4 @@ def _print_dict_indented(dictionary: Dict[str, Any], indent_level=0):
 
 
 def main(*_):
-    _print_dict_indented(get_options().__dict__)
+    _print_dict_indented(options.__dict__)

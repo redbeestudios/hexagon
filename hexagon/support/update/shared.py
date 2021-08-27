@@ -1,5 +1,5 @@
 from hexagon.support.storage import HexagonStorageKeys, load_user_data, store_user_data
-from hexagon.domain import get_options
+from hexagon.domain import options
 import datetime
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
@@ -16,7 +16,7 @@ def already_checked_for_updates(app: str = None) -> bool:
         )
 
         result = (
-            last_checked_date + get_options().update.time_between_checks
+            last_checked_date + options.update_time_between_checks
             >= datetime.datetime.now()
         )
 
