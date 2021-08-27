@@ -39,9 +39,7 @@ InputDataType = str or List[str] or Dict[Any]
 
 
 def _get_storage_dir_path():
-    result = os.getenv(
-        "HEXAGON_STORAGE_PATH", _storage_path_by_os[sys.platform]
-    )
+    result = os.getenv("HEXAGON_STORAGE_PATH", _storage_path_by_os[sys.platform])
     Path(result).mkdir(exist_ok=True)
 
     return result
