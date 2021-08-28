@@ -2,6 +2,22 @@
 
 <!--next-version-placeholder-->
 
+## v0.18.0 (2021-08-27)
+### Feature
+* Options by env variables, local options file or defaults ([#52](https://github.com/redbeestudios/hexagon/issues/52)) ([`6687b94`](https://github.com/redbeestudios/hexagon/commit/6687b94a53723f56fb683d53ad26c1a64dd3d025))
+
+## v0.17.0 (2021-08-27)
+### Feature
+* Nested tools, for grouping and organizing ([#54](https://github.com/redbeestudios/hexagon/issues/54)) ([`b5831fd`](https://github.com/redbeestudios/hexagon/commit/b5831fdc4f69a6765973f1f5ce1a41ea58d8218c))
+
+## v0.16.0 (2021-08-24)
+### Feature
+* Auto-update for clis ([#49](https://github.com/redbeestudios/hexagon/issues/49)) ([`a03d3e0`](https://github.com/redbeestudios/hexagon/commit/a03d3e00c27a39e72298e3f5979711162ded6f1d))
+
+## v0.15.1 (2021-08-20)
+### Fix
+* Changelog in hexagon update ([#48](https://github.com/redbeestudios/hexagon/issues/48)) ([`c6ab57d`](https://github.com/redbeestudios/hexagon/commit/c6ab57de27d3d0f8d4d441e198f273b0cd204554))
+
 ## v0.15.0 (2021-07-26)
 ### Feature
 * **execute:** Display action errors nicely to user ([#43](https://github.com/redbeestudios/hexagon/issues/43)) ([`b8ab97f`](https://github.com/redbeestudios/hexagon/commit/b8ab97f377bb10fe7c5533c5bbdbbd19938a74b1))

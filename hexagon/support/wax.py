@@ -9,7 +9,16 @@ from hexagon.support.analytics import Event
 
 
 def __classifier(value: Union[Tool, Env]):
-    symbols = {"web": "⦾", "shell": "ƒ", "misc": " ", "hexagon": "⬡"}
+    if value.icon:
+        return f"{value.icon:2}"
+
+    symbols = {
+        "web": "⦾",
+        "shell": "ƒ",
+        "misc": " ",
+        "hexagon": "⬡",
+        "group": "≡",
+    }
     r = symbols.get(value.type, "")
     return f"{r:2}" if r else ""
 

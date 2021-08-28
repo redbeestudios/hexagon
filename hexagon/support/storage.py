@@ -1,3 +1,4 @@
+from hexagon.utils.dict import merge_dictionaries_deep
 import os
 from pathlib import Path
 import sys
@@ -5,12 +6,12 @@ from typing import Any, Dict, List
 from ruamel.yaml import YAML
 from enum import Enum
 from shutil import rmtree
-from hexagon.domain import cli, configuration
 
 HEXAGON_STORAGE_APP = "hexagon"
 
 
 class HexagonStorageKeys(Enum):
+    options = "options"
     last_command = "last-command"
     last_update_check = "last-update-check"
 
@@ -46,23 +47,6 @@ def __storage_path_by_os(purpose: StoragePurpose):
         "cygwin": os.path.expanduser(f"~/.{purpose.value}/hexagon"),
         "win32": os.path.expanduser("~/hexagon"),
     }
-
-
-def _merge_dictionaries_deep(a, b, path=None):
-    """merges b into a"""
-    if path is None:
-        path = []
-    for key in b:
-        if key in a:
-            if isinstance(a[key], dict) and isinstance(b[key], dict):
-                _merge_dictionaries_deep(a[key], b[key], path + [str(key)])
-            elif a[key] == b[key]:
-                pass
-            else:
-                a[key] = b[key]
-        else:
-            a[key] = b[key]
-    return a
 
 
 def _get_storage_dir_path():
@@ -117,6 +101,8 @@ def _storage_file(dir_path: str, file_name: str):
 
 
 def _get_app(app: str = None):
+    from hexagon.domain import cli, configuration
+
     return (
         app
         if app
@@ -151,11 +137,11 @@ def store_user_data(key: str, data: InputDataType, append=False, app: str = None
 
     elif value_type == StorageValueType.dictionary:
         previous = None
-        if append:
+        if append and os.path.exists(file_path):
             with open(file_path, "r") as file:
                 previous = YAML().load(file)
 
-        to_write = _merge_dictionaries_deep(previous, data) if previous else data
+        to_write = merge_dictionaries_deep(previous, data) if previous else data
 
         with open(file_path, "w") as file:
             YAML().dump(to_write, file)

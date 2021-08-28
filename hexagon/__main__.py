@@ -1,14 +1,14 @@
+from hexagon.support.execute.tool import select_and_execute_tool
+from hexagon.support.update.cli import check_for_cli_updates
 import sys
 
 from hexagon.support import analytics
 from hexagon.support.args import fill_args
 from hexagon.domain import cli, tools, envs
-from hexagon.support.execute_tool import execute_action
 from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer
-from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 from hexagon.support.printer import log
-from hexagon.support.update_hexagon import check_for_hexagon_updates
+from hexagon.support.update.hexagon import check_for_hexagon_updates
 from hexagon.support.storage import (
     HexagonStorageKeys,
     store_user_data,
@@ -33,19 +33,11 @@ def main():
             'You should probably run "Install CLI".',
             gap_end=1,
         )
+    else:
+        check_for_cli_updates()
 
     try:
-        _tool = search_by_name_or_alias(tools, _tool)
-        _env = search_by_name_or_alias(envs, _env)
-
-        tool = select_tool(tools, _tool)
-        tracer.tracing(tool.name)
-
-        env, params = select_env(envs, tool.envs, _env)
-        if env:
-            tracer.tracing(env.name)
-
-        result = execute_action(tool, params, env, sys.argv[3:])
+        result = select_and_execute_tool(tools, _tool, _env, sys.argv[3:])
 
         log.gap()
 
