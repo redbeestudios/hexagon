@@ -17,20 +17,20 @@ def session_start():
     s = {
         "datetime": str(datetime.datetime.now()),
         "type": Event.session.value,
-        "name": "session_start",
+        "name": "start",
     }
     store_local_data(_data_file_name, str(s))
-    google_analytics.session_start()
+    google_analytics.event(s["name"])
 
 
 def session_end():
     s = {
         "datetime": str(datetime.datetime.now()),
         "type": Event.session.value,
-        "name": "session_end",
+        "name": "end",
     }
     store_local_data(_data_file_name, str(s))
-    google_analytics.session_end()
+    google_analytics.event(s["name"])
 
 
 def user_action(name: Event, **kwargs):
