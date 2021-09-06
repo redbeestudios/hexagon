@@ -7,10 +7,6 @@ from hexagon.support.storage import load_user_data, store_user_data
 
 
 def event(name: str, **kwargs):
-    __collect(name, **{**{"ea": name}, **kwargs})
-
-
-def __collect(name: str, **kwargs):
     version = pkg_resources.require("hexagon")[0].version
 
     cid = load_user_data("user_id")
@@ -20,22 +16,13 @@ def __collect(name: str, **kwargs):
 
     mid = "G-Y28H5KHQEZ"
 
-    # params = {
-    #     **{
-    #         "v": 1,
-    #         # "tid": "UA-204311640-1",
-    #         "aip": 1,  # https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aip
-    #         "npa": 1,  # https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#npa
-    #         "cid": cid,
-    #         "t": "event",
-    #         "an": "hexagon",
-    #         "av": version,
-    #     },
-    #     **kwargs,
-    # }
-    params = {"client_id": cid, "events": [{"name": name}]}
-    res = requests.post(
+    params = {
+        "client_id": cid,
+        "events": [{"name": name, "params": {**kwargs}}],
+        "user_properties": {"hexagon_version": {"value": version}},
+    }
+    # TODO: externalize mid and api_secret
+    requests.post(
         f"https://www.google-analytics.com/mp/collect?measurement_id={mid}&api_secret=lalUv8tgR4OfjXl88FjrFw",
         json=params,
     )
-    print(res.text)

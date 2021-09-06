@@ -1,59 +1,86 @@
 from enum import Enum
 import datetime
 
-from hexagon.support.storage import store_local_data
+from InquirerPy import inquirer
+
+from hexagon.domain import get_options
+from hexagon.domain.options import update_options
+from hexagon.support.printer import log
+from hexagon.support.storage import store_local_data, get_local_data_dir
 from hexagon.support.analytics import google_analytics
 
-_data_file_name = "events"
+_data_file_name = "events_" + datetime.date.today().isoformat()
 
 
-class Event(Enum):
+class EventType(Enum):
     session = "session"
+    user = "user_event"
+    system = "system_event"
+
+
+class UserEvent(Enum):
     selection = "selection"
+
+
+class SessionEvent(Enum):
+    start = "start"
+    end = "end"
+
+
+class SystemEvent(Enum):
     execution = "execution"
 
 
-def session_start():
+def session(e: SessionEvent):
     s = {
         "datetime": str(datetime.datetime.now()),
-        "type": Event.session.value,
-        "name": "start",
+        "type": EventType.session.value,
+        "name": e.value,
     }
-    store_local_data(_data_file_name, str(s))
-    google_analytics.event(s["name"])
+    _send_event(s)
 
 
-def session_end():
-    s = {
-        "datetime": str(datetime.datetime.now()),
-        "type": Event.session.value,
-        "name": "end",
-    }
-    store_local_data(_data_file_name, str(s))
-    google_analytics.event(s["name"])
-
-
-def user_action(name: Event, **kwargs):
+def user_event(e: UserEvent, **kwargs):
     s = {
         **{
             "datetime": str(datetime.datetime.now()),
-            "type": "user_action",
-            "name": name.value,
+            "type": EventType.user.value,
+            "name": e.value,
         },
         **kwargs,
     }
-    store_local_data(_data_file_name, str(s))
-    google_analytics.event(name.value, **kwargs)
+    _send_event(s)
 
 
-def event(name: Event, **kwargs):
+def system_event(e: SystemEvent, **kwargs):
     s = {
         **{
             "datetime": str(datetime.datetime.now()),
-            "type": "hexagon",
-            "name": name.value,
+            "type": EventType.system.value,
+            "name": e.value,
         },
         **kwargs,
     }
+    _send_event(s)
+
+
+def _send_event(s):
+    # TODO: actually execute in background
     store_local_data(_data_file_name, str(s))
-    google_analytics.event(name.value, **kwargs)
+    if _send_telemetry():
+        google_analytics.event(**s)
+
+
+def _send_telemetry():
+    opt = get_options()
+    if opt.send_telemetry is None:
+        log.info(
+            "In order to make Hexagon better we record anonymous usage statistics. "
+            f"You can see what's collected in {get_local_data_dir()}",
+            gap_start=1,
+        )
+        opt.send_telemetry = inquirer.confirm(
+            message="Do you agree to participate?", default=True
+        ).execute()
+        update_options(opt)
+    return opt.send_telemetry

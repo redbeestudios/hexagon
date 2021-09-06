@@ -191,7 +191,12 @@ def clear_storage():
 
 
 def store_local_data(key: str, data: str):
-    dir_path = __storage_path_by_os(StoragePurpose.data)[sys.platform]
-    Path(dir_path).mkdir(exist_ok=True, parents=True)
+    dir_path = get_local_data_dir()
     with open(os.path.join(dir_path, key), "a") as f:
         f.write(f"{data}\n")
+
+
+def get_local_data_dir():
+    dir_path = __storage_path_by_os(StoragePurpose.data)[sys.platform]
+    Path(dir_path).mkdir(exist_ok=True, parents=True)
+    return dir_path

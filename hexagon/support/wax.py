@@ -5,7 +5,7 @@ from InquirerPy import inquirer
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
 from hexagon.support import analytics
-from hexagon.support.analytics import Event
+from hexagon.support.analytics import UserEvent
 
 
 def __classifier(value: Union[Tool, Env]):
@@ -91,8 +91,8 @@ def _select_and_register_event(
 ):
     selected = next((e for e in options if e.name == name), None)
     if selected:
-        analytics.user_action(
-            Event.selection,
+        analytics.user_event(
+            UserEvent.selection,
             mode="prompt" if prompt else "args",
             selected=selected.name,
             **kwargs,
