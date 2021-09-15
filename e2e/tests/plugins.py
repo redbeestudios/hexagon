@@ -3,7 +3,7 @@ import os
 from e2e.tests.utils.hexagon_spec import as_a_user
 from e2e.tests.utils.path import e2e_test_folder_path
 
-storage_path = os.path.join(e2e_test_folder_path(__file__), "storage", "test")
+storage_path = os.path.join(e2e_test_folder_path(__file__), ".config", "test")
 
 
 def test_plugins():
