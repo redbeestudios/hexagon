@@ -3,9 +3,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[packages]
-hexagon = {editable = true, path = "."}
-
 [dev-packages]
 flake8 = "*"
 pytest = "*"
@@ -17,3 +14,11 @@ python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
+
+[packages.hexagon]
+editable = true
+path = "."
+
+[packages.e1839a8]
+path = "."
+editable = true
