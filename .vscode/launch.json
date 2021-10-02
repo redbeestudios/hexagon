@@ -122,6 +122,7 @@
             "module": "hexagon",
             "console": "integratedTerminal",
             "subProcess": true,
+            "cwd": "${workspaceFolder}/e2e/seed/springboot",
             "env": {
                 "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/seed/app.yml",
                 "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/seed/storage",
