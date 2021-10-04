@@ -14,11 +14,3 @@ python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
-
-[packages.hexagon]
-editable = true
-path = "."
-
-[packages.e1839a8]
-path = "."
-editable = true
