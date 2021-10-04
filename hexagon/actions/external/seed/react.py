@@ -25,3 +25,9 @@ def scaffold_react(use_next_js=False):
             create_command += " --template typescript"
 
     subprocess.check_call(create_command, shell=True)
+
+    if use_next_js:
+        if package_manager == "yarn":
+            subprocess.check_call("yarn run build", shell=True)
+        else:
+            subprocess.check_call("npm run build", shell=True)
