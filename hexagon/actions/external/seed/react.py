@@ -1,5 +1,6 @@
 import subprocess
 from InquirerPy import inquirer
+import os
 
 
 def scaffold_react(use_next_js=False):
@@ -27,7 +28,8 @@ def scaffold_react(use_next_js=False):
     subprocess.check_call(create_command, shell=True)
 
     if use_next_js:
+        cwd = os.path.join(os.getcwd(), name)
         if package_manager == "yarn":
-            subprocess.check_call("yarn run build", shell=True)
+            subprocess.check_call("yarn run build", shell=True, cwd=cwd)
         else:
-            subprocess.check_call("npm run build", shell=True)
+            subprocess.check_call("npm run build", shell=True, cwd=cwd)

@@ -90,7 +90,7 @@ def test_seed_react():
         .carriage_return()
         .carriage_return()
         .carriage_return()
-        .exit(timeout_in_seconds=60)
+        .exit(timeout_in_seconds=120)
     )
 
     __assert_react_app_works(created_project_path)
@@ -118,7 +118,7 @@ def test_seed_nextjs():
         .carriage_return()
         .carriage_return()
         .carriage_return()
-        .exit(timeout_in_seconds=60)
+        .exit(timeout_in_seconds=120)
     )
 
     __assert_react_app_works(created_project_path)
