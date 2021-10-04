@@ -34,7 +34,7 @@ def __assert_react_app_works(created_project_path: str):
         "npm start", shell=True, cwd=created_project_path
     )
 
-    time.sleep(5)
+    time.sleep(20)
 
     try:
         response = requests.get("http://localhost:3000")
