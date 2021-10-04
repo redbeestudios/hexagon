@@ -5,6 +5,7 @@ import os
 from shutil import rmtree
 import time
 import requests
+import signal
 
 test_folder_path = os.path.join(e2e_test_folder_path(__file__))
 springboot_folder_path = os.path.join(test_folder_path, "springboot")
@@ -40,7 +41,7 @@ def __assert_react_app_works(created_project_path: str):
         response = requests.get("http://localhost:3000")
         assert response.status_code == 200
     finally:
-        local_server_process.kill()
+        local_server_process.send_signal(signal.SIGINT)
 
 
 def test_seed_springboot():
