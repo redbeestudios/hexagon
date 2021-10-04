@@ -1,10 +1,10 @@
+from hexagon.actions.external.seed.react import scaffold_react
 from hexagon.actions.external.seed.springboot import scaffold_springboot
 from InquirerPy import inquirer
 
 from hexagon.support.tracer import tracer
-from hexagon.support.printer import log
 
-SEEDS = ["springboot", "react"]
+SEEDS = ["springboot", "react", "nextjs"]
 
 
 def main(tool, env, env_args, cli_args):
@@ -31,3 +31,7 @@ def main(tool, env, env_args, cli_args):
 
     if seed == "springboot":
         scaffold_springboot()
+    elif seed == "react":
+        scaffold_react()
+    elif seed == "nextjs":
+        scaffold_react(use_next_js=True)

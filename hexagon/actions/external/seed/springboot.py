@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, NamedTuple
 from hexagon.utils.monad import IdentityMonad
 from functools import partial
 from InquirerPy import inquirer
@@ -16,10 +16,23 @@ def __id_name_to_choice(id_name: Dict) -> Dict:
 map_id_name_to_choice = partial(map, __id_name_to_choice)
 
 
-def scaffold_springboot():
+class SpringBootSeedOptions(NamedTuple):
+    project_type: str
+    language: str
+    springboot_version: str
+    group: str
+    artifact: str
+    name: str
+    description: str
+    package_name: str
+    packaging: str
+    java_version: str
+
+
+def scaffold_springboot(options: SpringBootSeedOptions = None):
     initializr_data = requests.get("https://start.spring.io/metadata/client").json()
 
-    project_type = inquirer.select(
+    project_type = (options and options.project_type) or inquirer.select(
         message="Project type",
         choices=IdentityMonad(initializr_data["type"]["values"])
         .bind(partial(filter, lambda type: type["tags"]["format"] == "project"))
@@ -28,7 +41,7 @@ def scaffold_springboot():
         default=initializr_data["type"]["default"],
     ).execute()
 
-    language = inquirer.select(
+    language = (options and options.language) or inquirer.select(
         message="Language",
         choices=IdentityMonad(initializr_data["language"]["values"])
         .bind(map_id_name_to_choice)
@@ -36,7 +49,7 @@ def scaffold_springboot():
         default=initializr_data["language"]["default"],
     ).execute()
 
-    springboot_version = inquirer.select(
+    springboot_version = (options and options.springboot_version) or inquirer.select(
         message="Spring Boot Version",
         choices=IdentityMonad(initializr_data["bootVersion"]["values"])
         .bind(map_id_name_to_choice)
@@ -44,25 +57,27 @@ def scaffold_springboot():
         default=initializr_data["bootVersion"]["default"],
     ).execute()
 
-    group = inquirer.text(
+    group = (options and options.group) or inquirer.text(
         message="Group", default=initializr_data["groupId"]["default"]
     ).execute()
 
-    artifact = inquirer.text(
+    artifact = (options and options.artifact) or inquirer.text(
         message="Artifact", default=initializr_data["artifactId"]["default"]
     ).execute()
 
-    name = inquirer.text(message="Name", default=artifact).execute()
+    name = (options and options.name) or inquirer.text(
+        message="Name", default=artifact
+    ).execute()
 
-    description = inquirer.text(
+    description = (options and options.description) or inquirer.text(
         message="Description", default=initializr_data["description"]["default"]
     ).execute()
 
-    package_name = inquirer.text(
+    package_name = (options and options.package_name) or inquirer.text(
         message="Package name", default=f"{group}.{artifact}"
     ).execute()
 
-    packaging = inquirer.select(
+    packaging = (options and options.packaging) or inquirer.select(
         message="Packaging",
         choices=IdentityMonad(initializr_data["packaging"]["values"])
         .bind(map_id_name_to_choice)
@@ -70,7 +85,7 @@ def scaffold_springboot():
         default=initializr_data["packaging"]["default"],
     ).execute()
 
-    java_version = inquirer.select(
+    java_version = (options and options.java_version) or inquirer.select(
         message="Java Version",
         choices=IdentityMonad(initializr_data["javaVersion"]["values"])
         .bind(map_id_name_to_choice)

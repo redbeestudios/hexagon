@@ -89,9 +89,9 @@ class HexagonSpec:
         write_to_process(self.process, text)
         return self
 
-    def exit(self, status: int = 0):
+    def exit(self, status: int = 0, timeout_in_seconds: int = 5):
         __tracebackhide__ = True
-        assert_process_ended(self.process, status)
+        assert_process_ended(self.process, status, timeout_in_seconds)
         clean_hexagon_environment()
 
     @property
