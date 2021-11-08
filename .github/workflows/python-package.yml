@@ -38,6 +38,7 @@ jobs:
 
       - name: e2e tests
         run: |
+          stty cols 120
           pytest -svv e2e/
 
   release:
