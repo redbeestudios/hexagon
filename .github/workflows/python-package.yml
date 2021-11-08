@@ -37,6 +37,7 @@ jobs:
           pytest -svv tests/
 
       - name: e2e tests
+        shell: 'script --return --quiet --command "bash {0}"'
         run: |
           stty cols 120
           pytest -svv e2e/
