@@ -23,3 +23,4 @@ version_pattern = [
 ]
 upload_to_pypi = false
 commit_subject = "chore(release): {version}"
+build_command = "pipenv run python setup.py sdist bdist_wheel"
