@@ -28,8 +28,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pipenv wheel pytest
-          pipenv install -e .
+          python -m pip install --upgrade pipenv
+          pipenv install
+          pipenv install --dev
 
       - name: Unit tests
         run: |
