@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a110dac17ed28ae695a0aaa3009361178a6f37ca9d735f0f0d82c5c6cb6eb02c"
+            "sha256": "9e6aceebe790e8b747f4ec9542dd10b60abf9dc96159a25476d9d2d45b6821d8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -45,10 +45,6 @@
             ],
             "index": "pypi",
             "version": "==0.0.31"
-        },
-        "hexagon": {
-            "editable": true,
-            "path": "."
         },
         "inquirerpy": {
             "hashes": [
@@ -353,6 +349,14 @@
             ],
             "version": "==0.12.0"
         },
+        "pip": {
+            "hashes": [
+                "sha256:deaf32dcd9ab821e359cd8330786bcd077604b5c5730c0b096eda46f95c24a2d",
+                "sha256:fd11ba3d0fdb4c07fbc5ecbba0b1b719809420f25038f8ee3cd913d3faa3033a"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==21.3.1"
+        },
         "pip-shims": {
             "hashes": [
                 "sha256:b6704551be47f9a7b05cbdb51a180b6d68be4c980c255e22d6a6dec7feb8f087",
@@ -519,6 +523,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==1.6.1"
+        },
+        "setuptools": {
+            "hashes": [
+                "sha256:a481fbc56b33f5d8f6b33dce41482e64c68b668be44ff42922903b03872590bf",
+                "sha256:dae6b934a965c8a59d6d230d3867ec408bb95e73bd538ff77e71fedf1eaca729"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==58.5.3"
         },
         "six": {
             "hashes": [
