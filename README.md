@@ -4,7 +4,7 @@ Make your team's knowledge truly accessible, truly shared, and truly empowering 
 [![build](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml/badge.svg)](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-
+a
 ---
 
 ## Getting Started
