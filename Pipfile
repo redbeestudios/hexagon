@@ -4,8 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-hexagon = {editable = true, path = "."}
 inquirerpy = "==0.2.0"
+rich = "*"
+halo = "*"
+pydantic = "*"
+"ruamel.yaml" = "*"
+clipboard = "*"
+markdown = "*"
 
 [dev-packages]
 flake8 = "*"
