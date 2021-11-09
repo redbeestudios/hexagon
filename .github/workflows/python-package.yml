@@ -33,11 +33,11 @@ jobs:
 
       - name: Unit tests
         run: |
-          pytest -svv tests/
+          pipenv run pytest -svv tests/
 
       - name: e2e tests
         run: |
-          pytest -svv e2e/
+          pipenv run pytest -svv e2e/
 
   release:
     if: ${{ github.event_name != 'pull_request' && github.event_name != 'pull_request_target' }}
