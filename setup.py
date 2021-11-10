@@ -1,17 +1,26 @@
-from pathlib import Path
-
-from setuptools import setup, find_packages
-from pipenv_setup.lockfile_parser import get_default_packages, format_remote_package
+import setuptools
+import json
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
 __version__ = "0.21.0"
 
+
+def __markers(config: dict):
+    return f"; {config['markers']}" if "markers" in config else ""
+
+
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-local_packages, remote_packages = get_default_packages(Path("Pipfile.lock"))
+with open("Pipfile.lock", "r", encoding="utf-8") as lock:
+    json_lock = json.load(lock)
+    requires = [
+        f"{name}{config['version']}{__markers(config)}"
+        for name, config in json_lock["default"].items()
+        if "version" in config
+    ]
 
-setup(
+setuptools.setup(
     name="hexagon",
     version=__version__,
     author="Joaco Campero",
@@ -26,19 +35,14 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=find_packages(exclude=["tests", "tests.*", "e2e", "e2e.*"]),
+    packages=setuptools.find_packages(exclude=["tests", "tests.*", "e2e", "e2e.*"]),
     package_data={"": ["*.md"]},
-    install_requires=[
-        v
-        for k, v in [
-            format_remote_package(name, config)
-            for name, config in remote_packages.items()
-        ]
-    ],
+    install_requires=requires,
     python_requires=">=3.7",
     entry_points="""
         [console_scripts]
         hexagon=hexagon.__main__:main
     """,
     platform="debian",
+    data_files=[("*", ["Pipfile.lock"])],
 )

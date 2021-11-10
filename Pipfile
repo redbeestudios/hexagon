@@ -6,10 +6,12 @@ name = "pypi"
 [packages]
 inquirerpy = "==0.2.0"
 rich = "*"
-halo = "*"
-pydantic = "*"
-"ruamel.yaml" = "*"
 clipboard = "*"
+requests = "*"
+"ruamel.yaml" = "*"
+pydantic = "*"
+packaging = "*"
+halo = "*"
 markdown = "*"
 
 [dev-packages]
