@@ -38,6 +38,7 @@ jobs:
 
       - name: e2e tests
         run: |
+          python -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.21.0/hexagon-0.21.0.tar.gz
           pipenv run pytest -svv e2e/
 
   release:
