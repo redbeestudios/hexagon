@@ -5,7 +5,4 @@ from hexagon.support.printer.themes import load_theme
 
 theme = load_theme()
 
-log = Logger(
-    Console(color_system="auto" if theme.show_colors else None),
-    theme,
-)
+log = Logger(Console(color_system="auto" if theme.show_colors else None), theme,)

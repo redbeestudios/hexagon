@@ -1,6 +1,4 @@
-from e2e.tests.utils.assertions import (
-    assert_file_has_contents,
-)
+from e2e.tests.utils.assertions import assert_file_has_contents
 from e2e.tests.utils.hexagon_spec import as_a_user
 
 shared_prompt_output = [

@@ -62,8 +62,7 @@ def main():
                     f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
                 )
         store_user_data(
-            HexagonStorageKeys.last_command.value,
-            f"{cli.command} {tracer.command()}",
+            HexagonStorageKeys.last_command.value, f"{cli.command} {tracer.command()}",
         )
     except KeyboardInterrupt:
         sys.exit(1)

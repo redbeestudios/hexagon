@@ -40,10 +40,7 @@ class Options(BaseSettings):
 
         @classmethod
         def customise_sources(
-            cls,
-            init_settings,
-            env_settings,
-            file_secret_settings,
+            cls, init_settings, env_settings, file_secret_settings,
         ):
             # TODO: allow CLIs to override options from app.yaml (ie: cli.options.update_time_between_checks)
             return (
