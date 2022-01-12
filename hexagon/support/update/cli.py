@@ -3,11 +3,12 @@ from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
     output_from_command_in_cli_project_path,
 )
+from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.printer import log
 from hexagon.support.update.shared import already_checked_for_updates
 import os
 import re
-from hexagon.domain import cli
+from hexagon.domain import cli, configuration
 from InquirerPy import inquirer
 import sys
 
@@ -46,6 +47,7 @@ def check_for_cli_updates():
         if not inquirer.confirm("Would you like to update?", default=True).execute():
             return
         execute_command_in_cli_project_path("git pull", show_stdout=True)
+        scan_and_install_dependencies(configuration.project_path)
         log.info("[green]🗸 [white]Updated to latest version")
         log.finish()
         sys.exit(1)

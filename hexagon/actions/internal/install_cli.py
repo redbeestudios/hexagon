@@ -6,6 +6,7 @@ from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
 
 from hexagon.domain import configuration
+from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.printer import log
 from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_user_data
 
@@ -16,8 +17,7 @@ class YamlFileValidator(PathValidator):
         extension = document.text.split("/")[-1].split(".")[-1]
         if extension != "yaml" and extension != "yml":
             raise ValidationError(
-                message=self.message,
-                cursor_position=document.cursor_position,
+                message=self.message, cursor_position=document.cursor_position,
             )
 
 
@@ -52,7 +52,10 @@ def main(*_):
             "# file create by hexagon\n"
             f"HEXAGON_CONFIG_FILE={src_path} hexagon $@"
         )
+
     _make_executable(command_path)
+    scan_and_install_dependencies(Path(src_path).parent)
+
     log.info(
         "[green]🗸️ [white][u]All done! Now you can execute your project's CLI like:",
         gap_end=1,

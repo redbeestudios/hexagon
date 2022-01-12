@@ -12,11 +12,7 @@ storage_path = os.path.join(test_folder_path, "storage")
 local_repo_path = os.path.join(test_folder_path, "local")
 remote_repo_path = os.path.join(test_folder_path, "remote")
 
-last_checked_storage_path = os.path.join(
-    storage_path,
-    "test",
-    "last-update-check.txt",
-)
+last_checked_storage_path = os.path.join(storage_path, "test", "last-update-check.txt",)
 
 os_env_vars = {
     "HEXAGON_STORAGE_PATH": storage_path,
@@ -43,10 +39,11 @@ def _prepare():
     os.makedirs(local_repo_path)
     subprocess.check_call("git init", cwd=remote_repo_path, shell=True)
     subprocess.check_call("git branch -m main", cwd=remote_repo_path, shell=True)
-    shutil.copyfile(
-        os.path.join(test_folder_path, "app.yml"),
-        os.path.join(remote_repo_path, "app.yml"),
-    )
+    files_to_copy = ["app.yml", "package.json", "Pipfile", "yarn.lock"]
+    for file in files_to_copy:
+        shutil.copyfile(
+            os.path.join(test_folder_path, file), os.path.join(remote_repo_path, file),
+        )
 
     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
     subprocess.check_call(
@@ -91,7 +88,12 @@ def test_cli_updated_if_pending_changes():
         as_a_user(local_repo_path)
         .run_hexagon(
             ["echo"],
-            {**os_env_vars, "HEXAGON_THEME": "default"},
+            {
+                **os_env_vars,
+                "HEXAGON_THEME": "default",
+                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+            },
             test_file_path_is_absoulte=True,
         )
         .write("y")
@@ -101,6 +103,8 @@ def test_cli_updated_if_pending_changes():
                 "Fast-forward",
                 "app.yml | 2 +-",
                 "1 file changed, 1 insertion(+), 1 deletion(-)",
+                "would have ran pipenv install --system",
+                "would have ran yarn --production",
                 "Updated to latest version",
             ],
             True,
@@ -117,8 +121,7 @@ def test_cli_updates_fail_silently_if_not_in_a_git_repository():
     os.mkdir(local_repo_path)
 
     shutil.copyfile(
-        os.path.join(test_folder_path, "app.yml"),
-        os.path.join(tmp_dir, "app.yml"),
+        os.path.join(test_folder_path, "app.yml"), os.path.join(tmp_dir, "app.yml"),
     )
 
     (
