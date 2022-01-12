@@ -8,10 +8,13 @@ from pathlib import Path
 def crawl_directory(
     path: str,
     run: Callable[[Path], None],
-    ignored_dirs: Optional[List[str]] = [],
+    ignored_dirs: Optional[List[str]] = None,
     ignore_dirs_ignored_by_git=True,
     in_git_repo: Optional[bool] = None,
 ):
+    if ignored_dirs is None:
+        ignored_dirs = []
+
     if ignore_dirs_ignored_by_git and in_git_repo is None:
         in_git_repo = (
             subprocess.call(
