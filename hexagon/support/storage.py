@@ -1,3 +1,4 @@
+from hexagon.support.printer import translator
 from hexagon.utils.dict import merge_dictionaries_deep
 import os
 from pathlib import Path
@@ -8,6 +9,8 @@ from enum import Enum
 from shutil import rmtree
 
 HEXAGON_STORAGE_APP = "hexagon"
+
+_ = translator
 
 
 class HexagonStorageKeys(Enum):
@@ -79,7 +82,8 @@ def _storage_value_type_by_data_type(data: InputDataType):
         return StorageValueType.dictionary
     else:
         raise Exception(
-            f"Type {type(data).__name__} cannot be stored: supported types are str, List[str] or Dict"
+            # Type {type} cannot be stored: supported types are str, List[str] or Dict
+            _("error.support.storage.unsupported_type").format(type=type(data).__name__)
         )
 
 

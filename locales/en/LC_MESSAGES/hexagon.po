@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2022-01-10 16:12-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+#: hexagon/__main__.py:37
+msgid "msg.main.first_time_intro"
+msgstr ""
+
+#: hexagon/__main__.py:37
+msgid "msg.main.first_time_tool"
+msgstr ""
+
+#: hexagon/support/help.py:23
+msgid "msg.support.help.no_install"
+msgstr ""
+
+#: hexagon/support/help.py:24
+msgid "msg.support.help.get_started"
+msgstr ""
+
+#: hexagon/support/wax.py:61
+msgid "action.support.wax.select_environment"
+msgstr ""
+
+#: hexagon/support/wax.py:66
+msgid "error.support.wax.invalid_environment"
+msgstr ""
+
+#: hexagon/support/wax.py:83
+msgid "action.support.wax.select_tool"
+msgstr ""
+
+#: hexagon/support/wax.py:86
+msgid "error.support.wax.invalid_tool"
+msgstr ""
