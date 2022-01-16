@@ -73,5 +73,5 @@ def save_new_alias(alias_name, command):
 
 def __pretty_print_created_alias(aliases_file, file, lines_to_show=-10):
     log.gap()
-    log.info(_("msg.actions.internal.save_new_alias.added_to_file".format(file=file)))
+    log.info(_("msg.actions.internal.save_new_alias.added_to_file").format(file=file))
     log.example("\n".join(aliases_file.read().splitlines()[lines_to_show:]))
