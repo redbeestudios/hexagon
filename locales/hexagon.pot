@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-01-16 12:05-0300\n"
+"POT-Creation-Date: 2022-01-16 18:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,15 +67,19 @@ msgstr ""
 msgid "action.actions.internal.create_new_tool.input_description"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:73
+#: hexagon/actions/internal/create_new_tool.py:70
+msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
+msgstr ""
+
+#: hexagon/actions/internal/create_new_tool.py:75
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:79
+#: hexagon/actions/internal/create_new_tool.py:81
 msgid "error.actions.internal.create_new_tool.insert_valid_directory"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:84
+#: hexagon/actions/internal/create_new_tool.py:86
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr ""
 
@@ -95,16 +99,46 @@ msgstr ""
 msgid "error.actions.internal.install_cli.select_valid_directory"
 msgstr ""
 
-#: hexagon/actions/internal/save_new_alias.py:20
+#: hexagon/actions/internal/install_cli.py:61
+msgid "msg.actions.internal.install_cli.success"
+msgstr ""
+
+#: hexagon/actions/internal/install_cli.py:61
+#: hexagon/actions/internal/save_new_alias.py:61
+#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:199
+msgid "icon.global.ok"
+msgstr ""
+
+#: hexagon/actions/internal/save_new_alias.py:19
 msgid "msg.actions.internal.save_new_alias.last_command"
 msgstr ""
 
-#: hexagon/actions/internal/save_new_alias.py:26
+#: hexagon/actions/internal/save_new_alias.py:25
 msgid "action.actions.internal.save_new_alias.prompt_alias_name"
 msgstr ""
 
-#: hexagon/actions/internal/save_new_alias.py:28
+#: hexagon/actions/internal/save_new_alias.py:27
 msgid "error.actions.internal.save_new_alias.insert_valid_alias"
+msgstr ""
+
+#: hexagon/actions/internal/save_new_alias.py:61
+msgid "msg.actions.internal.save_new_alias.success"
+msgstr ""
+
+#: hexagon/actions/internal/save_new_alias.py:67
+msgid "msg.actions.internal.save_new_alias.execute_tip"
+msgstr ""
+
+#: hexagon/actions/internal/save_new_alias.py:70
+msgid "msg.actions.internal.save_new_alias.reload_builtins"
+msgstr ""
+
+#: hexagon/actions/internal/save_new_alias.py:73
+msgid "msg.actions.internal.save_new_alias.run_source"
+msgstr ""
+
+#: hexagon/actions/internal/save_new_alias.py:82
+msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr ""
 
 #: hexagon/domain/configuration.py:27
@@ -135,7 +169,7 @@ msgstr ""
 msgid "action.support.analytics.confirm_telemetry"
 msgstr ""
 
-#: hexagon/support/cli/git.py:33
+#: hexagon/support/cli/git.py:35
 msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
 
@@ -143,11 +177,35 @@ msgstr ""
 msgid "error.support.execute.action.command_result_code"
 msgstr ""
 
-#: hexagon/support/execute/action.py:68
+#: hexagon/support/execute/action.py:67
+msgid "error.support.execute.action.could_not_execute"
+msgstr ""
+
+#: hexagon/support/execute/action.py:70
 msgid "error.support.execute.action.we_tried"
 msgstr ""
 
-#: hexagon/support/execute/action.py:150
+#: hexagon/support/execute/action.py:73
+msgid "error.support.execute.action.attempt_cli_custom_dir"
+msgstr ""
+
+#: hexagon/support/execute/action.py:79
+msgid "error.support.execute.action.attempt_internal_tools"
+msgstr ""
+
+#: hexagon/support/execute/action.py:84
+msgid "error.support.execute.action.attempt_known_script"
+msgstr ""
+
+#: hexagon/support/execute/action.py:89
+msgid "error.support.execute.action.attempt_inline_command"
+msgstr ""
+
+#: hexagon/support/execute/action.py:112
+msgid "error.support.execute.action.execute_tool_failed"
+msgstr ""
+
+#: hexagon/support/execute/action.py:165
 msgid "error.support.execute.action.python_dependency_error"
 msgstr ""
 
@@ -175,6 +233,14 @@ msgstr ""
 msgid "msg.support.help.get_started"
 msgstr ""
 
+#: hexagon/support/help.py:29
+msgid "msg.global.envs"
+msgstr ""
+
+#: hexagon/support/help.py:39
+msgid "msg.global.tools"
+msgstr ""
+
 #: hexagon/support/hooks/hook.py:56
 msgid "error.support.hooks.hook.unknown_type"
 msgstr ""
@@ -183,8 +249,16 @@ msgstr ""
 msgid "error.support.storage.unsupported_type"
 msgstr ""
 
-#: hexagon/support/update/cli.py:49
+#: hexagon/support/update/cli.py:48
 msgid "msg.support.update.cli.new_version_available"
+msgstr ""
+
+#: hexagon/support/update/cli.py:53
+msgid "action.support.update.cli.confirm_update"
+msgstr ""
+
+#: hexagon/support/update/cli.py:59
+msgid "msg.support.update.cli.updated"
 msgstr ""
 
 #: hexagon/support/update/hexagon.py:135
@@ -207,7 +281,11 @@ msgstr ""
 msgid "msg.support.update.hexagon.updating"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:205
+#: hexagon/support/update/hexagon.py:199
+msgid "msg.support.update.hexagon.updated"
+msgstr ""
+
+#: hexagon/support/update/hexagon.py:207
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr ""
 

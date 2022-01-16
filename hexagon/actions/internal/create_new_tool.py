@@ -12,7 +12,7 @@ from hexagon.support.printer import log, translator
 _ = translator
 
 
-def main():
+def main(*__):
     create_action = False
     new_tool = ActionTool(
         name="invalid",
@@ -66,7 +66,9 @@ def main():
     if create_action:
         if not configuration.custom_tools_path:
             log.info(
-                f'[magenta]{_("msg.actions.internal.create_new_tool.custom_tools_dir_not_set")}'
+                "[magenta]{}".format(
+                    _("msg.actions.internal.create_new_tool.custom_tools_dir_not_set")
+                )
             )
             configuration.update_custom_tools_path(
                 inquirer.filepath(

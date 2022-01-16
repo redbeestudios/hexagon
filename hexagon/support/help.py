@@ -26,7 +26,7 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
 
     log.info(f"[bold]{cli_config.name}", gap_end=1)
 
-    log.info(f"[bold][u]{_('msg.global.envs')}:")
+    log.info("[bold][u]{}:".format(_("msg.global.envs")))
     for env in envs:
         log.info(
             f'  {env.name + (" (" + env.alias + ")" if env.alias else ""):<60}[dim]{env.long_name or ""}'
@@ -36,7 +36,7 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
             # the same for tools
             log.info(f'  {"": <60}[dim]{env.description}', gap_end=1)
 
-    log.info(f"[bold][u]{_('msg.global.tools')}:", gap_start=2)
+    log.info("[bold][u]{}:".format(_("msg.global.tools")), gap_start=2)
 
     data = sorted(tools, key=lambda t: t.type, reverse=True)
 

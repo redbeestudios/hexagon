@@ -60,40 +60,16 @@ jobs:
         run: sudo apt-get install -y gettext
 
       - name: add matcher
-        run: |
-          echo "::add-matcher::.github/i18n-problem-matcher.json"
+        run: echo "::add-matcher::.github/i18n-problem-matcher.json"
 
       - name: build locales
-        run: |
-          pygettext3 -d hexagon -o locales/hexagon.pot hexagon
-          for locale in locales/**/LC_MESSAGES/hexagon.po ; do
-              l=$(echo "$locale" | cut -d/ -f2)
-              echo "merging messages to $locale"
-              msgmerge --update "$locale" locales/hexagon.pot
-              echo "formatting messages to $locale"
-              msgfmt -o "locales/$l/LC_MESSAGES/hexagon.mo" "$locale"
-          done
+        run: .github/scripts/i18n/build.sh
 
       - name: validate translations
-        run: |
-          for locale in locales/**/LC_MESSAGES/hexagon.po; do
-            grep -Hin 'msgstr ""' "$locale" >>errors.txt
-          done
-
-          if [ -s errors.txt ]; then
-            while IFS="" read -r p || [ -n "$p" ]; do
-              # the first match is always empty
-              if [[ "$p" != *".po:6:"* ]]; then printf '%s\n' "$p:translation string should not be empty"; fi
-            done <errors.txt
-            exit 1
-          else
-            echo "all strings have a translation"
-            exit 0
-          fi
+        run: .github/scripts/i18n/check.sh
 
       - name: remove matcher
-        run: |
-          echo "::remove-matcher owner=hexagon-i18n::"
+        run: echo "::remove-matcher owner=hexagon-i18n::"
 
   release:
     if: ${{ github.event_name != 'pull_request' && github.event_name != 'pull_request_target' }}

@@ -15,7 +15,6 @@ _ = translator
 def main(*__):
     last_command = load_user_data(HexagonStorageKeys.last_command.value)
 
-    # Last command: {last_command}
     log.info(
         _("msg.actions.internal.save_new_alias.last_command").format(
             last_command=last_command
@@ -58,16 +57,23 @@ def save_new_alias(alias_name, command):
         aliases_file.close()
 
     log.info(
-        f"[green]{_('icon.global.ok')}️ [white][u]{_('msg.actions.internal.save_new_alias.success')}",
+        "[green]{} [white][u]{}".format(
+            _("icon.global.ok"), _("msg.actions.internal.save_new_alias.success")
+        ),
         gap_end=1,
     )
     log.result(f"[b]$ {alias_name}")
     log.info(
-        f"[dim][u]{_('msg.actions.internal.save_new_alias.execute_tip')}", gap_start=1
+        "[dim][u]{}".format(_("msg.actions.internal.save_new_alias.execute_tip")),
+        gap_start=1,
     )
-    log.info(f"[dim]{_('msg.actions.internal.save_new_alias.reload_builtins')}")
+    log.info("[dim]{}".format(_("msg.actions.internal.save_new_alias.reload_builtins")))
     log.info(
-        f"[dim]{_('msg.actions.internal.save_new_alias.run_source').format(file_path=aliases_file_path)}"
+        "[dim]{}".format(
+            _("msg.actions.internal.save_new_alias.run_source").format(
+                file_path=aliases_file_path
+            )
+        )
     )
 
 

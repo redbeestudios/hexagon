@@ -57,7 +57,9 @@ def main(*__):
         )
     _make_executable(command_path)
     log.info(
-        f"[green]{_('icon.global.ok')} [white][u]{_('msg.actions.internal.install_cli.success')}",
+        "[green]{0} [white][u]{1}".format(
+            _("icon.global.ok"), _("msg.actions.internal.install_cli.success")
+        ),
         gap_end=1,
         gap_start=1,
     )

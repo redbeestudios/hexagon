@@ -63,20 +63,31 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
 
             if return_code == 127:
                 log.error(
-                    f"{_('error.support.execute.action.could_not_execute')} [bold]{tool.action}"
+                    "{} [bold]{}".format(
+                        _("error.support.execute.action.could_not_execute"), tool.action
+                    )
                 )
                 log.error(_("error.support.execute.action.we_tried"))
                 log.error(
-                    f"  - {_('error.support.execute.action.attempt_cli_custom_dir')} [bold]{custom_tools_path}"
+                    "  - {} [bold]{}".format(
+                        _("error.support.execute.action.attempt_cli_custom_dir"),
+                        custom_tools_path,
+                    )
                 )
                 log.error(
-                    f"  - {_('error.support.execute.action.attempt_internal_tools')}"
+                    "  - {} (hexagon.actions.external)".format(
+                        _("error.support.execute.action.attempt_internal_tools")
+                    )
                 )
                 log.error(
-                    f"  - {_('error.support.execute.action.attempt_known_script')}"
+                    "  - {} (.js, .sh)".format(
+                        _("error.support.execute.action.attempt_known_script")
+                    )
                 )
                 log.error(
-                    f"  - {_('error.support.execute.action.attempt_inline_command')}"
+                    "  - {}".format(
+                        _("error.support.execute.action.attempt_inline_command")
+                    )
                 )
             sys.exit(1)
 
@@ -97,7 +108,11 @@ def _execute_python_module(
         return True
     except Exception:
         __pretty_print_external_error(action_id, custom_tools_path)
-        log.error("error.support.execute.action.execute_tool_failed")
+        log.error(
+            _("error.support.execute.action.execute_tool_failed").format(
+                action=action_id
+            )
+        )
         sys.exit(1)
 
 

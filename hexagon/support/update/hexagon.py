@@ -195,7 +195,9 @@ def check_for_hexagon_updates():
         )
 
     log.info(
-        f"[green]{_('icon.global.ok')}️[white]{_('msg.support.update.hexagon.updated')}"
+        "[green]{}️[white]{}".format(
+            _("icon.global.ok"), _("msg.support.update.hexagon.updated")
+        )
     )
     log.finish()
     sys.exit(1)
