@@ -8,7 +8,7 @@ LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 test_folder_path = e2e_test_folder_path(__file__)
 storage_path = os.path.realpath(os.path.join(test_folder_path, "storage"))
 last_checked_storage_path = os.path.join(
-    storage_path, "hexagon", "last-update-check.txt",
+    storage_path, "hexagon", "last-update-check.txt"
 )
 
 

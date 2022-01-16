@@ -18,7 +18,7 @@ class YamlFileValidator(PathValidator):
         extension = document.text.split("/")[-1].split(".")[-1]
         if extension != "yaml" and extension != "yml":
             raise ValidationError(
-                message=self.message, cursor_position=document.cursor_position,
+                message=self.message, cursor_position=document.cursor_position
             )
 
 

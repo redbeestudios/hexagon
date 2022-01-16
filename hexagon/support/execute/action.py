@@ -50,7 +50,7 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
 
         split_action = action_to_execute.split(" ")
         return_code, executed_command = _execute_command(
-            split_action[0], env_args, args, action_args=split_action[1:],
+            split_action[0], env_args, args, action_args=split_action[1:]
         )
 
         if return_code != 0:
@@ -165,7 +165,7 @@ def __pretty_print_external_error(action_id, custom_tools_path):
 
     if trace:
         log.example(
-            rich_traceback.Traceback.from_exception(exc_type, exc_value, trace,),
+            rich_traceback.Traceback.from_exception(exc_type, exc_value, trace),
             decorator_start=False,
             decorator_end=False,
         )

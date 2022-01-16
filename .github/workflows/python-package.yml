@@ -56,6 +56,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: install gettext
+        run: sudo apt-get install -y gettext
+
       - name: add matcher
         run: |
           echo "::add-matcher::.github/i18n-problem-matcher.json"
