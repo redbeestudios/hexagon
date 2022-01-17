@@ -310,6 +310,3 @@ msgstr ""
 #: hexagon/support/yaml/__init__.py:15
 msgid "error.support.yaml.invalid_yaml"
 msgstr ""
-
-#~ msgid "info.title.first_time"
-#~ msgstr " asdcasdf asdfs "

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 for locale in locales/**/LC_MESSAGES/hexagon.po; do
-  grep -Hin 'msgstr ""' "$locale" >>errors.txt
+  (cat "$locale"; echo) \
+    | awk '/^msgstr ""$/{getline;print NR-1":"$0}' \
+    | awk -v fname="$locale" '/^[0-9]*:\s*$/{print fname":"$0"translation string should not be empty"}' >> errors.txt
 done
 
 if [ -s errors.txt ]; then
-  while IFS="" read -r p || [ -n "$p" ]; do
-    # the first match is always on line 6 and empty
-    if [[ "$p" != *".po:6:"* ]]; then printf '%s\n' "$p:translation string should not be empty"; fi
-  done <errors.txt
+  echo "Some translation files contain errors"
+  cat errors.txt
   exit 1
 else
   echo "🥳 all strings have a translation 🗺"
