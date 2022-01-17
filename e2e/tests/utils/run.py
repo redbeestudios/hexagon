@@ -78,7 +78,7 @@ def run_hexagon(
 
     command = [*HEXAGON_COMMAND, *args]
     print(
-        f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
+        f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in os_env_vars.items() if 'HEXAGON_' in k] + command)}"
     )
     return subprocess.Popen(
         command,
