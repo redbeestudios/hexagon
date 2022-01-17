@@ -14,6 +14,6 @@ theme = load_theme()
 
 log = Logger(Console(color_system="auto" if theme.show_colors else None), theme)
 
-gettext.bindtextdomain("hexagon", LOCALEDIR)
-gettext.textdomain("hexagon")
-translator: Callable[[str], str] = gettext.gettext
+el = gettext.translation("hexagon", localedir=LOCALEDIR, languages=["en", "es"])
+el.install()
+translator: Callable[[str], str] = el.gettext
