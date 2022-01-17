@@ -4,7 +4,7 @@
       "owner": "hexagon-i18n",
       "pattern": [
         {
-          "regexp": "^([^:]*):(\\d+):msgstr \"\":(.*)$",
+          "regexp": "^([^:]*):(\\d+):(.*)$",
           "file": 1,
           "line": 2,
           "message": 3
