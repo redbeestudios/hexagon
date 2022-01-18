@@ -38,6 +38,7 @@ jobs:
       - name: Setup e2e dependencies
         run: |
           python -m pip install wheel
+          .github/scripts/i18n/build.sh
           python setup.py sdist bdist_wheel
           python -m pip install --find-links=./dist hexagon
 
@@ -81,6 +82,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: build locales
+        run: .github/scripts/i18n/build.sh
 
       - name: Python Semantic Release
         uses: relekang/python-semantic-release@master
