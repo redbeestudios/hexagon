@@ -171,12 +171,10 @@ def check_for_hexagon_updates():
     log.info(
         _("msg.support.update.hexagon.new_version_available").format(
             latest_version=latest_github_release_version,
-            colors=dict(
-                hexagon_start="[cyan]",
-                hexagon_end="[/cyan]",
-                version_start="[green]",
-                version_end="[/green]",
-            ),
+            hexagon_start="[cyan]",
+            hexagon_end="[/cyan]",
+            version_start="[green]",
+            version_end="[/green]",
         )
     )
 

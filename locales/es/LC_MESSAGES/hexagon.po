@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-01-16 17:58-0300\n"
+"POT-Creation-Date: 2022-01-18 00:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: hexagon/actions/internal/install_cli.py:61
 #: hexagon/actions/internal/save_new_alias.py:61
-#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:199
+#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
 msgid "icon.global.ok"
 msgstr ""
 
@@ -275,19 +275,19 @@ msgstr ""
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:186
+#: hexagon/support/update/hexagon.py:184
 msgid "action.support.update.hexagon.confirm_update"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:190
+#: hexagon/support/update/hexagon.py:188
 msgid "msg.support.update.hexagon.updating"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:199
+#: hexagon/support/update/hexagon.py:197
 msgid "msg.support.update.hexagon.updated"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:207
+#: hexagon/support/update/hexagon.py:205
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr ""
 

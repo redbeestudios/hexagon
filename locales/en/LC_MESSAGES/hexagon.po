@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-01-16 17:58-0300\n"
+"POT-Creation-Date: 2022-01-18 00:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgstr "All done! Now you can execute your project's CLI like:"
 
 #: hexagon/actions/internal/install_cli.py:61
 #: hexagon/actions/internal/save_new_alias.py:61
-#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:199
+#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
 msgid "icon.global.ok"
 msgstr "🗸"
 
@@ -282,22 +282,22 @@ msgstr "and much more!"
 #: hexagon/support/update/hexagon.py:172
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
-"New {colors.hexagon_start}hexagon{colors.hexagon_end} version available "
-"{colors.version_start}{latest_version}{colors.version_end}!"
+"New {hexagon_start}hexagon{hexagon_end} version available {version_start}"
+"{latest_version}{version_end}!"
 
-#: hexagon/support/update/hexagon.py:186
+#: hexagon/support/update/hexagon.py:184
 msgid "action.support.update.hexagon.confirm_update"
 msgstr "Would you like to update?"
 
-#: hexagon/support/update/hexagon.py:190
+#: hexagon/support/update/hexagon.py:188
 msgid "msg.support.update.hexagon.updating"
 msgstr "Updating"
 
-#: hexagon/support/update/hexagon.py:199
+#: hexagon/support/update/hexagon.py:197
 msgid "msg.support.update.hexagon.updated"
 msgstr "Updated to latest version"
 
-#: hexagon/support/update/hexagon.py:207
+#: hexagon/support/update/hexagon.py:205
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr "Checking for new hexagon versions"
 
