@@ -261,7 +261,7 @@ msgstr ""
 
 #: hexagon/support/update/cli.py:48
 msgid "msg.support.update.cli.new_version_available"
-msgstr "New {cli_start}{cli.name}{cli_end} version available"
+msgstr "New {cli_start}{cli_name}{cli_end} version available"
 
 #: hexagon/support/update/cli.py:53
 msgid "action.support.update.cli.confirm_update"
