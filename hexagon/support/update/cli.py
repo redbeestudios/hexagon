@@ -46,7 +46,7 @@ def check_for_cli_updates():
     if "is behind" in branch_status:
         log.info(
             _("msg.support.update.cli.new_version_available").format(
-                cli_name=cli.name, colors=dict(cli_start="[cyan]", cli_end="[/cyan]")
+                cli_name=cli.name, cli_start="[cyan]", cli_end="[/cyan]"
             )
         )
         if not inquirer.confirm(
