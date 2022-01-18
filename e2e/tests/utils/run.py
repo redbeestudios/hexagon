@@ -77,6 +77,12 @@ def run_hexagon(
     print(
         f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
     )
+    print(
+        environment["LANGUAGE"],
+        environment["LC_ALL"],
+        environment["LC_MESSAGES"],
+        environment["LANG"],
+    )
     return subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
