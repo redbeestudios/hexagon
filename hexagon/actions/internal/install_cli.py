@@ -6,9 +6,11 @@ from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
 
 from hexagon.domain import configuration
+from hexagon.support.printer import log, translator
 from hexagon.support.dependencies import scan_and_install_dependencies
-from hexagon.support.printer import log
 from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_user_data
+
+_ = translator
 
 
 class YamlFileValidator(PathValidator):
@@ -17,16 +19,17 @@ class YamlFileValidator(PathValidator):
         extension = document.text.split("/")[-1].split(".")[-1]
         if extension != "yaml" and extension != "yml":
             raise ValidationError(
-                message=self.message, cursor_position=document.cursor_position,
+                message=self.message, cursor_position=document.cursor_position
             )
 
 
-def main(*_):
+def main(*__):
     src_path = inquirer.filepath(
-        message="Where is your project's hexagon config file?",
+        message=_("action.actions.internal.install_cli.config_file_location"),
         default=str(Path.cwd()),
         validate=YamlFileValidator(
-            is_file=True, message="Please select a valid YAML file"
+            is_file=True,
+            message=_("error.actions.internal.install_cli.select_valid_file"),
         ),
     ).execute()
 
@@ -35,10 +38,11 @@ def main(*_):
     bin_path = (
         load_user_data(HexagonStorageKeys.cli_install_path.value)
         or inquirer.filepath(
-            message="Where do you want your CLI commands to be saved? This should be on your path",
+            message=_("action.actions.internal.install_cli.commands_path"),
             default=str(os.path.expanduser(os.path.join("~", "bin"))),
             validate=PathValidator(
-                is_dir=True, message="Please select a valid directory"
+                is_dir=True,
+                message=_("error.actions.internal.install_cli.select_valid_directory"),
             ),
         ).execute()
     )
@@ -57,7 +61,9 @@ def main(*_):
     scan_and_install_dependencies(Path(src_path).parent)
 
     log.info(
-        "[green]🗸️ [white][u]All done! Now you can execute your project's CLI like:",
+        "[green]{0} [white][u]{1}".format(
+            _("icon.global.ok"), _("msg.actions.internal.install_cli.success")
+        ),
         gap_end=1,
         gap_start=1,
     )
