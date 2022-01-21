@@ -14,7 +14,7 @@ envs_dict = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
 
 @pytest.mark.parametrize(
     "initial,expected_command",
-    [([], ""), ([""], ""), (["docker"], ""), (["docker", "dev"], ""),],
+    [([], ""), ([""], ""), (["docker"], ""), (["docker", "dev"], "")],
 )
 def test_build_command_from_initial_trace(initial, expected_command):
     tracer = Tracer(initial)

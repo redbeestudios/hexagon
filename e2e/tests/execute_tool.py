@@ -122,7 +122,7 @@ def test_execute_python_module_by_argument():
     (
         as_a_user(__file__)
         .run_hexagon(["python-module"])
-        .then_output_should_be(["executed python-module",])
+        .then_output_should_be(["executed python-module"])
         .exit()
     )
     assert_file_has_contents(
@@ -134,7 +134,7 @@ def test_execute_python_module_by_alias():
     (
         as_a_user(__file__)
         .run_hexagon(["pm"])
-        .then_output_should_be(["executed python-module",])
+        .then_output_should_be(["executed python-module"])
         .exit()
     )
     assert_file_has_contents(
@@ -212,7 +212,7 @@ def test_execute_script_module_by_argument():
     (
         as_a_user(__file__)
         .run_hexagon(["node-module"])
-        .then_output_should_be(["executed node module",])
+        .then_output_should_be(["executed node module"])
         .exit()
     )
     assert_file_has_contents(

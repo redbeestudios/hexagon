@@ -105,6 +105,6 @@ def test_print_help_using_yaml_contents_no_tools(command):
             }
         )
         .run_hexagon([command], os_env_vars={"HEXAGON_THEME": "disabled"})
-        .then_output_should_be(["Test", "", "Envs:", "", "", "Tools:", "", "",])
+        .then_output_should_be(["Test", "", "Envs:", "", "", "Tools:", "", ""])
         .exit()
     )
