@@ -167,7 +167,7 @@ def check_for_hexagon_updates():
     if current_version >= parse_version(latest_github_release_version):
         return
 
-    # New {colors.hexagon_start}hexagon{colors.hexagon_end} version available {colors.version_start}{latest_version}{colors.version_end}!
+    # FIXME find a better way of handling colors in translations
     log.info(
         _("msg.support.update.hexagon.new_version_available").format(
             latest_version=latest_github_release_version,
