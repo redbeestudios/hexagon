@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-01-18 12:00-0300\n"
+"POT-Creation-Date: 2022-01-19 18:36-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,7 +154,7 @@ msgid "msg.domain.configuration.install_cli_long_name"
 msgstr ""
 
 #: hexagon/domain/configuration.py:106
-msgid "msg.domain.configuration.save_alias_description"
+msgid "msg.domain.configuration.install_cli_description"
 msgstr ""
 
 #: hexagon/support/analytics/__init__.py:78

@@ -103,7 +103,7 @@ class Configuration:
                 ActionTool(
                     name="install",
                     long_name=_("msg.domain.configuration.install_cli_long_name"),
-                    description=_("msg.domain.configuration.save_alias_description"),
+                    description=_("msg.domain.configuration.install_cli_description"),
                     type=ToolType.hexagon,
                     action="hexagon.actions.internal.install_cli",
                 )

@@ -9,7 +9,7 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: hexagon/__main__.py:37
 msgid "msg.main.first_time_intro"
-msgstr "This looks like your first time running Hexagon."
+msgstr "This looks like your first time running hexagon."
 
 #: hexagon/__main__.py:37
 msgid "msg.main.first_time_tool"
@@ -91,7 +91,7 @@ msgstr "relative to this file"
 
 #: hexagon/actions/internal/install_cli.py:27
 msgid "action.actions.internal.install_cli.config_file_location"
-msgstr "Where is your project's hexagon config file?"
+msgstr "Where is your CLI's hexagon config YAML? (app.yml/yaml)"
 
 #: hexagon/actions/internal/install_cli.py:31
 msgid "error.actions.internal.install_cli.select_valid_file"
@@ -150,7 +150,7 @@ msgstr "Added alias to {file}"
 
 #: hexagon/domain/configuration.py:27
 msgid "msg.domain.configuration.save_alias_long_name"
-msgstr "Save Last Command as Linux Alias"
+msgstr "Save Last Command as Shell Alias"
 
 #: hexagon/domain/configuration.py:33
 msgid "msg.domain.configuration.create_tool_long_name"
@@ -161,7 +161,7 @@ msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Install CLI"
 
 #: hexagon/domain/configuration.py:106
-msgid "msg.domain.configuration.save_alias_description"
+msgid "msg.domain.configuration.install_cli_description"
 msgstr "Install a custom project CLI from a YAML file."
 
 #: hexagon/support/analytics/__init__.py:78
@@ -240,7 +240,7 @@ msgstr "You are executing Hexagon without an install."
 
 #: hexagon/support/help.py:24
 msgid "msg.support.help.get_started"
-msgstr "To get started run hexagon's \"Install Hexagon\" tool"
+msgstr "To get started run hexagon's \"Install CLI\" tool"
 
 #: hexagon/support/help.py:29
 msgid "msg.global.envs"

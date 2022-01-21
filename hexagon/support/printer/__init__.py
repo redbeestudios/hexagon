@@ -14,8 +14,12 @@ theme = load_theme()
 
 log = Logger(Console(color_system="auto" if theme.show_colors else None), theme)
 
-el = gettext.translation(
-    "hexagon", localedir=LOCALEDIR, languages=["en", "es"], fallback=True
-)
+try:
+    el = gettext.translation("hexagon", localedir=LOCALEDIR)
+except FileNotFoundError:
+    el = gettext.translation(
+        "hexagon", localedir=LOCALEDIR, languages=["en"], fallback=True
+    )
 el.install()
+
 translator: Callable[[str], str] = el.gettext
