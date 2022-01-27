@@ -54,7 +54,7 @@ def main(*_):
         )
 
     _make_executable(command_path)
-    scan_and_install_dependencies(Path(src_path).parent)
+    scan_and_install_dependencies(cli.custom_tools_dir)
 
     log.info(
         "[green]🗸️ [white][u]All done! Now you can execute your project's CLI like:",
