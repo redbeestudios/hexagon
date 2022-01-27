@@ -12,7 +12,11 @@ storage_path = os.path.join(test_folder_path, "storage")
 local_repo_path = os.path.join(test_folder_path, "local")
 remote_repo_path = os.path.join(test_folder_path, "remote")
 
-last_checked_storage_path = os.path.join(storage_path, "test", "last-update-check.txt",)
+last_checked_storage_path = os.path.join(
+    storage_path,
+    "test",
+    "last-update-check.txt",
+)
 
 os_env_vars = {
     "HEXAGON_STORAGE_PATH": storage_path,
@@ -42,7 +46,8 @@ def _prepare():
     files_to_copy = ["app.yml", "package.json", "Pipfile", "yarn.lock"]
     for file in files_to_copy:
         shutil.copyfile(
-            os.path.join(test_folder_path, file), os.path.join(remote_repo_path, file),
+            os.path.join(test_folder_path, file),
+            os.path.join(remote_repo_path, file),
         )
 
     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
@@ -121,7 +126,8 @@ def test_cli_updates_fail_silently_if_not_in_a_git_repository():
     os.mkdir(local_repo_path)
 
     shutil.copyfile(
-        os.path.join(test_folder_path, "app.yml"), os.path.join(tmp_dir, "app.yml"),
+        os.path.join(test_folder_path, "app.yml"),
+        os.path.join(tmp_dir, "app.yml"),
     )
 
     (
