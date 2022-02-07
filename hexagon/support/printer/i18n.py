@@ -17,7 +17,12 @@ DEFAULT_LANGUAGE = "en"
 
 def install():
     el = (
-        (__try_translation(localedir=LOCALEDIR) if LOCALEDIR else None)
+        (
+            __try_translation(localedir=LOCALEDIR)
+            or __try_translation(localedir=LOCALEDIR, languages=[DEFAULT_LANGUAGE])
+            if LOCALEDIR
+            else None
+        )
         or __try_translation(localedir=LOCAL_LOCALEDIR)
         or __try_translation(localedir=LOCAL_LOCALEDIR, languages=[DEFAULT_LANGUAGE])
         or __try_translation(localedir=SYSTEM_LOCALEDIR)
