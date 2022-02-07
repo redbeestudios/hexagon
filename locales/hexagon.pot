@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-01-19 18:36-0300\n"
+"POT-Creation-Date: 2022-01-25 17:18-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,14 @@ msgstr ""
 
 #: hexagon/__main__.py:37
 msgid "msg.main.first_time_tool"
+msgstr ""
+
+#: hexagon/__main__.py:55
+msgid "msg.main.tracer.run_again"
+msgstr ""
+
+#: hexagon/__main__.py:62
+msgid "msg.main.tracer.or"
 msgstr ""
 
 #: hexagon/actions/external/docker_registry.py:30
@@ -99,14 +107,8 @@ msgstr ""
 msgid "error.actions.internal.install_cli.select_valid_directory"
 msgstr ""
 
-#: hexagon/actions/internal/install_cli.py:61
+#: hexagon/actions/internal/install_cli.py:60
 msgid "msg.actions.internal.install_cli.success"
-msgstr ""
-
-#: hexagon/actions/internal/install_cli.py:61
-#: hexagon/actions/internal/save_new_alias.py:61
-#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
-msgid "icon.global.ok"
 msgstr ""
 
 #: hexagon/actions/internal/save_new_alias.py:19
@@ -123,6 +125,11 @@ msgstr ""
 
 #: hexagon/actions/internal/save_new_alias.py:61
 msgid "msg.actions.internal.save_new_alias.success"
+msgstr ""
+
+#: hexagon/actions/internal/save_new_alias.py:61
+#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
+msgid "icon.global.ok"
 msgstr ""
 
 #: hexagon/actions/internal/save_new_alias.py:67
@@ -241,12 +248,8 @@ msgstr ""
 msgid "msg.global.tools"
 msgstr ""
 
-#: hexagon/support/hooks/hook.py:56
+#: hexagon/support/hooks/hook.py:59
 msgid "error.support.hooks.hook.unknown_type"
-msgstr ""
-
-#: hexagon/support/storage.py:86
-msgid "error.support.storage.unsupported_type"
 msgstr ""
 
 #: hexagon/support/update/cli.py:48

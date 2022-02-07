@@ -42,7 +42,10 @@ class Hook(Generic[T]):
     def run(self, data: T = None):
         for subscription in self.subscriptions:
             if subscription.type == HookSubscrptionType.blocking:
-                subscription.callback(data)
+                try:
+                    subscription.callback(data)
+                except IOError:
+                    pass
             elif subscription.type == HookSubscrptionType.background:
                 thread = threading.Thread(
                     target=subscription.callback,

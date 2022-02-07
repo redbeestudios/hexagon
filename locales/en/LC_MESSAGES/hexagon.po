@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-01-18 00:32-0300\n"
+"POT-Creation-Date: 2022-01-25 17:08-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,14 @@ msgstr "This looks like your first time running hexagon."
 #: hexagon/__main__.py:37
 msgid "msg.main.first_time_tool"
 msgstr "You should probably run \"Install CLI\"."
+
+#: hexagon/__main__.py:55
+msgid "msg.main.tracer.run_again"
+msgstr "[cyan][dim]To run this tool again do:[/dim]\n  {command}"
+
+#: hexagon/__main__.py:62
+msgid "msg.main.tracer.or"
+msgstr "[cyan][dim] or:[/dim]\n  {command}"
 
 #: hexagon/actions/external/docker_registry.py:30
 msgid "action.actions.external.docker_registry.prompt_docker_image"
@@ -106,15 +114,10 @@ msgstr ""
 msgid "error.actions.internal.install_cli.select_valid_directory"
 msgstr "Please select a valid directory"
 
-#: hexagon/actions/internal/install_cli.py:61
+#: hexagon/actions/internal/install_cli.py:60
 msgid "msg.actions.internal.install_cli.success"
-msgstr "All done! Now you can execute your project's CLI like:"
-
-#: hexagon/actions/internal/install_cli.py:61
-#: hexagon/actions/internal/save_new_alias.py:61
-#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
-msgid "icon.global.ok"
-msgstr "🗸"
+msgstr ""
+"[green]🗸 [white][u]All done! Now you can execute your project's CLI like:"
 
 #: hexagon/actions/internal/save_new_alias.py:19
 msgid "msg.actions.internal.save_new_alias.last_command"
@@ -131,6 +134,11 @@ msgstr "Please insert a valid unix alias."
 #: hexagon/actions/internal/save_new_alias.py:61
 msgid "msg.actions.internal.save_new_alias.success"
 msgstr "All done! You can now run your alias like:"
+
+#: hexagon/actions/internal/save_new_alias.py:61
+#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
+msgid "icon.global.ok"
+msgstr "🗸"
 
 #: hexagon/actions/internal/save_new_alias.py:67
 msgid "msg.actions.internal.save_new_alias.execute_tip"
@@ -250,14 +258,9 @@ msgstr "Envs"
 msgid "msg.global.tools"
 msgstr "Tools"
 
-#: hexagon/support/hooks/hook.py:56
+#: hexagon/support/hooks/hook.py:59
 msgid "error.support.hooks.hook.unknown_type"
 msgstr "Unknown HookSubscriptionType {subscription_type}"
-
-#: hexagon/support/storage.py:86
-msgid "error.support.storage.unsupported_type"
-msgstr ""
-"Type {type} cannot be stored: supported types are str, List[str] or Dict"
 
 #: hexagon/support/update/cli.py:48
 msgid "msg.support.update.cli.new_version_available"
@@ -320,3 +323,7 @@ msgstr "Please select a valid tool"
 #: hexagon/support/yaml/__init__.py:15
 msgid "error.support.yaml.invalid_yaml"
 msgstr "There were {errors_length} error(s) in your YAML file: {yaml_path}"
+
+#~ msgid "error.support.storage.unsupported_type"
+#~ msgstr ""
+#~ "Type {type} cannot be stored: supported types are str, List[str] or Dict"

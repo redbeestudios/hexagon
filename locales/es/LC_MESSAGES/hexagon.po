@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-01-18 00:32-0300\n"
+"POT-Creation-Date: 2022-01-25 17:08-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,15 @@ msgstr "Esta parece ser tu primera vez ejecutando hexagon."
 #: hexagon/__main__.py:37
 msgid "msg.main.first_time_tool"
 msgstr "Probablemente deberías ejecutar \"Instalar CLI\""
+
+#: hexagon/__main__.py:55
+msgid "msg.main.tracer.run_again"
+msgstr ""
+
+#: hexagon/__main__.py:62
+#, fuzzy
+msgid "msg.main.tracer.or"
+msgstr "Esta parece ser tu primera vez ejecutando hexagon."
 
 #: hexagon/actions/external/docker_registry.py:30
 msgid "action.actions.external.docker_registry.prompt_docker_image"
@@ -61,11 +70,15 @@ msgstr "¿Te gustaría que tenga un alias? (vacío = No)"
 
 #: hexagon/actions/internal/create_new_tool.py:55
 msgid "action.actions.internal.create_new_tool.input_long_name"
-msgstr "¿Te gustaría agregar un nombre más descriptivo? (va a ser mostrado en lugar del comando)"
+msgstr ""
+"¿Te gustaría agregar un nombre más descriptivo? (va a ser mostrado en lugar "
+"del comando)"
 
 #: hexagon/actions/internal/create_new_tool.py:60
 msgid "action.actions.internal.create_new_tool.input_description"
-msgstr "¿Te gustaría agregar una descripción? (va a ser mostrada junto con el nombre/comando)"
+msgstr ""
+"¿Te gustaría agregar una descripción? (va a ser mostrada junto con el nombre/"
+"comando)"
 
 #: hexagon/actions/internal/create_new_tool.py:70
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
@@ -73,7 +86,9 @@ msgstr "Tu CLI no tiene un directorio de herramientas (cli.custom_tools_dir)."
 
 #: hexagon/actions/internal/create_new_tool.py:75
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
-msgstr "¿Donde te gustaría que se encuentre? (puede ser un directorio relativo al YAML - ej: ./tools o . - o absoluto)"
+msgstr ""
+"¿Donde te gustaría que se encuentre? (puede ser un directorio relativo al "
+"YAML - ej: ./tools o . - o absoluto)"
 
 #: hexagon/actions/internal/create_new_tool.py:81
 msgid "error.actions.internal.create_new_tool.insert_valid_directory"
@@ -93,21 +108,17 @@ msgstr "Por favor, selecciona un YAML valido (*.yaml o *.yml)"
 
 #: hexagon/actions/internal/install_cli.py:40
 msgid "action.actions.internal.install_cli.commands_path"
-msgstr "¿En qué directorio te gustaría que se guarden los comandos de CLI? Debería estar en el PATH de tu SO."
+msgstr ""
+"¿En qué directorio te gustaría que se guarden los comandos de CLI? Debería "
+"estar en el PATH de tu SO."
 
 #: hexagon/actions/internal/install_cli.py:44
 msgid "error.actions.internal.install_cli.select_valid_directory"
 msgstr "Por favor, ingresar un directorio valido"
 
-#: hexagon/actions/internal/install_cli.py:61
+#: hexagon/actions/internal/install_cli.py:60
 msgid "msg.actions.internal.install_cli.success"
 msgstr "¡Listo! Ahora podes ejecutar tu CLI de la siguiente manera:"
-
-#: hexagon/actions/internal/install_cli.py:61
-#: hexagon/actions/internal/save_new_alias.py:61
-#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
-msgid "icon.global.ok"
-msgstr "🗸"
 
 #: hexagon/actions/internal/save_new_alias.py:19
 msgid "msg.actions.internal.save_new_alias.last_command"
@@ -124,6 +135,11 @@ msgstr "Por favor, ingresar un alias de shell valido."
 #: hexagon/actions/internal/save_new_alias.py:61
 msgid "msg.actions.internal.save_new_alias.success"
 msgstr "¡Listo! Ya podés ejecutar tu alias de la siguiente manera:"
+
+#: hexagon/actions/internal/save_new_alias.py:61
+#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
+msgid "icon.global.ok"
+msgstr "🗸"
 
 #: hexagon/actions/internal/save_new_alias.py:67
 msgid "msg.actions.internal.save_new_alias.execute_tip"
@@ -159,7 +175,9 @@ msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
 #: hexagon/support/analytics/__init__.py:78
 msgid "msg.support.analytics.telemetry_notice"
-msgstr "Para poder mejorar la experiencia de hexagon registramos eventos anónimos de uso."
+msgstr ""
+"Para poder mejorar la experiencia de hexagon registramos eventos anónimos de "
+"uso."
 
 #: hexagon/support/analytics/__init__.py:80
 msgid "msg.support.analytics.telemetry_directory"
@@ -171,7 +189,9 @@ msgstr "¿Te gustaría participar enviando estos datos?"
 
 #: hexagon/support/cli/git.py:35
 msgid "error.support.cli.git.failed_to_get_remote"
-msgstr "Hubo un error de git accediendo al remote del repositorio de tu CLI, hay varias opciones y origin no está presente."
+msgstr ""
+"Hubo un error de git accediendo al remote del repositorio de tu CLI, hay "
+"varias opciones y origin no está presente."
 
 #: hexagon/support/execute/action.py:59
 msgid "error.support.execute.action.command_result_code"
@@ -241,13 +261,9 @@ msgstr "Entornos"
 msgid "msg.global.tools"
 msgstr "Herramientas"
 
-#: hexagon/support/hooks/hook.py:56
+#: hexagon/support/hooks/hook.py:59
 msgid "error.support.hooks.hook.unknown_type"
 msgstr "HookSubscriptionType desconocido {subscription_type}"
-
-#: hexagon/support/storage.py:86
-msgid "error.support.storage.unsupported_type"
-msgstr "El tipo {type} no se puede guardar: los tipos soportados son str, List[str] or Dict"
 
 #: hexagon/support/update/cli.py:48
 msgid "msg.support.update.cli.new_version_available"
@@ -271,7 +287,9 @@ msgstr "¡y mucho más!"
 
 #: hexagon/support/update/hexagon.py:172
 msgid "msg.support.update.hexagon.new_version_available"
-msgstr "¡Existe una nueva versión {version_start}{latest_version}{version_end} de {hexagon_start}hexagon{hexagon_end}!"
+msgstr ""
+"¡Existe una nueva versión {version_start}{latest_version}{version_end} de "
+"{hexagon_start}hexagon{hexagon_end}!"
 
 #: hexagon/support/update/hexagon.py:184
 msgid "action.support.update.hexagon.confirm_update"
@@ -308,3 +326,8 @@ msgstr "Por favor, selecciona una herramienta valida"
 #: hexagon/support/yaml/__init__.py:15
 msgid "error.support.yaml.invalid_yaml"
 msgstr "Hay {errors_length} errores en el YAML: {yaml_path}"
+
+#~ msgid "error.support.storage.unsupported_type"
+#~ msgstr ""
+#~ "El tipo {type} no se puede guardar: los tipos soportados son str, "
+#~ "List[str] or Dict"
