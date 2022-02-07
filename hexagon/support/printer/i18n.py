@@ -16,23 +16,27 @@ DEFAULT_LANGUAGE = "en"
 
 
 def install():
-    el = (
-        (
-            __try_translation(localedir=LOCALEDIR)
-            or __try_translation(localedir=LOCALEDIR, languages=[DEFAULT_LANGUAGE])
-            if LOCALEDIR
-            else None
-        )
-        or __try_translation(localedir=LOCAL_LOCALEDIR)
+    el = lookup_localedir() if LOCALEDIR else lookup_install_localedirs()
+
+    el.install()
+
+    return el.gettext
+
+
+def lookup_install_localedirs():
+    return (
+        __try_translation(localedir=LOCAL_LOCALEDIR)
         or __try_translation(localedir=LOCAL_LOCALEDIR, languages=[DEFAULT_LANGUAGE])
         or __try_translation(localedir=SYSTEM_LOCALEDIR)
         or __try_translation(localedir=SYSTEM_LOCALEDIR, languages=[DEFAULT_LANGUAGE])
         or __try_translation(fallback=True)
     )
 
-    el.install()
 
-    return el.gettext
+def lookup_localedir():
+    return __try_translation(localedir=LOCALEDIR) or __try_translation(
+        localedir=LOCALEDIR, languages=[DEFAULT_LANGUAGE]
+    )
 
 
 def __try_translation(**kwargs):
