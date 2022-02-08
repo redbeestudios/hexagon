@@ -26,11 +26,14 @@ msgstr "Probablemente deberías ejecutar \"Instalar CLI\""
 #: hexagon/__main__.py:53
 msgid "msg.main.tracer.run_again"
 msgstr ""
+"[cyan][dim]Para ejecutar nuevamente:[/dim]\n"
+"  {command}"
 
 #: hexagon/__main__.py:60
-#, fuzzy
 msgid "msg.main.tracer.or"
-msgstr "Esta parece ser tu primera vez ejecutando hexagon."
+msgstr ""
+"[cyan][dim] o:[/dim]\n"
+"  {command}"
 
 #: hexagon/actions/external/docker_registry.py:28
 msgid "action.actions.external.docker_registry.prompt_docker_image"
