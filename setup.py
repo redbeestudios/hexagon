@@ -6,7 +6,7 @@ import json
 import glob
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
-__version__ = "0.23.0"
+__version__ = "0.23.1"
 
 
 def __markers(config: dict):
@@ -42,7 +42,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "e2e", "e2e.*"]),
-    package_data={"": ["*.md", "Pipfile.lock"]},
+    include_package_data=True,
     install_requires=requires,
     python_requires=">=3.7",
     entry_points="""
