@@ -16,7 +16,9 @@ def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=Non
     )
     for err in errors_as_dict:
         log.error(
-            f"\n✗ [u][bold]{'.'.join(map(lambda i: str(i), err['loc']))}[/bold] -> {err['msg']}"
+            _("error.support.yaml.errors_counter").format(
+                loc=".".join(map(lambda i: str(i), err["loc"])), message=err["msg"]
+            )
         )
         if ruamel_yaml and yaml:
             (start, line_number, end) = __lines_of_error(err, ruamel_yaml)
