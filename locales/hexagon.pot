@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-02-16 22:10-0300\n"
+"POT-Creation-Date: 2022-02-16 22:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -307,11 +307,11 @@ msgstr ""
 msgid "error.support.wax.invalid_tool"
 msgstr ""
 
-#: hexagon/support/yaml/__init__.py:12
+#: hexagon/support/yaml/__init__.py:14
 msgid "error.support.yaml.invalid_yaml"
 msgstr ""
 
-#: hexagon/support/yaml/__init__.py:18
-msgid "error.support.yaml.errors_counter"
+#: hexagon/support/yaml/__init__.py:21
+msgid "error.support.yaml.error_at"
 msgstr ""
 

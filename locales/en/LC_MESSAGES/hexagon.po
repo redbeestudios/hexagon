@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-02-16 22:10-0300\n"
+"POT-Creation-Date: 2022-02-16 22:22-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -257,11 +257,11 @@ msgstr "To get started run hexagon's \"Install CLI\" tool"
 
 #: hexagon/support/help.py:27
 msgid "msg.support.help.envs"
-msgstr "[bold][u]Envs[/bold][/u]"
+msgstr "[bold][u]Envs:[/bold][/u]"
 
 #: hexagon/support/help.py:37
 msgid "msg.support.help.tools"
-msgstr "[bold][u]Tools[/bold][/u]"
+msgstr "[bold][u]Tools:[/bold][/u]"
 
 #: hexagon/support/hooks/hook.py:52
 msgid "error.support.hooks.hook.unknown_type"
@@ -324,10 +324,10 @@ msgstr "Hi, which tool would you like to use today?"
 msgid "error.support.wax.invalid_tool"
 msgstr "Please select a valid tool"
 
-#: hexagon/support/yaml/__init__.py:12
+#: hexagon/support/yaml/__init__.py:14
 msgid "error.support.yaml.invalid_yaml"
 msgstr "There were {errors_length} error(s) in your YAML file: {yaml_path}"
 
-#: hexagon/support/yaml/__init__.py:18
-msgid "error.support.yaml.errors_counter"
+#: hexagon/support/yaml/__init__.py:21
+msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"

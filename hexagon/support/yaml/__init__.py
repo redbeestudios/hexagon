@@ -1,3 +1,5 @@
+import os
+
 from pydantic import ValidationError
 from rich.syntax import Syntax
 from ruamel import yaml
@@ -15,7 +17,8 @@ def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=Non
     )
     for err in errors_as_dict:
         log.error(
-            _("error.support.yaml.errors_counter").format(
+            os.linesep  # this \n can not go in the .po file because it breaks msgmt
+            + _("error.support.yaml.error_at").format(
                 loc=".".join(map(lambda i: str(i), err["loc"])), message=err["msg"]
             )
         )
