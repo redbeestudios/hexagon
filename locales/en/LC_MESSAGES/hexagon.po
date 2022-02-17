@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-02-08 12:50-0300\n"
+"POT-Creation-Date: 2022-02-16 22:10-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,7 +243,7 @@ msgstr "Go back to the previous menu"
 msgid "icon.global.go_back"
 msgstr "🠔"
 
-#: hexagon/support/execute/tool.py:101
+#: hexagon/support/execute/tool.py:100
 msgid "error.support.execute.tool.group_tool_file_not_found"
 msgstr "File {config_file_path} could not be found"
 
