@@ -9,7 +9,6 @@ def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=Non
     yml = open(yaml_path, "r").read() if yaml_path else None
     errors_as_dict = errors.errors()
     log.error(
-        # There were {errors_length} error(s) in your YAML file: {yaml_path}
         _("error.support.yaml.invalid_yaml").format(
             errors_length=len(errors_as_dict), yaml_path=yaml_path
         )

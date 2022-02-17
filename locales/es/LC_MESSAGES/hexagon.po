@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-02-07 21:49-0300\n"
+"POT-Creation-Date: 2022-02-08 12:50-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,13 +27,13 @@ msgstr "Probablemente deberías ejecutar \"Instalar CLI\""
 msgid "msg.main.tracer.run_again"
 msgstr ""
 "[cyan][dim]Para ejecutar nuevamente:[/dim]\n"
-"  {command}"
+"  {command}[/cyan]"
 
 #: hexagon/__main__.py:60
 msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] o:[/dim]\n"
-"  {command}"
+"  {command}[/cyan]"
 
 #: hexagon/actions/external/docker_registry.py:28
 msgid "action.actions.external.docker_registry.prompt_docker_image"
@@ -331,11 +331,10 @@ msgstr "Hola ¿qué herramienta te gustaría usar hoy?"
 msgid "error.support.wax.invalid_tool"
 msgstr "Por favor, selecciona una herramienta valida"
 
-#: hexagon/support/yaml/__init__.py:13
+#: hexagon/support/yaml/__init__.py:12
 msgid "error.support.yaml.invalid_yaml"
 msgstr "Hay {errors_length} errores en el YAML: {yaml_path}"
 
-#: hexagon/support/yaml/__init__.py:19
+#: hexagon/support/yaml/__init__.py:18
 msgid "error.support.yaml.errors_counter"
-msgstr ""
-"✗ [u][bold]{loc}[/bold] -> {message}[/u]"
+msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
