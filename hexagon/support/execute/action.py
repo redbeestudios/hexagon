@@ -4,7 +4,6 @@ import subprocess
 import sys
 import time
 import traceback
-import re
 from pathlib import Path
 from typing import List, Union, Dict
 
