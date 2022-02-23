@@ -4,6 +4,7 @@ import subprocess
 import sys
 import time
 import traceback
+import re
 from pathlib import Path
 from typing import List, Union, Dict
 
@@ -33,8 +34,7 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
         custom_tools_path if custom_tools_path else configuration.custom_tools_path
     )
     action_to_execute: str = tool.action
-    ext = action_to_execute.split(".")[-1]
-    script_action_command = _command_by_file_extension.get(ext)
+    script_action_command = __script_action_command(action_to_execute)
 
     if script_action_command:
         _execute_script(
@@ -83,6 +83,12 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
                 )
                 log.error(_("error.support.execute.action.attempt_inline_command"))
             sys.exit(1)
+
+
+def __script_action_command(action_to_execute):
+    ext = action_to_execute.split(".")[-1]
+    script_action_command = _command_by_file_extension.get(ext)
+    return script_action_command
 
 
 def _execute_python_module(
@@ -148,6 +154,9 @@ def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
 
 
 def _load_action_module(action_id: str, custom_tools_path):
+    if not all(s and s.isidentifier() for s in action_id.split(".")):
+        return None
+
     try:
         return __load_module(action_id)
     except ModuleNotFoundError as e:
