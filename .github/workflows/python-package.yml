@@ -41,7 +41,7 @@ jobs:
           python -m pip install wheel
           .github/scripts/i18n/build.sh
           python setup.py sdist bdist_wheel
-          python -m pip install --find-links=./dist hexagon
+          docker build -t hexagon-e2e-runner .
 
       - uses: actions/upload-artifact@v2
         with:
@@ -51,6 +51,11 @@ jobs:
       - name: e2e tests
         run: |
           pipenv run pytest -svv e2e/
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: e2e-tests
+          path: /tmp/hexagon-outputs-*/*.asc
 
   i18n:
     name: i18n

@@ -1,8 +1,11 @@
 import itertools
-import signal
 import os
+import signal
 import subprocess
+import tempfile
+from pathlib import Path
 from typing import Dict, List, Optional
+
 from e2e.tests.utils.path import e2e_test_folder_path
 
 hexagon_path = os.path.realpath(
@@ -11,11 +14,13 @@ hexagon_path = os.path.realpath(
     )
 )
 
-HEXAGON_COMMAND: List[str] = ["python", "-m" "hexagon"]
+HEXAGON_COMMAND: List[str] = ["hexagon"]
+HEXAGON_OUTPUTS_DIR = tempfile.mkdtemp(prefix="hexagon-outputs-")
 
 
 def run_hexagon_e2e_test(
     test_file: str,
+    test_name: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
     test_file_path_is_absoulte: bool = False,
@@ -49,50 +54,80 @@ def run_hexagon_e2e_test(
     if "HEXAGON_SEND_TELEMETRY" not in os_env_vars:
         os_env_vars["HEXAGON_SEND_TELEMETRY"] = "0"
 
-    if "HEXAGON_LOCALES_DIR" not in os_env_vars:
-        os_env_vars["HEXAGON_LOCALES_DIR"] = os.path.join(hexagon_path, "locales")
+    # if "HEXAGON_LOCALES_DIR" not in os_env_vars:
+    #     os_env_vars["HEXAGON_LOCALES_DIR"] = os.path.join(hexagon_path, "locales")
 
     os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
         "HEXAGON_STORAGE_PATH",
-        os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
+        os.getenv(
+            "HEXAGON_STORAGE_PATH",
+            # os.path.abspath(os.path.join("app", "target", ".config")),
+            "/app/target/.config",
+        ),
     )
 
     app_config_path = os.path.join(test_folder_path, "app.yml")
     if os.path.isfile(app_config_path):
-        os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
+        os_env_vars["HEXAGON_CONFIG_FILE"] = "/app/target/app.yml"
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return run_hexagon(cwd or test_folder_path, args, os_env_vars)
+    return run_hexagon(test_file, test_name, cwd or test_folder_path, args, os_env_vars)
 
 
 def run_hexagon(
-    cwd: str, args: List[str] = tuple(), os_env_vars: Optional[Dict[str, str]] = None
+    test_file: str,
+    test_name: str,
+    cwd: str,
+    args: List[str] = tuple(),
+    os_env_vars: Optional[Dict[str, str]] = None,
 ):
     environment = os.environ.copy()
     if os_env_vars:
         environment.update(os_env_vars)
 
-    command = [*HEXAGON_COMMAND, *args]
-    print(
-        f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
+    recording = f"{Path(test_file).stem}-{test_name}"
+    envs = " ".join(
+        [f"-e {k}={v}" for k, v in environment.items() if "HEXAGON_" in k]
+    ).split(" ")
+    docker_run = (
+        ["docker", "run", "--rm", "-i"]
+        + envs
+        + [
+            "-e",
+            "TERM=xterm-256color",
+            "-e",
+            f"TEST_NAME={recording}",
+            "-v",
+            f"{HEXAGON_OUTPUTS_DIR}:/app/out",
+            "-v",
+            f"{cwd}:/app/target",
+            "hexagon-e2e-runner",
+        ]
     )
+    command = f'"{" ".join([*HEXAGON_COMMAND, *args])}"'
+
+    print(
+        "recording: asciinema play ",
+        os.path.join(HEXAGON_OUTPUTS_DIR, f"{recording}.asc"),
+    )
+
+    print(f"\nrunning command:\n{' '.join(docker_run + [command])}")
     return subprocess.Popen(
-        command,
+        " ".join(docker_run + [command]),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         stdin=subprocess.PIPE,
         encoding="utf-8",
-        cwd=cwd,
-        env=environment,
+        shell=True,
         universal_newlines=True,
     )
 
 
-def write_to_process(process: subprocess.Popen, input: str):
-    written = process.stdin.write(input)
-    if written != len(input):
-        raise Exception(f"Written {written} instead of {input}")
+def write_to_process(process: subprocess.Popen, content: str):
+    written = process.stdin.write(content)
+    if written != len(content):
+        raise Exception(f"Written {written} instead of {content}")
     process.stdin.flush()
 
 
