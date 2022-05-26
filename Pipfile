@@ -16,7 +16,7 @@ markdown = "*"
 [dev-packages]
 flake8 = "*"
 pytest = "*"
-black = "*"
+black = "==22.3.0"
 flake8-bugbear = "*"
 pipenv-setup = "*"
 
