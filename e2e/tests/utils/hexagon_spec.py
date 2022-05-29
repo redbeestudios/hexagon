@@ -1,3 +1,4 @@
+import inspect
 import time
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional
@@ -43,9 +44,11 @@ class HexagonSpec:
         cwd: str = None,
     ):
         __tracebackhide__ = True
+        caller = inspect.stack()[1][3]
         if command:
             self.command = command
             self.process = run_hexagon_e2e_test(
+                caller,
                 self.__file,
                 self.command,
                 os_env_vars=os_env_vars,
@@ -54,6 +57,7 @@ class HexagonSpec:
             )
         else:
             self.process = run_hexagon_e2e_test(
+                caller,
                 self.__file,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absoulte=test_file_path_is_absoulte,
@@ -80,7 +84,8 @@ class HexagonSpec:
         return self
 
     def then_output_should_not_contain(
-        self, output_to_match: List[Expected_Process_Output],
+        self,
+        output_to_match: List[Expected_Process_Output],
     ):
         __tracebackhide__ = True
         # noinspection PyBroadException

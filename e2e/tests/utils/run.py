@@ -11,10 +11,11 @@ hexagon_path = os.path.realpath(
     )
 )
 
-HEXAGON_COMMAND: List[str] = ["python", "-m", "hexagon"]
+HEXAGON_COMMAND: List[str] = ["hexagon"]
 
 
 def run_hexagon_e2e_test(
+    test_name: str,
     test_file: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
@@ -63,11 +64,14 @@ def run_hexagon_e2e_test(
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return run_hexagon(cwd or test_folder_path, args, os_env_vars)
+    return run_hexagon(test_name, cwd or test_folder_path, args, os_env_vars)
 
 
 def run_hexagon(
-    cwd: str, args: List[str] = tuple(), os_env_vars: Optional[Dict[str, str]] = None
+    test_name: str,
+    cwd: str,
+    args: List[str] = tuple(),
+    os_env_vars: Optional[Dict[str, str]] = None,
 ):
     environment = os.environ.copy()
     if os_env_vars:
@@ -77,10 +81,24 @@ def run_hexagon(
     print(
         f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
     )
+
+    os.makedirs(os.path.join(cwd, ".errors"), exist_ok=True)
+    err_file = open(os.path.join(cwd, ".errors", f"{test_name}.err"), "w")
+    os.makedirs(os.path.join(hexagon_path, ".recordings"), exist_ok=True)
+
+    command_ = [
+        "asciinema",
+        "rec",
+        "-q",
+        f'{os.path.join(hexagon_path, ".recordings", f"{test_name}.asc")}',
+        "--overwrite",
+        f'-c "{" ".join(command)}"',
+    ]
+
     return subprocess.Popen(
-        command,
+        command_,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stderr=err_file,
         stdin=subprocess.PIPE,
         encoding="utf-8",
         cwd=cwd,
