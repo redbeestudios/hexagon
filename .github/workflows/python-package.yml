@@ -53,6 +53,7 @@ jobs:
           pipenv run pytest -svv e2e/
 
       - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
         with:
           name: recordings
           path: .recordings
