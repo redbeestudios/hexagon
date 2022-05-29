@@ -52,6 +52,12 @@ jobs:
         run: |
           pipenv run pytest -svv e2e/
 
+      - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: recordings
+          path: .recordings/*.asc
+
   i18n:
     name: i18n
     runs-on: ubuntu-latest
