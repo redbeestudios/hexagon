@@ -31,6 +31,10 @@ def _save_last_output_and_raise(
     for line in lines:
         print(line.rstrip())
 
+    print("command error:")
+    for line in process.stderr.readlines():
+        print(line.rstrip())
+
     _save_last_output(lines)
     raise error
 
@@ -39,9 +43,11 @@ def _check_process_return_code(process: subprocess.Popen, exit_status: int = 0):
     __tracebackhide__ = True
     return_code = process.returncode
     if return_code:
-        assert (
-            return_code == exit_status
-        ), f"Got return_code {return_code}, but {exit_status} was expected\n"
+        error = "\n".join(process.stderr.readlines())
+        assert return_code == exit_status, (
+            f"Got return_code {return_code}, but {exit_status} was expected\n"
+            f"Terminal error:\n" + error
+        )
 
 
 Expected_Process_Output_Item = str or Callable[[str], bool] or Dict[str, Any]
