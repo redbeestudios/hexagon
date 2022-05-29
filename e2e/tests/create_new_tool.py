@@ -125,7 +125,8 @@ def test_create_new_python_module_tool():
         .then_output_should_be(["What type of tool is it?", "web", "shell"])
         .carriage_return()
         .then_output_should_be(
-            [["What type of tool is it?", "shell"]], discard_until_first_match=True,
+            [["What type of tool is it?", "shell"]],
+            discard_until_first_match=True,
         )
         .input("-command")
         .then_output_should_be(

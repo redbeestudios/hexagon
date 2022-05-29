@@ -136,7 +136,8 @@ def test_show_changelog():
         )
         .write("n")
         .then_output_should_be(
-            [["Would you like to update?", "No"]], discard_until_first_match=True,
+            [["Would you like to update?", "No"]],
+            discard_until_first_match=True,
         )
         .then_output_should_be(["my-module"])
         .exit()
