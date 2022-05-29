@@ -84,19 +84,9 @@ def run_hexagon(
 
     os.makedirs(os.path.join(cwd, ".errors"), exist_ok=True)
     err_file = open(os.path.join(cwd, ".errors", f"{test_name}.err"), "w")
-    os.makedirs(os.path.join(hexagon_path, ".recordings"), exist_ok=True)
-
-    command_ = [
-        "asciinema",
-        "rec",
-        "-q",
-        f'{os.path.join(hexagon_path, ".recordings", f"{test_name}.asc")}',
-        "--overwrite",
-        f'-c "{" ".join(command)}"',
-    ]
 
     return subprocess.Popen(
-        command_,
+        command,
         stdout=subprocess.PIPE,
         stderr=err_file,
         stdin=subprocess.PIPE,
