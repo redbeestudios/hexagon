@@ -15,7 +15,6 @@ HEXAGON_COMMAND: List[str] = ["python", "-m", "hexagon"]
 
 
 def run_hexagon_e2e_test(
-    test_name: str,
     test_file: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
@@ -64,11 +63,10 @@ def run_hexagon_e2e_test(
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return run_hexagon(test_name, cwd or test_folder_path, args, os_env_vars)
+    return run_hexagon(cwd or test_folder_path, args, os_env_vars)
 
 
 def run_hexagon(
-    test_name: str,
     cwd: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
@@ -81,8 +79,6 @@ def run_hexagon(
     print(
         f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
     )
-
-    os.makedirs(os.path.join(hexagon_path, ".recordings"), exist_ok=True)
 
     return subprocess.Popen(
         command,

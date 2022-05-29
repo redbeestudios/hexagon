@@ -1,4 +1,3 @@
-import inspect
 import time
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional
@@ -44,11 +43,9 @@ class HexagonSpec:
         cwd: str = None,
     ):
         __tracebackhide__ = True
-        caller = inspect.stack()[1][3]
         if command:
             self.command = command
             self.process = run_hexagon_e2e_test(
-                caller,
                 self.__file,
                 self.command,
                 os_env_vars=os_env_vars,
@@ -57,7 +54,6 @@ class HexagonSpec:
             )
         else:
             self.process = run_hexagon_e2e_test(
-                caller,
                 self.__file,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absoulte=test_file_path_is_absoulte,

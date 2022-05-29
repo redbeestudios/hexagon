@@ -19,7 +19,6 @@ pytest = "*"
 black = "*"
 flake8-bugbear = "*"
 pipenv-setup = "*"
-asciinema = "*"
 
 [requires]
 python_version = "3.8"
