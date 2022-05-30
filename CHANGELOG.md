@@ -2,6 +2,37 @@
 
 <!--next-version-placeholder-->
 
+## v0.25.1 (2022-05-28)
+### Fix
+* Print help gaps ([`e130331`](https://github.com/redbeestudios/hexagon/commit/e130331f4e347c57e0bcb246b476063452c15911))
+
+## v0.25.0 (2022-02-25)
+### Feature
+* **groups:** Allow for inline groups in YAML ([`d29a587`](https://github.com/redbeestudios/hexagon/commit/d29a58748dac4e2a60dc0760d526cf78ed2c1034))
+
+### Fix
+* **execute-again:** Show command aliases correctly ([`922e554`](https://github.com/redbeestudios/hexagon/commit/922e5547c214f3819c9159eea174da28c3bd3856))
+
+## v0.24.0 (2022-02-23)
+### Feature
+* **storage:** Add get_local_config_dir() function ([#79](https://github.com/redbeestudios/hexagon/issues/79)) ([`ec817d2`](https://github.com/redbeestudios/hexagon/commit/ec817d2d4b3bfdd962c6a2dc51216e3b0b53c1ca))
+
+## v0.23.4 (2022-02-23)
+### Fix
+* **action:** Validate action is valid module identifier ([#78](https://github.com/redbeestudios/hexagon/issues/78)) ([`e583078`](https://github.com/redbeestudios/hexagon/commit/e5830787b96432c2c142f96a5850089c5958ace9))
+
+## v0.23.3 (2022-02-17)
+### Fix
+* **create-tool:** README lost during package ([#77](https://github.com/redbeestudios/hexagon/issues/77)) ([`b7238cd`](https://github.com/redbeestudios/hexagon/commit/b7238cddbcc07c09e5e20eb10d9e5dd7f396516f))
+
+## v0.23.2 (2022-02-17)
+### Fix
+* **i18n:** Missing translation strings ([#76](https://github.com/redbeestudios/hexagon/issues/76)) ([`97a1068`](https://github.com/redbeestudios/hexagon/commit/97a1068ec8c4eb771466676a84215a0b458fc84c))
+
+## v0.23.1 (2022-02-08)
+### Fix
+* **i18n:** Search local and system dirs ([`af62986`](https://github.com/redbeestudios/hexagon/commit/af6298632e78c289f2bf50b855a63a93526efd89))
+
 ## v0.23.0 (2022-01-21)
 ### Feature
 * **i18n:** Added EN and ES transltions + CI ([#73](https://github.com/redbeestudios/hexagon/issues/73)) ([`7c65e74`](https://github.com/redbeestudios/hexagon/commit/7c65e740dd74cc7c0e0bdb2ba75587f185d327d2))

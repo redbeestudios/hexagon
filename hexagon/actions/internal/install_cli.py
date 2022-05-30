@@ -6,11 +6,9 @@ from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
 
 from hexagon.domain import configuration
-from hexagon.support.printer import log, translator
+from hexagon.support.printer import log
 from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_user_data
-
-_ = translator
 
 
 class YamlFileValidator(PathValidator):
@@ -61,9 +59,7 @@ def main(*__):
     scan_and_install_dependencies(cli.custom_tools_dir)
 
     log.info(
-        "[green]{0} [white][u]{1}".format(
-            _("icon.global.ok"), _("msg.actions.internal.install_cli.success")
-        ),
+        _("msg.actions.internal.install_cli.success"),
         gap_end=1,
         gap_start=1,
     )

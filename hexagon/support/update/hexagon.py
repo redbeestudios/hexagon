@@ -1,22 +1,22 @@
-from hexagon.support.storage import HEXAGON_STORAGE_APP
-from hexagon.support.update.shared import already_checked_for_updates
-from hexagon.support.github import add_github_access_token
-import re
-from typing import List, Optional
-import pkg_resources
 import json
 import os
+import re
 import subprocess
 import sys
-from urllib.request import Request, urlopen
-from packaging.version import parse as parse_version, Version
-from markdown import Markdown
-from io import StringIO
-from hexagon.support.printer import log, translator
-from InquirerPy import inquirer
 from functools import reduce
+from io import StringIO
+from typing import List, Optional
+from urllib.request import Request, urlopen
 
-_ = translator
+import pkg_resources
+from InquirerPy import inquirer
+from markdown import Markdown
+from packaging.version import parse as parse_version, Version
+
+from hexagon.support.github import add_github_access_token
+from hexagon.support.printer import log
+from hexagon.support.storage import HEXAGON_STORAGE_APP
+from hexagon.support.update.shared import already_checked_for_updates
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 REPO_ORG = "redbeestudios"
@@ -167,14 +167,9 @@ def check_for_hexagon_updates():
     if current_version >= parse_version(latest_github_release_version):
         return
 
-    # FIXME find a better way of handling colors in translations
     log.info(
         _("msg.support.update.hexagon.new_version_available").format(
-            latest_version=latest_github_release_version,
-            hexagon_start="[cyan]",
-            hexagon_end="[/cyan]",
-            version_start="[green]",
-            version_end="[/green]",
+            latest_version=latest_github_release_version
         )
     )
 
@@ -192,11 +187,7 @@ def check_for_hexagon_updates():
             stdout=subprocess.DEVNULL,
         )
 
-    log.info(
-        "[green]{}️[white]{}".format(
-            _("icon.global.ok"), _("msg.support.update.hexagon.updated")
-        )
-    )
+    log.info(_("msg.support.update.hexagon.updated"))
     log.finish()
     sys.exit(1)
 

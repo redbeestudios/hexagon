@@ -4,12 +4,10 @@ from shutil import copytree
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 
-from hexagon.domain.tool import ActionTool, ToolType
-from hexagon.domain import configuration
 from hexagon.actions import external
-from hexagon.support.printer import log, translator
-
-_ = translator
+from hexagon.domain import configuration
+from hexagon.domain.tool import ActionTool, ToolType
+from hexagon.support.printer import log
 
 
 def main(*__):
@@ -65,11 +63,7 @@ def main(*__):
 
     if create_action:
         if not configuration.custom_tools_path:
-            log.info(
-                "[magenta]{}".format(
-                    _("msg.actions.internal.create_new_tool.custom_tools_dir_not_set")
-                )
-            )
+            log.info(_("msg.actions.internal.create_new_tool.custom_tools_dir_not_set"))
             configuration.update_custom_tools_path(
                 inquirer.filepath(
                     message=_(

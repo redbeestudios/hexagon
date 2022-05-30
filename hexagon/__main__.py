@@ -1,21 +1,19 @@
-from hexagon.support.hooks import HexagonHooks
-from hexagon.support.execute.tool import select_and_execute_tool
-from hexagon.support.update.cli import check_for_cli_updates
 import sys
 
-from hexagon.support.args import fill_args
 from hexagon.domain import cli, tools, envs
+from hexagon.plugins import collect_plugins
+from hexagon.support.args import fill_args
+from hexagon.support.execute.tool import select_and_execute_tool
 from hexagon.support.help import print_help
-from hexagon.support.tracer import tracer
-from hexagon.support.printer import log, translator
-from hexagon.support.update.hexagon import check_for_hexagon_updates
+from hexagon.support.hooks import HexagonHooks
+from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
     store_user_data,
 )
-from hexagon.plugins import collect_plugins
-
-_ = translator
+from hexagon.support.tracer import tracer
+from hexagon.support.update.cli import check_for_cli_updates
+from hexagon.support.update.hexagon import check_for_hexagon_updates
 
 
 def main():
@@ -50,19 +48,23 @@ def main():
 
         log.finish()
 
+        command = tracer.command()
         if tracer.has_traced():
             log.extra(
-                f"[cyan dim]{_('msg.main.tracer.run_again')}[/cyan dim]",
-                f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
+                _("msg.main.tracer.run_again").format(
+                    command=" ".join([cli.command, command])
+                )
             )
             command_as_aliases = tracer.command_as_aliases(tools, envs)
-            if command_as_aliases:
+            if command_as_aliases and command != command_as_aliases:
                 log.extra(
-                    f"[cyan dim]  {_('msg.main.tracer.or')}[/cyan dim]",
-                    f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
+                    _("msg.main.tracer.or").format(
+                        command=" ".join([cli.command, command_as_aliases])
+                    )
                 )
+
         store_user_data(
-            HexagonStorageKeys.last_command.value, f"{cli.command} {tracer.command()}"
+            HexagonStorageKeys.last_command.value, f"{cli.command} {command}"
         )
     except KeyboardInterrupt:
         sys.exit(1)

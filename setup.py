@@ -1,9 +1,12 @@
+from os.path import dirname
+
 import setuptools
 import json
+
 import glob
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
-__version__ = "0.23.0"
+__version__ = "0.25.1"
 
 
 def __markers(config: dict):
@@ -21,7 +24,7 @@ with open("Pipfile.lock", "r", encoding="utf-8") as lock:
         if "version" in config
     ]
 
-translations = glob.glob("./locales/*/LC_MESSAGES/*.mo")
+translations = [(dirname(x), [x]) for x in glob.glob("locales/*/LC_MESSAGES/*.mo")]
 
 setuptools.setup(
     name="hexagon",
@@ -39,13 +42,12 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "e2e", "e2e.*"]),
-    package_data={"": ["*.md"]},
+    include_package_data=True,
     install_requires=requires,
     python_requires=">=3.7",
     entry_points="""
         [console_scripts]
         hexagon=hexagon.__main__:main
     """,
-    platform="debian",
-    data_files=[("*", ["Pipfile.lock"]), ("locales", translations)],
+    data_files=translations,
 )

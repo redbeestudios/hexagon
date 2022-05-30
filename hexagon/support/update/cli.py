@@ -1,18 +1,18 @@
-from hexagon.support.cli.git import load_cli_git_config
+import os
+import re
+import sys
+
+from InquirerPy import inquirer
+
+from hexagon.domain import cli, configuration
 from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
     output_from_command_in_cli_project_path,
 )
+from hexagon.support.cli.git import load_cli_git_config
 from hexagon.support.dependencies import scan_and_install_dependencies
-from hexagon.support.printer import log, translator
+from hexagon.support.printer import log
 from hexagon.support.update.shared import already_checked_for_updates
-import os
-import re
-from hexagon.domain import cli, configuration
-from InquirerPy import inquirer
-import sys
-
-_ = translator
 
 
 def check_for_cli_updates():
@@ -46,9 +46,7 @@ def check_for_cli_updates():
 
     if "is behind" in branch_status:
         log.info(
-            _("msg.support.update.cli.new_version_available").format(
-                cli_name=cli.name, cli_start="[cyan]", cli_end="[/cyan]"
-            )
+            _("msg.support.update.cli.new_version_available").format(cli_name=cli.name)
         )
         if not inquirer.confirm(
             _("action.support.update.cli.confirm_update"), default=True
@@ -56,11 +54,7 @@ def check_for_cli_updates():
             return
         execute_command_in_cli_project_path("git pull", show_stdout=True)
         scan_and_install_dependencies(configuration.custom_tools_path)
-        log.info(
-            "[green]{}️[white]{}".format(
-                _("icon.global.ok"), _("msg.support.update.cli.updated")
-            )
-        )
+        log.info(_("msg.support.update.cli.updated"))
         log.finish()
         sys.exit(1)
 
